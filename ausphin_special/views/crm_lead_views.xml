@@ -6,10 +6,25 @@
         <field name="arch" type="xml">
             <xpath expr="//kanban" position="attributes">
                 <attribute name="disable_sort_column">true</attribute>
+                <attribute name="on_create"/>
             </xpath>
             <field name="stage_id" position="attributes">
                 <attribute name="readonly">1</attribute>
             </field>
+        </field>
+    </record>
+    
+    <record id="crm_lead_view_form_inherit" model="ir.ui.view">
+        <field name="name">crm.lead.view.form.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('col')][1]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+             <xpath expr="//div[hasclass('col')][2]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
         </field>
     </record>
 </odoo>

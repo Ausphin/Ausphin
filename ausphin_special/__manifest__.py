@@ -4,10 +4,12 @@
     'version': '0.1',
     'depends': [
         'crm',
+        'kanban_draggable',
     ],
     'external_dependencies': {},
-    'author': 'Ausphin',
-    'website': '',
+    'author': 'Rainier King, '
+              'Odev Solutions',
+    'website': 'https://odevsolutions.com',
     'summary': """Special Modifications for Ausphin""",
     'description': """
         Special Modifications for Ausphin

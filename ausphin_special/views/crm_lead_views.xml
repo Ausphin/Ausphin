@@ -4,6 +4,9 @@
         <field name="model">crm.lead</field>
         <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
         <field name="arch" type="xml">
+            <xpath expr="//kanban" position="attributes">
+                <attribute name="disable_sort_column">true</attribute>
+            </xpath>
             <field name="stage_id" position="attributes">
                 <attribute name="readonly">1</attribute>
             </field>

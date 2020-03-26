@@ -1,11 +1,11 @@
 from odoo import models, fields, api, exceptions
 
-class Lead(models.Model):
+class Journey(models.Model):
     
     ######################
     # Private attributes #
     ######################
-    _inherit = "crm.lead"
+    _inherit = "crm.team"
 
     ###################
     # Default methods #
@@ -14,10 +14,7 @@ class Lead(models.Model):
     ######################
     # Fields declaration #
     ######################
-    team_id = fields.Many2one(comodel_name="crm.team",
-        string="Journey",
-        related="stage_id.team_id",
-        store=True)
+    show_in_conversion = fields.Boolean(string="Show in Lead Conversion")
     
     ##############################
     # Compute and search methods #

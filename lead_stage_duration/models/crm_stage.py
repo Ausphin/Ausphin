@@ -11,6 +11,12 @@ class CrmStage(models.Model):
     ###################
     # Default methods #
     ###################
+    def name_get(self):
+        result = []
+        for stage in self:
+            name = stage.name + ' (' + str(stage.target_duration) + ')'
+            result.append((stage.id, name))
+        return result
 
     ######################
     # Fields declaration #

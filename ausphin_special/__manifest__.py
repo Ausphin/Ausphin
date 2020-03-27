@@ -5,8 +5,8 @@
     'depends': [
         'crm',
         'kanban_draggable',
-        'crm_move_stage_button',
         'crm_team_sequence',
+        'lead_stage_duration',
     ],
     'external_dependencies': {},
     'author': 'Rainier King, '

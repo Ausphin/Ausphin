@@ -22,6 +22,11 @@ class CrmLead(models.Model):
         inverse_name="lead_id")
     duration_in_stage = fields.Float(string="Duration in Stage",
         compute="_compute_duration_in_stage")
+    duration_status = fields.Selection(string="Duration Status",
+        selection=[
+            ("within", "Within Target"),
+            ("beyond", "Beyond Target")],
+        compute="_compute_duration_status")
     
     ##############################
     # Compute and search methods #
@@ -32,6 +37,14 @@ class CrmLead(models.Model):
             lead.duration_in_stage = \
                 sum(log.actual_duration for log in \
                     lead.stage_log_ids.filtered(lambda l: l.stage_id == lead.stage_id))
+    
+    @api.depends("duration_in_stage")
+    def _compute_duration_status(self):
+        for lead in self:
+            if lead.duration_in_stage <= lead.stage_id.target_duration:
+                lead.duration_status = "within"
+            else:
+                lead.duration_status = "beyond"
     
     ############################
     # Constrains and onchanges #

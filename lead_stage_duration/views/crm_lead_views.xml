@@ -9,6 +9,7 @@
                 <page string="Timeline" name="stage_logs">
                     <group>
                         <field name="duration_in_stage"/>
+                        <field name="duration_status"/>
                     </group>
                     <field name="stage_log_ids" readonly="1">
                         <tree>
@@ -22,6 +23,23 @@
                     </field>
                 </page>
             </xpath>
+        </field>
+    </record>
+    
+    <record id="crm_lead_view_kanban_inherit" model="ir.ui.view">
+        <field name="name">crm.lead.view.kanban.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
+        <field name="arch" type="xml">
+            <field name="activity_ids" position="after">
+                <field name="duration_in_stage"/>
+            </field>
+            <xpath expr="//div/field[@name='activity_ids']" position="after">
+                <field name="duration_in_stage"/>
+            </xpath>
+            <progressbar position="replace">
+                <progressbar field="duration_status" colors="{&quot;within&quot;: &quot;success&quot;, &quot;beyond&quot;: &quot;danger&quot;}"/>
+            </progressbar>
         </field>
     </record>
 </odoo>

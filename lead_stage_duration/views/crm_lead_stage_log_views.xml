@@ -14,7 +14,6 @@
                     <field name="start_date"/>
                     <field name="end_date"/>
                     <field name="actual_duration"/>
-                    <field name="target_duration"/>
                 </group>
             </form>
         </field>

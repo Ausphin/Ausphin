@@ -6,8 +6,11 @@
         <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
         <field name="arch" type="xml">
             <xpath expr="//notebook" position="inside">
-                <page string="History" name="stage_logs">
-                    <field name="stage_log_ids">
+                <page string="Timeline" name="stage_logs">
+                    <group>
+                        <field name="duration_in_stage"/>
+                    </group>
+                    <field name="stage_log_ids" readonly="1">
                         <tree>
                             <field name="stage_id"/>
                             <field name="user_id"/>

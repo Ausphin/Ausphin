@@ -28,7 +28,7 @@ class CrmLeadStageLog(models.Model):
     target_duration = fields.Float(string="Target Duration",
         related="stage_id.target_duration")
     user_id = fields.Many2one(string="Assignee",
-        comodel_name="res.partner")
+        comodel_name="res.users")
     stage_id = fields.Many2one(string="Stage",
         comodel_name="crm.stage",
         required=True)

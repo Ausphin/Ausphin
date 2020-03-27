@@ -19,9 +19,8 @@
                 <field name="tenureship"/>
             </field>
             <xpath expr="//div/field[@name='activity_ids']" position="after">
-                <span t-if="record.tenureship.raw_value" class="badge badge-info">
-                    <field name="tenureship"/>
-                </span>
+                <field name="tenureship" widget="label_selection"
+                       options="{'classes': {'0': 'default', '3': 'info', '6': 'success', '9': 'warning', '12': 'danger'}}"/>
             </xpath>
         </field>
     </record>

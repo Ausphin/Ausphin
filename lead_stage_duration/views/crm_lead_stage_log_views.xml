@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="crm_lead_stage_log_view_form" model="ir.ui.view">
+        <field name="name">crm.lead.stage.log.view.form</field>
+        <field name="model">crm.lead.stage.log</field>
+        <field name="arch" type="xml">
+            <form string="Stage Log">
+                <group>
+                    <field name="lead_id"/>
+                    <field name="stage_id"/>
+                    <field name="user_id"/>
+                </group>
+                <group>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="actual_duration"/>
+                    <field name="target_duration"/>
+                </group>
+            </form>
+        </field>
+    </record>
+</odoo>

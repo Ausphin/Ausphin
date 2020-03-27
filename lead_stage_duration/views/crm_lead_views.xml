@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="crm_lead_view_form_inherit" model="ir.ui.view">
+        <field name="name">crm.lead.view.form.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="History" name="stage_logs">
+                    <field name="stage_log_ids">
+                        <tree>
+                            <field name="stage_id"/>
+                            <field name="user_id"/>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                            <field name="actual_duration"/>
+                            <field name="target_duration"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

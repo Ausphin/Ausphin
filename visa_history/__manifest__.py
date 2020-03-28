@@ -17,6 +17,8 @@
     'data': [
         'security/ir.model.access.csv',
         'views/crm_lead_views.xml',
+        'data/mail_template_data.xml',
+        'data/base_automation_data.xml',
     ],
     'qweb': [],
     'css': [],

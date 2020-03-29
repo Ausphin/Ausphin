@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+import random
 from odoo import fields, models, api
 
 class Lead2OpportunityPartner(models.TransientModel):
@@ -32,6 +32,8 @@ class Lead2OpportunityPartner(models.TransientModel):
     @api.onchange("team_id")
     def _onchange_sales_team(self):
         self.user_id = False
+    
+        min = 999999999
         results = []
         
         stage = self.env["crm.stage"].sudo().search([("team_id","=",self.team_id.id)], limit=1).id
@@ -40,15 +42,23 @@ class Lead2OpportunityPartner(models.TransientModel):
         
                         
         for assignable_id in stage_id.assignable_ids:
-            opportunity_count = self.env["crm.lead"].search_count([("stage_id","=",stage_id.id),("user_id","=",assignable_id.id)])
+            opportunity_count = self.env["crm.lead"].sudo().search_count([("stage_id","=",stage_id.id),("user_id","=",assignable_id.id)])
             if not opportunity_count:
                 opportunity_count = 0
-                
-                self.user_id = assignable_id.id
-                
-            results.append({"user_id":assignable_id.id, "opportunity_count":opportunity_count})
             
+            if opportunity_count < min:
+                min = opportunity_count
+                results = [assignable_id.id]
+            elif opportunity_count == min:
+                results.append(assignable_id.id)
+        
+        if len(results) > 1:
+            self.user_id = random.choice(results)
+        
+        elif len(results) == 1:
+            self.user_id = results[0]
             
+        
         
     #########################
     # CRUD method overrides #

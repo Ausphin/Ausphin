@@ -52,7 +52,7 @@
         <field name="name">Trainings</field>
         <field name="res_model">crm.training</field>
         <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree,form,graph</field>
         <field name="domain">[]</field>
         <field name="context">{'create': 0, 'edit': 0}</field>
     </record>
@@ -61,6 +61,6 @@
         id="crm_training_menu"
         name="Trainings"
         action="crm_training_action"
-        parent="crm_training_menu_section"
-        sequence="10"/>
+        parent="crm.crm_menu_report"
+        sequence="3"/>
 </odoo>

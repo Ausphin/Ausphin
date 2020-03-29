@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem
+        id="crm_training_menu_section"
+        name="Trainings"
+        parent="crm.crm_menu_sales"
+        sequence="2"/>
+</odoo>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="crm_lead_view_form_inherit" model="ir.ui.view">
+        <field name="name">crm.lead.view.form.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Trainings" name="trainings">
+                    <field name="training_ids" context="{'from_lead': 1}">
+                        <tree>
+                            <field name="venue_id"/>
+                            <field name="endorsement_date"/>
+                            <field name="interview_date"/>
+                            <field name="interview_result"/>
+                            <field name="job_offer_date"/>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

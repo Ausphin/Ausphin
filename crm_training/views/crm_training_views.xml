@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="crm_training_view_form" model="ir.ui.view">
+        <field name="name">crm.training.view.form</field>
+        <field name="model">crm.training</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="venue_id"
+                               invisible="context.get('from_venue')"
+                               required="not context.get('from_venue')"/>
+                        <field name="lead_id"
+                               invisible="context.get('from_lead')"
+                               required="not context.get('from_lead')"/>
+                    </group>
+                    <group>
+                        <group string="Placement">
+                            <field name="endorsement_date"/>
+                            <field name="interview_date"/>
+                            <field name="interview_result"/>
+                            <field name="job_offer_date"/>
+                        </group>
+                        <group string="Pre-Departure">
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    
+    <record id="crm_training_view_tree" model="ir.ui.view">
+        <field name="name">crm.training.view.tree</field>
+        <field name="model">crm.training</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="venue_id"/>
+                <field name="lead_id"/>
+                <field name="endorsement_date"/>
+                <field name="interview_date"/>
+                <field name="interview_result"/>
+                <field name="job_offer_date"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+            </tree>
+        </field>
+    </record>
+    
+    <record id="crm_training_action" model="ir.actions.act_window">
+        <field name="name">Trainings</field>
+        <field name="res_model">crm.training</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{'create': 0, 'edit': 0}</field>
+    </record>
+    
+    <menuitem
+        id="crm_training_menu"
+        name="Trainings"
+        action="crm_training_action"
+        parent="crm_training_menu_section"
+        sequence="10"/>
+</odoo>

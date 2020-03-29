@@ -7,8 +7,9 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='user_id']/.." position="replace">
                 <group string="Assign this opportunity to">
-                    <field name="team_id" widget="selection" domain="[('show_in_conversion','!=',False)]"/>
-                    <field name="user_id" readonly="1"/>
+                    <field name="team_id" widget="selection" domain="[('show_in_conversion','!=',False)]" required="1"/>
+                    <field name="user_id" readonly="1" force_save="1"/>
+                    <field name="stage_id" readonly="1" force_save="1"/>
                 </group>
             </xpath>
         </field>

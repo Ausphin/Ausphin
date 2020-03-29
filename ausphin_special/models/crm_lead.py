@@ -13,10 +13,15 @@ class CrmLead(models.Model):
     ######################
     # Fields declaration #
     ######################
+    stage_id = fields.Many2one(comodel_name="crm.stage",
+        domain=False)
     team_id = fields.Many2one(comodel_name="crm.team",
         string="Journey",
         related="stage_id.team_id",
         store=True)
+    user_id = fields.Many2one(comodel_name="res.users",
+        string="Assigned To",
+        domain="[('stage_ids','in',[stage_id])]")
     
     ##############################
     # Compute and search methods #
@@ -25,11 +30,13 @@ class CrmLead(models.Model):
     ############################
     # Constrains and onchanges #
     ############################
+    
 
     #########################
     # CRUD method overrides #
     #########################
-
+    
+    
     ##################
     # Action methods #
     ##################
@@ -73,3 +80,18 @@ class CrmLead(models.Model):
     ####################
     # Business methods #
     ####################
+    def allocate_salesman(self, user_ids=None, team_id=False):
+        index = 0
+        for lead in self:
+            value = {}
+            if team_id:
+                value["team_id"] = team_id
+            if user_ids:
+                value["user_id"] = user_ids[index]
+                # Cycle through user_ids
+                index = (index + 1) % len(user_ids)
+            if self._context.get("stage_id"):
+                value["stage_id"] = self._context.get("stage_id")
+            if value:
+                lead.write(value)
+        return True

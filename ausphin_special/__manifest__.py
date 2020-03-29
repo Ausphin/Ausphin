@@ -7,6 +7,8 @@
         'kanban_draggable',
         'crm_team_sequence',
         'lead_stage_duration',
+        'tenureship',
+        'visa_history',
     ],
     'external_dependencies': {},
     'author': 'Rainier King, '
@@ -18,8 +20,10 @@
     """,
     'category': 'Special',
     'data': [
+        'security/crm_team_security.xml',
         'views/crm_lead_views.xml',
         'views/crm_team_views.xml',
+        'views/crm_stage_views.xml',
         'wizards/crm_lead2opportunity_partner_views.xml',
     ],
     'qweb': [],

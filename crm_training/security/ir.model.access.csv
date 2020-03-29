@@ -1,0 +1,4 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+access_crm_training_user,access.crm.training.user,model_crm_training,sales_team.group_sale_salesman,1,1,1,1
+access_crm_training_venue_user,access.crm.training.venue.user,model_crm_training_venue,sales_team.group_sale_salesman,1,0,0,0
+access_crm_training_venue_manager,access.crm.training.venue.manager,model_crm_training_venue,sales_team.group_sale_manager,1,1,1,1

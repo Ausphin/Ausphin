@@ -53,19 +53,20 @@ class CrmLead(models.Model):
     def _record_stage_log(self):
         current_time = datetime.now()
         for lead in self:
-            # end last log
-            if lead.stage_log_ids:
-                last_log = lead.stage_log_ids[-1]
-                last_log.end_date = current_time
+            if lead.type == "opportunity":
+                # end last log
+                if lead.stage_log_ids:
+                    last_log = lead.stage_log_ids[-1]
+                    last_log.end_date = current_time
 
-            # create new log
-            log_obj = self.env["crm.lead.stage.log"]
-            log_obj.create({
-                "lead_id": lead.id,
-                "stage_id": lead.stage_id.id,
-                "user_id": lead.user_id and lead.user_id.id,
-                "start_date": current_time,
-            })
+                # create new log
+                log_obj = self.env["crm.lead.stage.log"]
+                log_obj.create({
+                    "lead_id": lead.id,
+                    "stage_id": lead.stage_id.id,
+                    "user_id": lead.user_id and lead.user_id.id,
+                    "start_date": current_time,
+                })
 
     #########################
     # CRUD method overrides #

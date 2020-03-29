@@ -29,6 +29,24 @@
             <xpath expr="//label[@for='probability']/.." position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
+            <field name="user_id" position="attributes">
+                <attribute name="domain"/>
+            </field>
+            <field name="stage_id" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </field>
+        </field>
+    </record>
+    
+    <record id="crm_lead_view_form_inherit_manager" model="ir.ui.view">
+        <field name="name">crm.lead.view.form.inherit.manager</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm_lead_view_form_inherit"/>
+        <field name="groups_id" eval="[(4,ref('sales_team.group_sale_manager'))]"/>
+        <field name="arch" type="xml">
+            <field name="stage_id" position="attributes">
+                <attribute name="readonly">0</attribute>
+            </field>
         </field>
     </record>
 </odoo>

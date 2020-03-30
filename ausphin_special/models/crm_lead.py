@@ -54,11 +54,11 @@ class CrmLead(models.Model):
             raise ValidationError("This is already the last stage!")
         next_stage_id = stage_ids[current_stage_index + 1]
 
-        self.write({
+        self.sudo().write({
             "stage_id": next_stage_id,
             "user_id": False
         })
-        return True
+        return self.env.ref("crm.crm_lead_opportunities_tree_view").read()[0]
     
     def action_move_to_prev_stage(self):
         self.ensure_one()
@@ -75,11 +75,11 @@ class CrmLead(models.Model):
                                                      l.user_id)
         user_id = logs[-1].user_id.id if logs else False
         
-        self.write({
+        self.sudo().write({
             "stage_id": prev_stage_id,
             "user_id": user_id
         })
-        return True
+        return self.env.ref("crm.crm_lead_opportunities_tree_view").read()[0]
 
     ####################
     # Business methods #

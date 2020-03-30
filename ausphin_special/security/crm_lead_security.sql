@@ -1,0 +1,1 @@
+UPDATE ir_rule SET domain_force='[''&'',''|'',(''user_id'',''='',user.id),(''user_id'',''='',False),(''stage_id'',''in'',user.stage_ids.ids)]' WHERE name='Personal Leads';

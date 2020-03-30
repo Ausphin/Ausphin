@@ -23,6 +23,9 @@ class CrmLead(models.Model):
     user_id = fields.Many2one(comodel_name="res.users",
         string="Assigned To",
         domain="[('stage_ids','in',[stage_id])]")
+    company_id = fields.Many2one(comodel_name="res.company",
+        related="team_id.company_id",
+        store=True)
     
     ##############################
     # Compute and search methods #

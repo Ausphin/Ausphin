@@ -26,6 +26,8 @@ class CrmLead(models.Model):
     company_id = fields.Many2one(comodel_name="res.company",
         related="team_id.company_id",
         store=True)
+    force_assign = fields.Boolean(string="Force Assign",
+        related="stage_id.force_assign")
     
     ##############################
     # Compute and search methods #

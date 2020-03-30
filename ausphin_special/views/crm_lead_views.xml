@@ -31,8 +31,12 @@
             <xpath expr="//label[@for='probability']/.." position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
+            <field name="user_id" position="before">
+                <field name="force_assign" invisible="1"/>
+            </field>
             <field name="user_id" position="attributes">
                 <attribute name="domain"/>
+                <attribute name="attrs">{'readonly': [('force_assign','=',True),('user_id','!=', False)]}</attribute>
             </field>
             <field name="stage_id" position="attributes">
                 <attribute name="readonly">1</attribute>
@@ -48,6 +52,9 @@
         <field name="arch" type="xml">
             <field name="stage_id" position="attributes">
                 <attribute name="readonly">0</attribute>
+            </field>
+            <field name="user_id" position="attributes">
+                <attribute name="attrs"/>
             </field>
         </field>
     </record>

@@ -20,6 +20,7 @@ class Stages(models.Model):
         relation="users_stages_rel",
         string="Assignable Users",
         domain="[('sale_team_id','=',team_id)]")
+    force_assign = fields.Boolean(string="Force Assign")
     
     ##############################
     # Compute and search methods #

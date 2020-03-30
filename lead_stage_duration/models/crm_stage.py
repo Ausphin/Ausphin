@@ -21,7 +21,7 @@ class CrmStage(models.Model):
     ######################
     # Fields declaration #
     ######################
-    target_duration = fields.Float(string="Target Duration")
+    target_duration = fields.Float(string="Target Duration (Days)")
     
     ##############################
     # Compute and search methods #

@@ -53,7 +53,7 @@ class CrmLead(models.Model):
     def _record_stage_log(self):
         current_time = datetime.now()
         for lead in self:
-            if lead.type == "opportunity":
+            if lead.type == "opportunity" and lead.stage_id.id:
                 # end last log
                 if lead.stage_log_ids:
                     last_log = lead.stage_log_ids[-1]

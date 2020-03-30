@@ -19,13 +19,7 @@ class CrmLead(models.Model):
     ######################
     # Fields declaration #
     ######################
-    tenureship = fields.Selection(string="Tenureship",
-        selection=[
-            ("0", "0"),
-            ("3", "3"),
-            ("6", "6"),
-            ("9", "9"),
-            ("12", "12")],
+    tenureship = fields.Integer(string="Tenureship",
         compute="_compute_tenureship")
     
     ##############################
@@ -34,7 +28,7 @@ class CrmLead(models.Model):
     @api.depends("team_id", "team_id.tenureship_basis_id")
     def _compute_tenureship(self):
         for lead in self:
-            lead.tenureship = False
+            lead.tenureship = 0
             basis = lead.team_id.tenureship_basis_id
             if basis:
                 date = lead[basis.name]
@@ -44,7 +38,7 @@ class CrmLead(models.Model):
                     delta = relativedelta(datetime.today().date(), date)
                     diff = delta.years * 12 + delta.months
                     if diff < 0: diff = 0
-                    lead.tenureship = str(12 if diff >= 12 else floor(diff / 3) * 3)
+                    lead.tenureship = floor(diff)
 
     ############################
     # Constrains and onchanges #

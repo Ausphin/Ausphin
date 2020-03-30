@@ -19,8 +19,16 @@
                 <field name="tenureship"/>
             </field>
             <xpath expr="//div/field[@name='activity_ids']" position="after">
-                <field name="tenureship" widget="label_selection"
-                       options="{'classes': {'0': 'default', '3': 'info', '6': 'success', '9': 'warning', '12': 'danger'}}"/>
+                <t t-if="record.tenureship.raw_value &gt;= 12" t-set="tenureship_style" t-value="'background-color: black; color: white;'"/>
+                <t t-if="record.tenureship.raw_value == 11" t-set="tenureship_style" t-value="'background-color: indianred; color: white;'"/>
+                <t t-if="record.tenureship.raw_value == 10" t-set="tenureship_style" t-value="'background-color: orange; color: black;'"/>
+                <t t-if="record.tenureship.raw_value == 9" t-set="tenureship_style" t-value="'background-color: yellow; color: black;'"/>
+                <t t-if="record.tenureship.raw_value &lt;= 8" t-set="tenureship_style" t-value="'background-color: green; color: white;'"/>
+                <t t-if="record.tenureship.raw_value &lt;= 5" t-set="tenureship_style" t-value="'background-color: lightblue; color: black;'"/>
+                <t t-if="record.tenureship.raw_value &lt;= 2" t-set="tenureship_style" t-value=""/>
+                <span class="badge" t-att-style="tenureship_style">
+                    <field name="tenureship"/>
+                </span>
             </xpath>
         </field>
     </record>

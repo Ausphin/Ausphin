@@ -4,7 +4,7 @@ from datetime import datetime
 
 from odoo import models, fields, api
 
-SECONDS_IN_AN_HOUR = 60 * 60
+SECONDS_IN_AN_DAY = 60 * 60 * 24
 
 class CrmLeadStageLog(models.Model):
     ######################
@@ -42,9 +42,9 @@ class CrmLeadStageLog(models.Model):
     def _compute_actual_duration(self):
         for log in self:
             if log.end_date:
-                duration = (log.end_date - log.start_date).total_seconds() / SECONDS_IN_AN_HOUR
+                duration = (log.end_date - log.start_date).total_seconds() / SECONDS_IN_AN_DAY
             else:
-                duration = (datetime.now() - log.start_date).total_seconds() / SECONDS_IN_AN_HOUR
+                duration = (datetime.now() - log.start_date).total_seconds() / SECONDS_IN_AN_DAY
             log.actual_duration = duration
     
     ############################

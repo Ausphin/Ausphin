@@ -32,7 +32,8 @@ class CrmLeadStageLog(models.Model):
         required=True)
     lead_id = fields.Many2one(string="Lead/Opportunity",
         comodel_name="crm.lead",
-        required=True)
+        required=True,
+        ondelete="cascade")
     
     ##############################
     # Compute and search methods #

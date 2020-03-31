@@ -57,7 +57,7 @@
                 <attribute name="readonly">0</attribute>
             </field>
             <field name="user_id" position="attributes">
-                <attribute name="attrs"/>
+                <attribute name="attrs">{'required': [('force_assign','=',True)]}</attribute>
             </field>
             <button name="action_move_to_prev_stage" position="attributes">
                 <attribute name="attrs"/>
@@ -67,4 +67,16 @@
             </button>
         </field>
     </record>
+    
+    <record id="crm_lead_view_search_inherit" model="ir.ui.view">
+        <field name="name">crm.lead.view.search.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.view_crm_case_opportunities_filter"/>
+        <field name="arch" type="xml">
+            <filter name="saleschannel" position="replace">
+                <filter string="Journey" name="saleschannel" context="{'group_by':'team_id'}"/>
+            </filter>
+        </field>
+    </record>
+    
 </odoo>

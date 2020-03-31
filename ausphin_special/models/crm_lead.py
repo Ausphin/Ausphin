@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from odoo import models, fields, api 
 from odoo.exceptions import ValidationError
 
@@ -28,10 +30,18 @@ class CrmLead(models.Model):
         store=True)
     force_assign = fields.Boolean(string="Force Assign",
         related="stage_id.force_assign")
+    is_user = fields.Boolean(string="Is User",
+        compute="_compute_is_user")
     
     ##############################
     # Compute and search methods #
     ##############################
+    @api.depends("user_id")
+    def _compute_is_user(self):
+        for lead in self:
+            lead.is_user = False
+            if lead.user_id.id == self.env.uid:
+                lead.is_user = True
 
     ############################
     # Constrains and onchanges #
@@ -50,15 +60,21 @@ class CrmLead(models.Model):
         self.ensure_one()
 
         # get next stage
-        stage_ids = self.env["crm.stage"].sudo().search([]).ids
+        stage_obj = self.env["crm.stage"]
+        stage_ids = stage_obj.sudo().search([]).ids
         current_stage_index = stage_ids.index(self.stage_id.id)
         if current_stage_index == (len(stage_ids) - 1):
             raise ValidationError("This is already the last stage!")
         next_stage_id = stage_ids[current_stage_index + 1]
-
+        
+        # get user to assign if force assign
+        next_stage = stage_obj.browse(next_stage_id)
+        if next_stage.force_assign:
+            user_id = next_stage.sudo().get_assignee()
+        
         self.sudo().write({
             "stage_id": next_stage_id,
-            "user_id": False
+            "user_id": user_id
         })
         return self.env.ref("crm.crm_lead_opportunities_tree_view").read()[0]
     

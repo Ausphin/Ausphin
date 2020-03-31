@@ -20,9 +20,12 @@
         <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
         <field name="arch" type="xml">
             <button name="toggle_active" position="after">
+                <field name="is_user" invisible="1"/>
                 <button string="Move to Prev" type="object" name="action_move_to_prev_stage"
+                        attrs="{'invisible': [('is_user', '=', False)]}"
                         confirm="Are you sure you would like to move to the PREV stage?"/>
                 <button string="Move to Next" type="object" name="action_move_to_next_stage"
+                        attrs="{'invisible': [('is_user', '=', False)]}"
                         confirm="Are you sure you would like to move to the NEXT stage?"/>
             </button>
             <xpath expr="//label[@for='planned_revenue']/.." position="attributes">
@@ -56,6 +59,12 @@
             <field name="user_id" position="attributes">
                 <attribute name="attrs"/>
             </field>
+            <button name="action_move_to_prev_stage" position="attributes">
+                <attribute name="attrs"/>
+            </button>
+            <button name="action_move_to_next_stage" position="attributes">
+                <attribute name="attrs"/>
+            </button>
         </field>
     </record>
 </odoo>

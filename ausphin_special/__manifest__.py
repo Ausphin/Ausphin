@@ -9,6 +9,8 @@
         'lead_stage_duration',
         'tenureship',
         'visa_history',
+        'crm_site',
+        'crm_training',
     ],
     'external_dependencies': {},
     'author': 'Rainier King, '

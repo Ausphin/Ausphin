@@ -21,6 +21,7 @@
     'category': 'Special',
     'data': [
         'security/crm_lead_security.sql',
+        'security/crm_lead_security.xml',
         'security/crm_team_security.xml',
         'views/crm_lead_views.xml',
         'views/crm_team_views.xml',

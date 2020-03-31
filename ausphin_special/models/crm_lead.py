@@ -68,6 +68,7 @@ class CrmLead(models.Model):
         next_stage_id = stage_ids[current_stage_index + 1]
         
         # get user to assign if force assign
+        user_id = False;
         next_stage = stage_obj.browse(next_stage_id)
         if next_stage.force_assign:
             user_id = next_stage.sudo().get_assignee()

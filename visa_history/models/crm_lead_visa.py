@@ -22,6 +22,10 @@ class CrmLeadVisa(models.Model):
     lead_id = fields.Many2one(string="Lead/Opportunity",
         comodel_name="crm.lead",
         required=True)
+    type = fields.Selection(string="Type",
+        selection=[
+            ("diploma", "Diploma"),
+            ("leadership", "Leadership")])
     start_date = fields.Date(string="Start Date")
     expiration_date = fields.Date(string="Expiration Date")
     

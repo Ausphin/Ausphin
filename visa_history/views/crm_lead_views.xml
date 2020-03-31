@@ -9,16 +9,19 @@
                 <page string="Visas" name="visas">
                     <group>
                         <field name="visa_expiration_date"/>
+                        <field name="visa_type"/>
                     </group>
                     <field name="visa_ids">
                         <tree>
                             <field name="name"/>
+                            <field name="type"/>
                             <field name="start_date"/>
                             <field name="expiration_date"/>
                         </tree>
                         <form>
                             <group>
                                 <field name="name"/>
+                                <field name="type"/>
                                 <field name="start_date"/>
                                 <field name="expiration_date"/>
                             </group>

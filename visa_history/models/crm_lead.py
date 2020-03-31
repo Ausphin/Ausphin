@@ -19,21 +19,29 @@ class CrmLead(models.Model):
         comodel_name="crm.lead.visa",
         inverse_name="lead_id")
     visa_expiration_date = fields.Date(string="Visa Expiration",
-        compute="_compute_visa_expiration_date",
+        compute="_compute_visa_details",
         store=True,
-        help="Gets the latest expiration date available")
+        help="Gets the expiration date of the newest visa")
+    visa_type = fields.Selection(string="Visa Type",
+        selection=[
+            ("diploma", "Diploma"),
+            ("leadership", "Leadership")],
+        compute="_compute_visa_details",
+        store=True)
     
     ##############################
     # Compute and search methods #
     ##############################
-    @api.depends("visa_ids", "visa_ids.expiration_date")
-    def _compute_visa_expiration_date(self):
+    @api.depends("visa_ids", "visa_ids.expiration_date", "visa_ids.type")
+    def _compute_visa_details(self):
         for lead in self:
-            result = False
-            visa_ids = lead.visa_ids.filtered(lambda l: l.expiration_date)
+            lead.visa_type = False
+            lead.visa_expiration_date = False
+            visa_ids = lead.visa_ids.filtered(lambda l: l.start_date)
             if visa_ids:
-                result = visa_ids.sorted("expiration_date")[-1].expiration_date
-            lead.visa_expiration_date = result
+                lead.visa_type = visa_ids[-1].type
+                lead.visa_expiration_date = visa_ids[-1].expiration_date
+            
 
     ############################
     # Constrains and onchanges #

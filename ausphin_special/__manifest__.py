@@ -4,6 +4,7 @@
     'version': '0.1',
     'depends': [
         'crm',
+        'sale_crm',
         'kanban_draggable',
         'crm_team_sequence',
         'lead_stage_duration',

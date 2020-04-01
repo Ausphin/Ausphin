@@ -18,6 +18,7 @@
         <field name="name">crm.lead.view.form.inherit</field>
         <field name="model">crm.lead</field>
         <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+        <field name="priority">50</field>
         <field name="arch" type="xml">
             <button name="toggle_active" position="after">
                 <field name="is_user" invisible="1"/>
@@ -43,6 +44,200 @@
             </field>
             <field name="stage_id" position="attributes">
                 <attribute name="readonly">1</attribute>
+                <attribute name="attrs"/>
+                <attribute name="domain"/>
+                <attribute name="options"/>
+                <attribute name="widget">many2one</attribute>
+            </field>
+            
+            <!-- STUDIO CUSTOMIZATIONS -->
+            <button name="%(sale_crm.sale_action_orders)d" position="after">
+                <button class="oe_stat_button" icon="fa-trophy" type="action" name="525">
+                    <field name="x_x_studio_field_9txAp__x_skills_audit_count" string="Skills Audit" widget="statinfo"/>
+                </button>
+                <button class="oe_stat_button" icon="fa-file" type="action" name="542">
+                    <field name="x_x_studio_candidate_lead__x_ta_count" string="T.A." widget="statinfo"/>
+                </button>
+                <button class="oe_stat_button" icon="fa-sitemap" type="action" name="559">
+                    <field name="x_x_studio_candidate_lead__x_training_plan_count" string="Training Plan" widget="statinfo"/>
+                </button>
+            </button>
+            <xpath expr="//field[@name='partner_id']/.." position="attributes">
+                <attribute name="string">Contact Details</attribute>
+            </xpath>
+            <field name="partner_id" position="attributes">
+                <attribute name="string">Candidate Profile</attribute>
+            </field>
+            <xpath expr="//field[@name='phone']" position="after">
+                <field name="x_studio_passport_number"/>
+                <field name="x_studio_passport_expiry_date"/>
+                <field name="x_studio_arrival_in_australia"/>
+            </xpath>
+            <xpath expr="//field[@name='user_id']/.." position="attributes">
+                <attribute name="string">Pipeline</attribute>
+            </xpath>
+            <xpath expr="//field[@name='date_deadline']/.." position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='training_ids']/.." position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <field name="site_id" position="after">
+                <field name="stage_id" position="move"/>
+                <field name="priority" position="move"/>
+                <field name="date_deadline" position="move"/>
+                <field name="tag_ids" position="move"/>
+                <field name="lost_reason" position="move"/>
+            </field>
+            <xpath expr="//notebook" position="inside">
+                <page string="Consultation">
+                    <group>
+                        <group string="Files">
+                            <field filename="x_studio_initial_resume_file_filename" name="x_studio_initial_resume_file"/>
+                            <field invisible="1" name="x_studio_initial_resume_file_filename"/>
+                            <field filename="x_studio_tcs_file_filename" name="x_studio_tcs_file"/>
+                            <field invisible="1" name="x_studio_tcs_file_filename"/>
+                        </group>
+                        <group string="Lead Information">
+                            <field name="source_id" position="move"/>
+                            <field name="x_studio_qualification"/>
+                            <field name="x_studio_consultant_1"/>
+                            <field name="date_conversion" position="move"/>
+                        </group>
+                    </group>
+                    <field name="x_studio_major_documents">
+                        <tree>
+                            <field name="x_studio_field_3eeof"/>
+                            <field name="x_studio_date_submitted"/>
+                            <field name="x_studio_notarized"/>
+                            <field name="x_studio_remarks"/>
+                            <field name="x_studio_audit_date"/>
+                            <field name="x_studio_auditor"/>
+                        </tree>
+                    </field>
+                    <field name="x_studio_minor_documents">
+                        <tree string="Minor Document Lines">
+                            <field name="x_studio_field_7laCO"/>
+                            <field name="x_studio_date_submitted"/>
+                            <field name="x_studio_notarized"/>
+                            <field name="x_studio_remarks"/>
+                            <field name="x_studio_audit_date"/>
+                            <field name="x_studio_auditor"/>
+                        </tree>
+                    </field>
+                </page>
+                <page string="Visume">
+                    <group>
+                        <group string="Files">
+                            <field filename="x_studio_final_visume_filename" name="x_studio_final_visume"/>
+                            <field invisible="1" name="x_studio_payment_receipt_filename"/>
+                            <field filename="x_studio_payment_receipt_filename" name="x_studio_payment_receipt"/>
+                            <field invisible="1" name="x_studio_final_visume_filename"/>
+                        </group>
+                        <group  string="Visume">
+                            <field name="x_studio_visume_schedule"/>
+                        </group>
+                    </group>
+                </page>
+                <page string="Placement">
+                    <group string="Files">
+                        <field filename="x_studio_endorsement_resume_filename" name="x_studio_endorsement_resume"/>
+                        <field invisible="1" name="x_studio_job_offer_copy_filename"/>
+                        <field filename="x_studio_job_offer_copy_filename" name="x_studio_job_offer_copy"/>
+                        <field invisible="1" name="x_studio_endorsement_resume_filename"/>
+                    </group>
+                    <separator string="Trainings"/>
+                    <field name="training_ids" position="move"/>
+                </page>
+                <page string="I. Traineeship">
+                    <group>
+                        <group>
+                            <field name="x_studio_statement_of_purpose"/>
+                            <field name="x_studio_professional_knowledge_and_skills"/>
+                        </group>
+                    </group>
+                </page>
+                <page string="II. Education &amp; Employment">
+                    <group string="History">
+                        <field name="x_studio_field_N9o6G">
+                            <tree>
+                                <field name="x_name"/>
+                                <field name="x_studio_position"/>
+                                <field name="x_studio_company"/>
+                                <field name="x_studio_start_period"/>
+                                <field name="x_studio_end_period"/>
+                                <field name="x_studio_responsibilities"/>
+                                <field name="x_studio_chef_jd" widget="many2many_tags"/>
+                                <field name="x_studio_cook_jd" widget="many2many_tags"/>
+                            </tree>
+                            <form>
+                                <sheet>
+                                    <div class="oe_title">
+                                        <h1>
+                                            <field name="x_name" required="1" placeholder="#" string="#"/>
+                                        </h1>
+                                    </div>
+                                    <group>
+                                        <group>
+                                            <field name="x_studio_position"/>
+                                            <field name="x_studio_company"/>
+                                            <field name="x_studio_start_period"/>
+                                            <field name="x_studio_end_period"/>
+                                            <field name="x_studio_responsibilities" attrs="{'invisible': [['x_studio_without_jd','=',True]]}"/>
+                                        </group>
+                                        <group>
+                                            <field name="x_studio_field_WUsfQ" attrs="{}" invisible="1"/>
+                                            <field name="x_studio_without_jd"/>
+                                            <field name="x_studio_job_description" attrs="{'invisible': [['x_studio_without_jd','=',False]]}"/>
+                                            <field name="x_studio_chef_jd" widget="many2many_tags" attrs="{'invisible': ['|','|',['x_studio_without_jd','=',False],['x_studio_job_description','=','Cook'],['x_studio_job_description','=',False]]}"/>
+                                            <field name="x_studio_cook_jd" widget="many2many_tags" attrs="{'invisible': ['|','|',['x_studio_without_jd','=',False],['x_studio_job_description','=','Chef'],['x_studio_job_description','=',False]]}"/>
+                                        </group>
+                                    </group>
+                                </sheet>
+                            </form>
+                        </field>
+                        <field name="x_studio_education_history">
+                            <tree>
+                                <field name="x_name"/>
+                                <field name="x_studio_degree"/>
+                                <field name="x_studio_institution"/>
+                                <field name="x_studio_start_period"/>
+                                <field name="x_studio_end_period"/>
+                            </tree>
+                        </field>
+                    </group>
+                </page>
+                <page string="III. Interests &amp; Referrals">
+                    <group>
+                        <field name="x_studio_list_of_referees">
+                            <tree>
+                                <field name="x_name"/>
+                                <field name="x_studio_name"/>
+                                <field name="x_studio_position"/>
+                                <field name="x_studio_company"/>
+                                <field name="x_studio_location"/>
+                                <field name="x_studio_phone"/>
+                                <field name="x_studio_email"/>
+                            </tree>
+                        </field>
+                        <field name="x_studio_interests"/>
+                    </group>
+                </page>
+            </xpath>
+            <xpath expr="//field[@name='description']/.." position="attributes">
+                <attribute name="string">Application Summary</attribute>
+            </xpath>
+            <page name="lead" position="attributes">
+                <attribute name="string">Candidate Followup</attribute>
+            </page>
+            <field name="partner_name" position="attributes">
+                <attribute name="string">Name</attribute>
+            </field>
+            <field name="referred" position="after">
+                <field name="x_studio_contact_picture" widget="image" options="{'size':[0,90]}"/>
+            </field>
+            <field name="tag_ids" position="attributes">
+                <attribute name="domain">[["x_studio_field_uN3ZC","=",stage_id]]</attribute>
             </field>
         </field>
     </record>

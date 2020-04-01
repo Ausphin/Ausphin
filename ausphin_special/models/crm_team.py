@@ -14,6 +14,7 @@ class Journey(models.Model):
     ######################
     # Fields declaration #
     ######################
+    name = fields.Char(string="Journey")
     show_in_conversion = fields.Boolean(string="Show in Lead Conversion")
     
     ##############################

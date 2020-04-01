@@ -12,4 +12,7 @@
         </field>
     </record>
 
+    <record id="sales_team.sales_team_config_action" model="ir.actions.act_window">
+        <field name="name">Journeys</field>
+    </record>
 </odoo>

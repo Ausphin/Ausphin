@@ -46,12 +46,10 @@ class CrmLead(models.Model):
     ############################
     # Constrains and onchanges #
     ############################
-    
 
     #########################
     # CRUD method overrides #
     #########################
-    
     
     ##################
     # Action methods #

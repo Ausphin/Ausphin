@@ -5,7 +5,7 @@
         <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
         <field name="arch" type="xml">
             <field name="phone" position="after">
-                <field name="tenureship"/>
+                <field name="tenureship" attrs="{'invisible': [('tenureship','&lt;',0)]}"/>
             </field>
         </field>
     </record>
@@ -26,7 +26,7 @@
                 <t t-if="record.tenureship.raw_value &lt;= 8" t-set="tenureship_style" t-value="'background-color: green; color: white;'"/>
                 <t t-if="record.tenureship.raw_value &lt;= 5" t-set="tenureship_style" t-value="'background-color: lightblue; color: black;'"/>
                 <t t-if="record.tenureship.raw_value &lt;= 2" t-set="tenureship_style" t-value=""/>
-                <span class="badge" t-att-style="tenureship_style">
+                <span t-if="record.tenureship.raw_value >= 0" class="badge" t-att-style="tenureship_style">
                     <field name="tenureship"/>
                 </span>
             </xpath>

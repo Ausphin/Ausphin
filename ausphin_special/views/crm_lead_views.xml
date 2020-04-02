@@ -79,9 +79,6 @@
             <xpath expr="//field[@name='date_deadline']/.." position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
-            <xpath expr="//field[@name='training_ids']/.." position="attributes">
-                <attribute name="invisible">1</attribute>
-            </xpath>
             <field name="site_id" position="after">
                 <field name="stage_id" position="move"/>
                 <field name="priority" position="move"/>
@@ -138,16 +135,6 @@
                             <field name="x_studio_visume_schedule"/>
                         </group>
                     </group>
-                </page>
-                <page string="Placement">
-                    <group string="Files">
-                        <field filename="x_studio_endorsement_resume_filename" name="x_studio_endorsement_resume"/>
-                        <field invisible="1" name="x_studio_job_offer_copy_filename"/>
-                        <field filename="x_studio_job_offer_copy_filename" name="x_studio_job_offer_copy"/>
-                        <field invisible="1" name="x_studio_endorsement_resume_filename"/>
-                    </group>
-                    <separator string="Trainings"/>
-                    <field name="training_ids" position="move"/>
                 </page>
                 <page string="I. Traineeship">
                     <group>
@@ -238,6 +225,18 @@
             </field>
             <field name="tag_ids" position="attributes">
                 <attribute name="domain">[["x_studio_field_uN3ZC","=",stage_id]]</attribute>
+            </field>
+            <xpath expr="//field[@name='training_ids']/.." position="attributes">
+                <attribute name="string">Placement</attribute>
+            </xpath>
+            <field name="training_ids" position="before">
+                <group string="Files">
+                    <field filename="x_studio_endorsement_resume_filename" name="x_studio_endorsement_resume"/>
+                    <field invisible="1" name="x_studio_job_offer_copy_filename"/>
+                    <field filename="x_studio_job_offer_copy_filename" name="x_studio_job_offer_copy"/>
+                    <field invisible="1" name="x_studio_endorsement_resume_filename"/>
+                </group>
+                <separator string="Trainings"/>
             </field>
         </field>
     </record>

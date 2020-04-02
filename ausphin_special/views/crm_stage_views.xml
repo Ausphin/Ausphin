@@ -9,7 +9,7 @@
                 <field name="assignable_ids" />
             </xpath>
             <field name="fold" position="after">
-                <field name="sequence"/>
+                <field name="sequence" groups="base.group_no_one"/>
                 <field name="force_assign"/>
             </field>
         </field>

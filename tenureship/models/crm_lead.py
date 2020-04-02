@@ -28,7 +28,7 @@ class CrmLead(models.Model):
     @api.depends("team_id", "team_id.tenureship_basis_id")
     def _compute_tenureship(self):
         for lead in self:
-            lead.tenureship = 0
+            lead.tenureship = -1
             basis = lead.team_id.tenureship_basis_id
             if basis:
                 date = lead[basis.name]
@@ -37,7 +37,7 @@ class CrmLead(models.Model):
                         date = date.date()
                     delta = relativedelta(datetime.today().date(), date)
                     diff = delta.years * 12 + delta.months
-                    if diff < 0: diff = 0
+                    if diff < 0: diff = -1
                     lead.tenureship = floor(diff)
 
     ############################

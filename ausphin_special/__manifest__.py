@@ -23,6 +23,7 @@
     """,
     'category': 'Special',
     'data': [
+        'security/ausphin_special_groups.xml',
         'security/crm_lead_security.sql',
         'security/crm_lead_security.xml',
         'security/crm_team_security.xml',

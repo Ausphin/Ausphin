@@ -38,6 +38,7 @@ class CrmTraining(models.Model):
     job_offer_date = fields.Date(string="Job Offer Date")
     start_date = fields.Date(string="Start Date")
     end_date = fields.Date(string="End Date")
+    supervisor = fields.Char(string="Workplace Supervisor")
     
     ##############################
     # Compute and search methods #

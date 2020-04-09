@@ -8,16 +8,18 @@
             <xpath expr="//notebook" position="inside">
                 <page string="Timeline" name="stage_logs">
                     <group>
+                        <field name="total_duration"/>
                         <field name="duration_in_stage"/>
                         <field name="duration_status"/>
                     </group>
                     <field name="stage_log_ids" readonly="1">
-                        <tree>
+                        <tree decoration-info="is_last_stage">
                             <field name="stage_id"/>
                             <field name="user_id"/>
                             <field name="start_date"/>
                             <field name="end_date"/>
                             <field name="actual_duration"/>
+                            <field name="is_last_stage" invisible="1"/>
                         </tree>
                     </field>
                 </page>

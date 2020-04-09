@@ -34,6 +34,8 @@ class CrmLeadStageLog(models.Model):
         comodel_name="crm.lead",
         required=True,
         ondelete="cascade")
+    is_last_stage = fields.Boolean(string="Is Last Stage",
+        related="stage_id.is_last_stage")
     
     ##############################
     # Compute and search methods #

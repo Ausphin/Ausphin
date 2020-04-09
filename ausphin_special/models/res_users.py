@@ -1,6 +1,6 @@
-from odoo import models, fields, api, exceptions
+from odoo import models, fields, api
 
-class Users(models.Model):
+class ResUsers(models.Model):
     
     ######################
     # Private attributes #

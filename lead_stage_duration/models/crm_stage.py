@@ -24,6 +24,8 @@ class CrmStage(models.Model):
     target_duration = fields.Float(string="Target Duration (Days)")
     average_duration = fields.Float(string="Average Duration (Days)",
         compute="_compute_average_duration")
+    is_last_stage = fields.Boolean(string="Is Last Stage",
+        compute="_compute_is_last_stage")
     
     ##############################
     # Compute and search methods #
@@ -37,6 +39,16 @@ class CrmStage(models.Model):
                 total = sum(l.duration_in_stage for l in leads)
                 result = total / len(leads)
             stage.average_duration = result
+
+    @api.depends("team_id")
+    def _compute_is_last_stage(self):
+        for stage in self:
+            result = False
+            stage_ids = stage.sudo().search([("team_id","=",stage.team_id.id)]).ids
+            current_stage_index = stage_ids.index(stage.id)
+            if current_stage_index == (len(stage_ids) - 1):
+                result = True
+            stage.is_last_stage = result
     
     ############################
     # Constrains and onchanges #

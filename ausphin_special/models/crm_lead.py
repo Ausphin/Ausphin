@@ -16,8 +16,7 @@ class CrmLead(models.Model):
     ######################
     # Fields declaration #
     ######################
-    stage_id = fields.Many2one(comodel_name="crm.stage",
-        domain=False)
+    stage_id = fields.Many2one(comodel_name="crm.stage")
     team_id = fields.Many2one(comodel_name="crm.team",
         string="Journey",
         related="stage_id.team_id",
@@ -59,7 +58,7 @@ class CrmLead(models.Model):
 
         # get next stage
         stage_obj = self.env["crm.stage"]
-        stage_ids = stage_obj.sudo().search([]).ids
+        stage_ids = stage_obj.sudo().search([("team_id","=",self.team_id.id)]).ids
         current_stage_index = stage_ids.index(self.stage_id.id)
         if current_stage_index == (len(stage_ids) - 1):
             raise ValidationError("This is already the last stage!")
@@ -81,7 +80,7 @@ class CrmLead(models.Model):
         self.ensure_one()
 
         # get prev stage
-        stage_ids = self.env["crm.stage"].sudo().search([]).ids
+        stage_ids = self.env["crm.stage"].sudo().search([("team_id","=",self.team_id.id)]).ids
         current_stage_index = stage_ids.index(self.stage_id.id)
         if current_stage_index == 0:
             raise ValidationError("This is already the first stage!")

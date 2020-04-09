@@ -13,6 +13,7 @@
                         <field name="lead_id"
                                invisible="context.get('from_lead')"
                                required="not context.get('from_lead')"/>
+                        <field name="supervisor"/>
                     </group>
                     <group>
                         <group string="Placement">

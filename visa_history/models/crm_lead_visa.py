@@ -25,7 +25,11 @@ class CrmLeadVisa(models.Model):
     type = fields.Selection(string="Type",
         selection=[
             ("diploma", "Diploma"),
-            ("leadership", "Leadership")])
+            ("leadership", "Leadership"),
+            ("working", "Work"),
+            ("402", "402"),
+            ("407", "407"),
+            ("485", "485")])
     start_date = fields.Date(string="Start Date")
     expiration_date = fields.Date(string="Expiration Date")
     

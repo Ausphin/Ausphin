@@ -23,9 +23,12 @@ class CrmTraining(models.Model):
     ######################
     # Fields declaration #
     ######################
-    lead_id = fields.Many2one(string="Trainee",
+    lead_id = fields.Many2one(string="Lead/Opportunity",
         comodel_name="crm.lead",
         required=True)
+    partner_id = fields.Many2one(string="Trainee",
+        comodel_name="res.partner",
+        related="lead_id.partner_id")
     venue_id = fields.Many2one(string="Venue",
         comodel_name="crm.training.venue",
         required=True)

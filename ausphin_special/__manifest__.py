@@ -12,6 +12,7 @@
         'visa_history',
         'crm_site',
         'crm_training',
+        'hide_field_by_stage',
     ],
     'external_dependencies': {},
     'author': 'Rainier King, '
@@ -32,6 +33,7 @@
         'views/crm_stage_views.xml',
         'views/sale_order_views.xml',
         'views/res_users_views.xml',
+        'views/sale_order_views.xml',
         'wizards/crm_lead2opportunity_partner_views.xml',
     ],
     'qweb': [],

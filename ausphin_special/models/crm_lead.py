@@ -33,6 +33,10 @@ class CrmLead(models.Model):
         compute="_compute_is_user")
     fees_and_guidelines = fields.Binary(string="Fees and Guidelines")
     fees_and_guidelines_fname = fields.Char(string="Fees and Guidelines Filename")
+    skills_audit = fields.Binary(string="Skills Audit")
+    skills_audit_fname = fields.Char(string="Skills Audit Filename")
+    predeparture_checklist = fields.Binary(string="Pre-departure Checklist")
+    predeparture_checklist_fname = fields.Char(string="Pre-departure Checklist Filename")
     
     ##############################
     # Compute and search methods #

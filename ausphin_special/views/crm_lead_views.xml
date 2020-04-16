@@ -52,13 +52,13 @@
             
             <!-- STUDIO CUSTOMIZATIONS -->
             <button name="%(sale_crm.sale_action_orders)d" position="after">
-                <button class="oe_stat_button" icon="fa-trophy" type="action" name="525">
+                <button class="oe_stat_button" icon="fa-trophy" type="action" name="525" visibility="{'team_id': [112,114], 'stage_id': [325,338]}">
                     <field name="x_x_studio_field_9txAp__x_skills_audit_count" string="Skills Audit" widget="statinfo"/>
                 </button>
                 <button class="oe_stat_button" icon="fa-file" type="action" name="542">
                     <field name="x_x_studio_candidate_lead__x_ta_count" string="T.A." widget="statinfo"/>
                 </button>
-                <button class="oe_stat_button" icon="fa-sitemap" type="action" name="559">
+                <button class="oe_stat_button" icon="fa-sitemap" type="action" name="559" visibility="{'team_id': [112,114], 'stage_id': [327,328,340,341]}">
                     <field name="x_x_studio_candidate_lead__x_training_plan_count" string="Training Plan" widget="statinfo"/>
                 </button>
             </button>
@@ -71,7 +71,7 @@
             <xpath expr="//field[@name='phone']" position="after">
                 <field name="x_studio_passport_number"/>
                 <field name="x_studio_passport_expiry_date"/>
-                <field name="x_studio_arrival_in_australia"/>
+                <field name="x_studio_arrival_in_australia" visibility="{'team_id': [114], 'stage_id': [342]}"/>
             </xpath>
             <xpath expr="//field[@name='user_id']/.." position="attributes">
                 <attribute name="string">Pipeline</attribute>
@@ -94,8 +94,12 @@
                             <field invisible="1" name="x_studio_initial_resume_file_filename"/>
                             <field filename="x_studio_tcs_file_filename" name="x_studio_tcs_file" visibility="{'team_id': [112,114], 'stage_id': [320,321,333,334]}"/>
                             <field invisible="1" name="x_studio_tcs_file_filename"/>
-                            <field filename="fees_and_guidelines" name="fees_and_guidelines_fname" visibility="{'team_id': [112,114], 'stage_id': [320,323,333,336]}"/>
+                            <field filename="fees_and_guidelines_fname" name="fees_and_guidelines" visibility="{'team_id': [112,114], 'stage_id': [320,323,333,336]}"/>
                             <field invisible="1" name="fees_and_guidelines_fname"/>
+                            <field filename="skills_audit_fname" name="skills_audit" visibility="{'team_id': [112,114], 'stage_id': [327,340]}"/>
+                            <field invisible="1" name="skills_audit_fname"/>
+                            <field filename="predeparture_checklist_fname" name="predeparture_checklist" visibility="{'team_id': [112,114,116], 'stage_id': [329,330,342,345,346]}"/>
+                            <field invisible="1" name="predeparture_checklist_fname"/>
                         </group>
                         <group string="Lead Information">
                             <field name="source_id" position="move"/>
@@ -136,7 +140,7 @@
                         </group>
                     </group>
                 </page>
-                <page string="I. Traineeship">
+                <page string="I. Traineeship" visibility="{'team_id': [112,114], 'stage_id': [327,340]}">
                     <group>
                         <group>
                             <field name="x_studio_statement_of_purpose"/>
@@ -144,7 +148,7 @@
                         </group>
                     </group>
                 </page>
-                <page string="II. Education &amp; Employment">
+                <page string="II. Education &amp; Employment" visibility="{'team_id': [112,114], 'stage_id': [327,340]}">
                     <group string="History">
                         <field name="x_studio_field_N9o6G">
                             <tree>
@@ -194,7 +198,7 @@
                         </field>
                     </group>
                 </page>
-                <page string="III. Interests &amp; Referrals">
+                <page string="III. Interests &amp; Referrals" visibility="{'team_id': [112,114], 'stage_id': [327,340]}">
                     <group>
                         <field name="x_studio_list_of_referees">
                             <tree>
@@ -213,6 +217,7 @@
             </xpath>
             <xpath expr="//field[@name='description']/.." position="attributes">
                 <attribute name="string">Application Summary</attribute>
+                <attribute name="visibility">{'team_id': [112,114], 'stage_id': [327,340]}</attribute>
             </xpath>
             <page name="lead" position="attributes">
                 <attribute name="string">Candidate Followup</attribute>
@@ -228,15 +233,19 @@
             </field>
             <xpath expr="//field[@name='training_ids']/.." position="attributes">
                 <attribute name="string">Placement</attribute>
+                <attribute name="visibility">{'team_id': [112,113,114,115], 'stage_id': [322,323,325,326,327,329,330,331,335,336,338,339,340,341,342,343]}</attribute>
             </xpath>
             <field name="training_ids" position="before">
-                <group string="Files">
-                    <field filename="x_studio_endorsement_resume_filename" name="x_studio_endorsement_resume"/>
+                <group string="Files" visibility="{'team_id': [112,114], 'stage_id': [322,323,327,335,336,340]}">
+                    <field invisible="1" name="x_studio_endorsement_resume_filename"/>
+                    <field filename="x_studio_endorsement_resume_filename" name="x_studio_endorsement_resume" visibility="{'stage_id': [322,327,335,340]}"/>
                     <field invisible="1" name="x_studio_job_offer_copy_filename"/>
                     <field filename="x_studio_job_offer_copy_filename" name="x_studio_job_offer_copy"/>
-                    <field invisible="1" name="x_studio_endorsement_resume_filename"/>
                 </group>
-                <separator string="Trainings"/>
+                <separator string="Trainings" visibility="{'team_id': [112,113,114,115], 'stage_id': [322,325,326,327,329,330,331,335,338,339,340,341,342,343]}"/>
+            </field>
+            <field name="training_ids" position="attributes">
+                <attribute name="visibility">{'team_id': [112,113,114,115], 'stage_id': [322,325,326,327,329,330,331,335,338,339,340,341,342,343]}</attribute>
             </field>
         </field>
     </record>

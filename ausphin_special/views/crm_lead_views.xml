@@ -87,13 +87,15 @@
                 <field name="lost_reason" position="move"/>
             </field>
             <xpath expr="//notebook" position="inside">
-                <page string="Consultation">
+                <page string="Requirements">
                     <group>
                         <group string="Files">
                             <field filename="x_studio_initial_resume_file_filename" name="x_studio_initial_resume_file"/>
                             <field invisible="1" name="x_studio_initial_resume_file_filename"/>
-                            <field filename="x_studio_tcs_file_filename" name="x_studio_tcs_file"/>
+                            <field filename="x_studio_tcs_file_filename" name="x_studio_tcs_file" visibility="{'team_id': [112,114], 'stage_id': [320,321,333,334]}"/>
                             <field invisible="1" name="x_studio_tcs_file_filename"/>
+                            <field filename="fees_and_guidelines" name="fees_and_guidelines_fname" visibility="{'team_id': [112,114], 'stage_id': [320,323,333,336]}"/>
+                            <field invisible="1" name="fees_and_guidelines_fname"/>
                         </group>
                         <group string="Lead Information">
                             <field name="source_id" position="move"/>
@@ -127,12 +129,10 @@
                     <group>
                         <group string="Files">
                             <field filename="x_studio_final_visume_filename" name="x_studio_final_visume"/>
-                            <field invisible="1" name="x_studio_payment_receipt_filename"/>
-                            <field filename="x_studio_payment_receipt_filename" name="x_studio_payment_receipt"/>
                             <field invisible="1" name="x_studio_final_visume_filename"/>
                         </group>
                         <group  string="Visume">
-                            <field name="x_studio_visume_schedule"/>
+                            <field name="x_studio_visume_schedule" visibility="{'team_id': [112,114], 'stage_id': [320,321,333,334]}"/>
                         </group>
                     </group>
                 </page>
@@ -238,6 +238,24 @@
                 </group>
                 <separator string="Trainings"/>
             </field>
+        </field>
+    </record>
+    
+    <record id="crm_lead_view_form_inherit_hide_sale_order" model="ir.ui.view">
+        <field name="name">crm.lead.view.form.inherit.hide.sale.order</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="sale_crm.crm_case_form_view_oppor"/>
+        <field name="priority">50</field>
+        <field name="arch" type="xml">
+            <button name="%(sale_crm.sale_action_quotations_new)d" position="attributes">
+                <attribute name="visibility">{'team_id': [112,114], 'stage_id': [320,321,323,333,334,336]}</attribute>
+            </button>
+            <button name="%(sale_crm.sale_action_quotations)d" position="attributes">
+                <attribute name="visibility">{'team_id': [112,114], 'stage_id': [320,321,323,333,334,336]}</attribute>
+            </button>
+            <button name="%(sale_crm.sale_action_orders)d" position="attributes">
+                <attribute name="visibility">{'team_id': [112,114], 'stage_id': [320,321,323,333,334,336]}</attribute>
+            </button>
         </field>
     </record>
     

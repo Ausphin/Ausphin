@@ -31,6 +31,8 @@ class CrmLead(models.Model):
         related="stage_id.force_assign")
     is_user = fields.Boolean(string="Is User",
         compute="_compute_is_user")
+    fees_and_guidelines = fields.Binary(string="Fees and Guidelines")
+    fees_and_guidelines_fname = fields.Char(string="Fees and Guidelines Filename")
     
     ##############################
     # Compute and search methods #

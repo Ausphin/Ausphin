@@ -17,10 +17,16 @@ class CrmLead(models.Model):
     ######################
     major_document_ids = fields.One2many(string="Major Documents",
         comodel_name="crm.lead.document",
-        inverse_name="lead_id")
+        inverse_name="lead_id",
+        domain=[('type','=','major')])
     minor_document_ids = fields.One2many(string="Minor Documents",
         comodel_name="crm.lead.document",
-        inverse_name="lead_id")
+        inverse_name="lead_id",
+        domain=[('type','=','minor')])
+    scholar_document_ids = fields.One2many(string="Scholar Documents",
+        comodel_name="crm.lead.document",
+        inverse_name="lead_id",
+        domain=[('type','=','scholar')])
     
     ##############################
     # Compute and search methods #

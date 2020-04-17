@@ -15,15 +15,13 @@ class SaleOrder(models.Model):
     ######################
     # Fields declaration #
     ######################
-    percent_paid = fields.Float(string="% Paid",
-        compute="_compute_percent_paid",
-        store=True)
+    total_paid = fields.Float(string="Total Paid",
+        compute="_compute_total_paid")
     
     ##############################
     # Compute and search methods #
     ##############################
-    @api.depends("invoice_ids.residual")
-    def _compute_percent_paid(self):
+    def _compute_total_paid(self):
         for order in self:
             result = 0
             total_amount = 0
@@ -35,9 +33,9 @@ class SaleOrder(models.Model):
                     total_residual += invoice.residual
 
             if total_amount:    
-                result = (total_amount - total_residual) / total_amount * 100
+                result = (total_amount - total_residual)
 
-            order.percent_paid = result
+            order.total_paid = result
 
     ############################
     # Constrains and onchanges #

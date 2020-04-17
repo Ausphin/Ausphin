@@ -48,6 +48,8 @@ class CrmLead(models.Model):
     partner_address_country_id = fields.Many2one(string="Country",
         comodel_name="res.country",
         related="partner_id.country_id")
+    scholarship_grant = fields.Float(string="Scholarship Grant (%)")
+    is_scholar = fields.Boolean(string="Is Scholar Candidate")
     
     ##############################
     # Compute and search methods #

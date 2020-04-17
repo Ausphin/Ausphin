@@ -8,7 +8,7 @@
         <field name="inherit_id" ref="sale.view_order_tree"/>
         <field name="arch" type="xml">
             <field name="invoice_status" position="after">
-                <field name="percent_paid"/>
+                <field name="total_paid"/>
             </field>
         </field>
     </record>

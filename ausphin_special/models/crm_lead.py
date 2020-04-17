@@ -37,6 +37,16 @@ class CrmLead(models.Model):
     skills_audit_fname = fields.Char(string="Skills Audit Filename")
     predeparture_checklist = fields.Binary(string="Pre-departure Checklist")
     predeparture_checklist_fname = fields.Char(string="Pre-departure Checklist Filename")
+    nationality_id = fields.Many2one(comodel_name="res.country",
+        string="Nationality",
+        related="partner_id.x_studio_nationality")
+    contact_name = fields.Char(required=True)
+    mobile = fields.Char(required=True)
+    partner_address_city = fields.Char(string="City",
+        related="partner_id.city")
+    partner_address_country_id = fields.Many2one(string="Country",
+        comodel_name="res.country",
+        related="partner_id.country_id")
     
     ##############################
     # Compute and search methods #

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="crm_document_view_form" model="ir.ui.view">
+        <field name="name">crm.document.view.form</field>
+        <field name="model">crm.document</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="name"/>
+                    <field name="type" readonly="context.get('default_type')"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="crm_document_view_tree" model="ir.ui.view">
+        <field name="name">crm.document.view.tree</field>
+        <field name="model">crm.document</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="type"/>
+            </tree>
+        </field>
+    </record>
+    
+    <record id="crm_document_action" model="ir.actions.act_window">
+        <field name="name">Documents</field>
+        <field name="res_model">crm.document</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+    
+    <menuitem
+        id="crm_document_menu"
+        name="Documents"
+        action="crm_document_action"
+        parent="studio_customization.crm_customer_journey_bfae0e3a-9520-4001-a080-8861bce6c9a0"
+        sequence="0"/>
+</odoo>

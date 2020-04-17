@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="crm_lead_view_form_inherit" model="ir.ui.view">
+        <field name="name">crm.lead.view.form.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Documents" name="documents">
+                    <group string="Major Documents" name="major_docs">
+                        <field name="major_document_ids" context="{'default_type': 'major'}" nolabel="1"/>
+                    </group>
+                    <group string="Minor Documents" name="minor_docs">
+                        <field name="minor_document_ids" context="{'default_type': 'minor'}" nolabel="1"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

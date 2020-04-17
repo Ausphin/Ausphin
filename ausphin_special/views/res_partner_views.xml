@@ -13,4 +13,35 @@
             </field>
         </field>
     </record>
+    
+    <record id="res_partner_view_form_inherit_crm" model="ir.ui.view">
+        <field name="name">res.partner.view.form.inherit.crm</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="crm.view_partners_form_crm1"/>
+        <field name="arch" type="xml">
+            <field name="opportunity_count" position="replace">
+                <div class="o_field_widget o_stat_info">
+                    <span class="o_stat_value">
+                        <field name="active_opportunity_count"/> /
+                        <field name="opportunity_count" widget="statinfo" nolabel="1" class="mr4"/>
+                    </span>
+                    <span class="o_stat_text">Opportunities</span>
+                </div>
+            </field>
+        </field>
+    </record>
+    
+    <record id="res_partner_view_kanban_inherit_crm" model="ir.ui.view">
+        <field name="name">res.partner.view.kanban.inherit.crm</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="crm.crm_lead_partner_kanban_view"/>
+        <field name="arch" type="xml">
+            <field name="opportunity_count" position="before">
+                <field name="active_opportunity_count"/>
+            </field>
+            <xpath expr="//i[hasclass('fa-star')]/.." position="replace">
+                <span t-att-class="'badge badge-pill' + (record.active_opportunity_count.value&gt;0 ? ' bg-success' : '')" t-if="record.opportunity_count.value&gt;0"><i class="fa fa-fw fa-star" aria-label="Favorites" role="img" title="Favorites"/><t t-esc="record.active_opportunity_count.value"/>/<t t-esc="record.opportunity_count.value"/></span>
+            </xpath>
+        </field>
+    </record>
 </odoo>

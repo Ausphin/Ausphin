@@ -54,21 +54,19 @@
                     <field name="partner_id" widget="res_partner_many2one" string="Candidate Profile" domain="[('customer', '=', True)]" context="{'search_default_customer': 1, 'default_name': partner_name, 'default_street': street, 'default_street2': street2, 'default_city': city, 'default_state_id': state_id, 'default_zip': zip, 'default_country_id': country_id, 'default_function': function, 'default_phone': phone, 'default_mobile': mobile, 'default_email': email_from, 'default_user_id': user_id, 'default_team_id': team_id, 'default_website': website, 'show_vat': True,}"/>
                     <field name="is_blacklisted" invisible="1"/>
                     <field name="partner_is_blacklisted" invisible="1"/>
+                    <field name="id" string="Application ID" visibility="{'team_id': [112,113,114,115]}"/>
+                    <field name="partner_address_city" attrs="{'invisible': [('partner_id','=',False)]}"/>
+                    <field name="partner_address_country_id" attrs="{'invisible': [('partner_id','=',False)]}"/>
+                    <field name="nationality_id" attrs="{'invisible': [('partner_id','=',False)]}"/>
+                    <i class="fa fa-ban" style="color: red;" role="img" title="This email is blacklisted for mass mailing" aria-label="Blacklisted" attrs="{'invisible': ['|', ('partner_is_blacklisted', '=', False), ('partner_address_email', '=', False)]}" groups="base.group_user"/>
+                    <field name="partner_address_email" string="Email" attrs="{'invisible': [('partner_id','=',False)]}"/>
+                    <field name="partner_address_phone" string="Phone" attrs="{'invisible': [('partner_id','=',False)]}"/>
+                    <field name="partner_address_mobile" string="Mobile" attrs="{'invisible': [('partner_id','=',False)]}"/>
+                    <field name="x_studio_passport_number" attrs="{'invisible': [('partner_id','=',False)]}"/>
+                    <field name="x_studio_passport_expiry_date" attrs="{'invisible': [('partner_id','=',False)]}"/>
+                    <field name="x_studio_arrival_in_australia" visibility="{'team_id': [114], 'stage_id': [342]}"/>
                 </group>
             </xpath>
-            <field name="partner_id" position="after">
-                <field name="id" string="Application ID" visibility="{'team_id': [112,113,114,115], 'stage_id': [320,321,322,323,324,325,326,327,328,329,330,331,332,333,334,335,336,337,338,339,340,341,342,343,344]}"/>
-                <field name="partner_address_city" attrs="{'invisible': [('partner_id','=',False)]}"/>
-                <field name="partner_address_country_id" attrs="{'invisible': [('partner_id','=',False)]}"/>
-                <field name="nationality_id" attrs="{'invisible': [('partner_id','=',False)]}"/>
-                <i class="fa fa-ban" style="color: red;" role="img" title="This email is blacklisted for mass mailing" aria-label="Blacklisted" attrs="{'invisible': ['|', ('partner_is_blacklisted', '=', False), ('partner_address_email', '=', False)]}" groups="base.group_user"/>
-                <field name="partner_address_email" string="Email" attrs="{'invisible': [('partner_id','=',False)]}"/>
-                <field name="partner_address_phone" string="Phone" attrs="{'invisible': [('partner_id','=',False)]}"/>
-                <field name="partner_address_mobile" string="Mobile" attrs="{'invisible': [('partner_id','=',False)]}"/>
-                <field name="x_studio_passport_number" attrs="{'invisible': [('partner_id','=',False)]}"/>
-                <field name="x_studio_passport_expiry_date" attrs="{'invisible': [('partner_id','=',False)]}"/>
-                <field name="x_studio_arrival_in_australia" visibility="{'team_id': [114], 'stage_id': [342]}"/>
-            </field>
             <field name="function" position="before">
                 <i class="fa fa-ban" style="color: red;" role="img" title="This email is blacklisted for mass mailing" aria-label="Blacklisted" attrs="{'invisible': ['|', ('is_blacklisted', '=', False), ('partner_address_email', '!=', False)]}" groups="base.group_user"/>
                 <field name="email_from"/>
@@ -237,7 +235,7 @@
             <group name="major_docs" position="before">
                 <group>
                     <group string="Files">
-                        <field filename="x_studio_initial_resume_file_filename" name="x_studio_initial_resume_file"/>
+                        <field filename="x_studio_initial_resume_file_filename" name="x_studio_initial_resume_file" visibility="{'team_id': [112,114], 'stage_id': [320,321,322,323,324,325,326,327,333,334,335,336,337,338,339,340]}"/>
                         <field invisible="1" name="x_studio_initial_resume_file_filename"/>
                         <field filename="x_studio_tcs_file_filename" name="x_studio_tcs_file" visibility="{'team_id': [112,114], 'stage_id': [320,321,333,334]}"/>
                         <field invisible="1" name="x_studio_tcs_file_filename"/>

@@ -9,13 +9,19 @@
                     <group>
                         <field name="document_id" domain="[('type','=',context.get('default_type'))]"
                                context="{'default_type':context.get('default_type')}"/>
+                        <field name="type" invisible="1"/>
                     </group>
-                    <group>
-                        <group>
+                    <group attrs="{'invisible':[('document_id','=',False)]}" >
+                        <group attrs="{'invisible':[('type','not in',['major','minor'])]}">
                             <field name="submit_date"/>
                             <field name="notarized"/>
                             <field name="audit_date"/>
                             <field name="auditor"/>
+                        </group>
+                        <group attrs="{'invisible':[('type','not in',['scholar'])]}">
+                            <field name="interview_date" />
+                            <field name="user_id" string="Interviewer"/>
+                            <field name="result"/>
                         </group>
                         <group>
                             <field name="remarks"/>

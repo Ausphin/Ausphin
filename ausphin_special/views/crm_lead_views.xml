@@ -74,6 +74,15 @@
             <field name="mobile" position="before">
                 <field name="phone"/>
             </field>
+            <xpath expr="//field[@name='priority']/.." position="after">
+                <group string="Scholarship Info" visibility="{'team_id': [110]}" >
+                    <field name="is_scholar" visibility="{'team_id': [110]}"/>
+                    <field name="scholarship_grant" visibility="{'stage_id': [367,315]}"/>
+                </group>
+            </xpath>
+            <page name="scholarship" position="attributes">
+                <attribute name="visibility">{'team_id': [110,111], 'stage_id': [314,365,366,367]}</attribute>
+            </page>
             
             <!-- STUDIO CUSTOMIZATIONS -->
             <button name="%(sale_crm.sale_action_orders)d" position="after">
@@ -231,10 +240,11 @@
             </field>
             <page name="documents" position="attributes">
                 <attribute name="string">Requirements</attribute>
+                <attribute name="visibility">{'team_id': [112,114], 'stage_id': [320,321,322,323,324,325,326,327,333,334,335,336,337,338,339,340]}</attribute>
             </page>
             <group name="major_docs" position="before">
                 <group>
-                    <group string="Files">
+                    <group string="Files" visibility="{'team_id': [112,114], 'stage_id': [320,321,322,323,324,325,326,327,333,334,335,336,337,338,339,340]}">
                         <field filename="x_studio_initial_resume_file_filename" name="x_studio_initial_resume_file" visibility="{'team_id': [112,114], 'stage_id': [320,321,322,323,324,325,326,327,333,334,335,336,337,338,339,340]}"/>
                         <field invisible="1" name="x_studio_initial_resume_file_filename"/>
                         <field filename="x_studio_tcs_file_filename" name="x_studio_tcs_file" visibility="{'team_id': [112,114], 'stage_id': [320,321,333,334]}"/>

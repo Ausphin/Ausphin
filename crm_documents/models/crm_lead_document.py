@@ -35,6 +35,10 @@ class CrmLeadDocument(models.Model):
         related="document_id.type",
         store=True)
     auditor = fields.Char(string="Auditor")
+    interview_date = fields.Date(string="Interview Date")
+    user_id = fields.Many2one(string="Responsible",
+        comodel_name="res.users")
+    result = fields.Float(string="Result (%)")
     
     ##############################
     # Compute and search methods #

@@ -22,7 +22,8 @@ class CrmDocument(models.Model):
         required=True,
         selection=[
             ("major", "Major"),
-            ("minor", "Minor")])
+            ("minor", "Minor"),
+            ("scholar", "Scholar")])
     
     ##############################
     # Compute and search methods #

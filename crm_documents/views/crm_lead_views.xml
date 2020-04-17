@@ -14,7 +14,21 @@
                         <field name="minor_document_ids" context="{'default_type': 'minor'}" nolabel="1"/>
                     </group>
                 </page>
+                <page string="Scholarship" name="scholarship">
+                    <group name="scholar_docs">
+                        <field name="scholar_document_ids" context="{'default_type': 'scholar'}" nolabel="1">
+                            <tree>
+                                <field name="document_id"/>
+                                <field name="interview_date"/>
+                                <field name="user_id" string="Interviewer"/>
+                                <field name="result"/>
+                                <field name="remarks"/>
+                            </tree>
+                        </field>
+                    </group>
+                </page>
             </xpath>
+            
         </field>
     </record>
 </odoo>

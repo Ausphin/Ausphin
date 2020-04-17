@@ -316,10 +316,25 @@
         <field name="model">crm.lead</field>
         <field name="inherit_id" ref="crm.crm_case_form_view_leads"/>
         <field name="arch" type="xml">
+            <field name="team_id" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
             <xpath expr="//field[@name='mobile']/.." positon="inside">
                 <field filename="x_studio_initial_resume_file_filename" name="x_studio_initial_resume_file"/>
                 <field name="x_studio_initial_resume_file_filename" invisible="1"/>
             </xpath>
+            
+        </field>
+    </record>
+    
+    <record id="crm_lead_view_tree_inherit_lead" model="ir.ui.view">
+        <field name="name">crm.lead.view.tree.inherit.lead</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_tree_view_leads"/>
+        <field name="arch" type="xml">
+            <field name="team_id" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
         </field>
     </record>
     

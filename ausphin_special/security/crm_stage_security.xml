@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    
+    <record id="crm_stage_rule_user_company" model="ir.rule">
+        <field name="name">crm.stage.rule.user.company</field>
+        <field name="model_id" ref="model_crm_stage"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        <field name="perm_read" eval="True"/> 
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+</odoo>

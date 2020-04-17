@@ -25,6 +25,9 @@ class Stages(models.Model):
         string="Assignable Users",
         domain="[('sale_team_id','=',team_id)]")
     force_assign = fields.Boolean(string="Force Assign")
+    company_id = fields.Many2one(string="Company",
+        comodel_name="res.company",
+        related="team_id.company_id")
     
     ##############################
     # Compute and search methods #

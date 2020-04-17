@@ -49,6 +49,33 @@
                 <attribute name="options"/>
                 <attribute name="widget">many2one</attribute>
             </field>
+            <xpath expr="//field[@name='partner_id']/.." position="replace">
+                <group>
+                    <field name="partner_id" widget="res_partner_many2one" string="Candidate Profile" domain="[('customer', '=', True)]" context="{'search_default_customer': 1, 'default_name': partner_name, 'default_street': street, 'default_street2': street2, 'default_city': city, 'default_state_id': state_id, 'default_zip': zip, 'default_country_id': country_id, 'default_function': function, 'default_phone': phone, 'default_mobile': mobile, 'default_email': email_from, 'default_user_id': user_id, 'default_team_id': team_id, 'default_website': website, 'show_vat': True,}"/>
+                    <field name="is_blacklisted" invisible="1"/>
+                    <field name="partner_is_blacklisted" invisible="1"/>
+                </group>
+            </xpath>
+            <field name="partner_id" position="after">
+                <field name="id" string="Application ID" visibility="{'team_id': [112,113,114,115], 'stage_id': [320,321,322,323,324,325,326,327,328,329,330,331,332,333,334,335,336,337,338,339,340,341,342,343,344]}"/>
+                <field name="partner_address_city" attrs="{'invisible': [('partner_id','=',False)]}"/>
+                <field name="partner_address_country_id" attrs="{'invisible': [('partner_id','=',False)]}"/>
+                <field name="nationality_id" attrs="{'invisible': [('partner_id','=',False)]}"/>
+                <i class="fa fa-ban" style="color: red;" role="img" title="This email is blacklisted for mass mailing" aria-label="Blacklisted" attrs="{'invisible': ['|', ('partner_is_blacklisted', '=', False), ('partner_address_email', '=', False)]}" groups="base.group_user"/>
+                <field name="partner_address_email" string="Email" attrs="{'invisible': [('partner_id','=',False)]}"/>
+                <field name="partner_address_phone" string="Phone" attrs="{'invisible': [('partner_id','=',False)]}"/>
+                <field name="partner_address_mobile" string="Mobile" attrs="{'invisible': [('partner_id','=',False)]}"/>
+                <field name="x_studio_passport_number" attrs="{'invisible': [('partner_id','=',False)]}"/>
+                <field name="x_studio_passport_expiry_date" attrs="{'invisible': [('partner_id','=',False)]}"/>
+                <field name="x_studio_arrival_in_australia" visibility="{'team_id': [114], 'stage_id': [342]}"/>
+            </field>
+            <field name="function" position="before">
+                <i class="fa fa-ban" style="color: red;" role="img" title="This email is blacklisted for mass mailing" aria-label="Blacklisted" attrs="{'invisible': ['|', ('is_blacklisted', '=', False), ('partner_address_email', '!=', False)]}" groups="base.group_user"/>
+                <field name="email_from"/>
+            </field>
+            <field name="mobile" position="before">
+                <field name="phone"/>
+            </field>
             
             <!-- STUDIO CUSTOMIZATIONS -->
             <button name="%(sale_crm.sale_action_orders)d" position="after">
@@ -65,14 +92,7 @@
             <xpath expr="//field[@name='partner_id']/.." position="attributes">
                 <attribute name="string">Contact Details</attribute>
             </xpath>
-            <field name="partner_id" position="attributes">
-                <attribute name="string">Candidate Profile</attribute>
-            </field>
-            <xpath expr="//field[@name='phone']" position="after">
-                <field name="x_studio_passport_number"/>
-                <field name="x_studio_passport_expiry_date"/>
-                <field name="x_studio_arrival_in_australia" visibility="{'team_id': [114], 'stage_id': [342]}"/>
-            </xpath>
+
             <xpath expr="//field[@name='user_id']/.." position="attributes">
                 <attribute name="string">Pipeline</attribute>
             </xpath>
@@ -87,48 +107,6 @@
                 <field name="lost_reason" position="move"/>
             </field>
             <xpath expr="//notebook" position="inside">
-                <page string="Requirements">
-                    <group>
-                        <group string="Files">
-                            <field filename="x_studio_initial_resume_file_filename" name="x_studio_initial_resume_file"/>
-                            <field invisible="1" name="x_studio_initial_resume_file_filename"/>
-                            <field filename="x_studio_tcs_file_filename" name="x_studio_tcs_file" visibility="{'team_id': [112,114], 'stage_id': [320,321,333,334]}"/>
-                            <field invisible="1" name="x_studio_tcs_file_filename"/>
-                            <field filename="fees_and_guidelines_fname" name="fees_and_guidelines" visibility="{'team_id': [112,114], 'stage_id': [320,323,333,336]}"/>
-                            <field invisible="1" name="fees_and_guidelines_fname"/>
-                            <field filename="skills_audit_fname" name="skills_audit" visibility="{'team_id': [112,114], 'stage_id': [327,340]}"/>
-                            <field invisible="1" name="skills_audit_fname"/>
-                            <field filename="predeparture_checklist_fname" name="predeparture_checklist" visibility="{'team_id': [112,114,116], 'stage_id': [329,330,342,345,346]}"/>
-                            <field invisible="1" name="predeparture_checklist_fname"/>
-                        </group>
-                        <group string="Lead Information">
-                            <field name="source_id" position="move"/>
-                            <field name="x_studio_qualification"/>
-                            <field name="x_studio_consultant_1"/>
-                            <field name="date_conversion" position="move"/>
-                        </group>
-                    </group>
-                    <field name="x_studio_major_documents">
-                        <tree>
-                            <field name="x_studio_field_3eeof"/>
-                            <field name="x_studio_date_submitted"/>
-                            <field name="x_studio_notarized"/>
-                            <field name="x_studio_remarks"/>
-                            <field name="x_studio_audit_date"/>
-                            <field name="x_studio_auditor"/>
-                        </tree>
-                    </field>
-                    <field name="x_studio_minor_documents">
-                        <tree string="Minor Document Lines">
-                            <field name="x_studio_field_7laCO"/>
-                            <field name="x_studio_date_submitted"/>
-                            <field name="x_studio_notarized"/>
-                            <field name="x_studio_remarks"/>
-                            <field name="x_studio_audit_date"/>
-                            <field name="x_studio_auditor"/>
-                        </tree>
-                    </field>
-                </page>
                 <page string="Visume">
                     <group>
                         <group string="Files">
@@ -220,21 +198,21 @@
                 <attribute name="visibility">{'team_id': [112,114], 'stage_id': [327,340]}</attribute>
             </xpath>
             <page name="lead" position="attributes">
-                <attribute name="string">Candidate Followup</attribute>
+                <attribute name="string">Consultation</attribute>
             </page>
             <field name="partner_name" position="attributes">
                 <attribute name="string">Name</attribute>
             </field>
             <field name="referred" position="after">
-                <field name="x_studio_contact_picture" widget="image" options="{'size':[0,90]}"/>
+                <field name="x_studio_qualification"/>
             </field>
             <field name="tag_ids" position="attributes">
                 <attribute name="domain">[["x_studio_field_uN3ZC","=",stage_id]]</attribute>
             </field>
-            <xpath expr="//field[@name='training_ids']/.." position="attributes">
+            <page name="trainings" position="attributes">
                 <attribute name="string">Placement</attribute>
                 <attribute name="visibility">{'team_id': [112,113,114,115], 'stage_id': [322,323,325,326,327,329,330,331,335,336,338,339,340,341,342,343]}</attribute>
-            </xpath>
+            </page>
             <field name="training_ids" position="before">
                 <group string="Files" visibility="{'team_id': [112,114], 'stage_id': [322,323,327,335,336,340]}">
                     <field invisible="1" name="x_studio_endorsement_resume_filename"/>
@@ -247,6 +225,37 @@
             <field name="training_ids" position="attributes">
                 <attribute name="visibility">{'team_id': [112,113,114,115], 'stage_id': [322,325,326,327,329,330,331,335,338,339,340,341,342,343]}</attribute>
             </field>
+            <field name="day_open" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="day_close" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <page name="documents" position="attributes">
+                <attribute name="string">Requirements</attribute>
+            </page>
+            <group name="major_docs" position="before">
+                <group>
+                    <group string="Files">
+                        <field filename="x_studio_initial_resume_file_filename" name="x_studio_initial_resume_file"/>
+                        <field invisible="1" name="x_studio_initial_resume_file_filename"/>
+                        <field filename="x_studio_tcs_file_filename" name="x_studio_tcs_file" visibility="{'team_id': [112,114], 'stage_id': [320,321,333,334]}"/>
+                        <field invisible="1" name="x_studio_tcs_file_filename"/>
+                        <field filename="fees_and_guidelines_fname" name="fees_and_guidelines" visibility="{'team_id': [112,114], 'stage_id': [320,323,333,336]}"/>
+                        <field invisible="1" name="fees_and_guidelines_fname"/>
+                        <field filename="skills_audit_fname" name="skills_audit" visibility="{'team_id': [112,114], 'stage_id': [327,340]}"/>
+                        <field invisible="1" name="skills_audit_fname"/>
+                        <field filename="predeparture_checklist_fname" name="predeparture_checklist" visibility="{'team_id': [112,114,116], 'stage_id': [329,330,342,345,346]}"/>
+                        <field invisible="1" name="predeparture_checklist_fname"/>
+                    </group>
+                </group>
+            </group>
+            <group name="major_docs" position="attributes">
+                <attribute name="visibility">{'team_id': [112,114,116], 'stage_id': [320,321,322,323,324,326,327,328,333,334,335,336,337,339,340,341,345,346]}</attribute>
+            </group>
+            <group name="minor_docs" position="attributes">
+                <attribute name="visibility">{'team_id': [112,114,116], 'stage_id': [320,321,322,323,324,326,327,328,333,334,335,336,337,339,340,341,345,346]}</attribute>
+            </group>
         </field>
     </record>
     
@@ -303,4 +312,17 @@
     <record id="crm.crm_lead_opportunities_tree_view" model="ir.actions.act_window">
         <field name="context">{'default_type': 'opportunity'}</field>
     </record>
+
+    <record id="crm_lead_view_form_inherit_lead" model="ir.ui.view">
+        <field name="name">crm.lead.view.form.inherit.lead</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_form_view_leads"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='mobile']/.." positon="inside">
+                <field filename="x_studio_initial_resume_file_filename" name="x_studio_initial_resume_file"/>
+                <field name="x_studio_initial_resume_file_filename" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+    
 </odoo>

@@ -13,6 +13,7 @@
         'crm_site',
         'crm_training',
         'hide_field_by_stage',
+        'crm_documents',
     ],
     'external_dependencies': {},
     'author': 'Rainier King, '
@@ -34,6 +35,7 @@
         'views/sale_order_views.xml',
         'views/res_users_views.xml',
         'views/sale_order_views.xml',
+        'views/res_partner_views.xml',
         'wizards/crm_lead2opportunity_partner_views.xml',
     ],
     'qweb': [],

@@ -60,6 +60,7 @@
                     <field name="nationality_id" attrs="{'invisible': [('partner_id','=',False)]}"/>
                     <i class="fa fa-ban" style="color: red;" role="img" title="This email is blacklisted for mass mailing" aria-label="Blacklisted" attrs="{'invisible': ['|', ('partner_is_blacklisted', '=', False), ('partner_address_email', '=', False)]}" groups="base.group_user"/>
                     <field name="partner_address_email" string="Email" attrs="{'invisible': [('partner_id','=',False)]}"/>
+                    <field name="partner_function" attrs="{'invisible': [('partner_id','=',False)]}"/>
                     <field name="partner_address_phone" string="Phone" attrs="{'invisible': [('partner_id','=',False)]}"/>
                     <field name="partner_address_mobile" string="Mobile" attrs="{'invisible': [('partner_id','=',False)]}"/>
                     <field name="x_studio_passport_number" attrs="{'invisible': [('partner_id','=',False)]}"/>
@@ -76,12 +77,12 @@
             </field>
             <xpath expr="//field[@name='priority']/.." position="after">
                 <group string="Scholarship Info" visibility="{'team_id': [110]}" >
-                    <field name="is_scholar" visibility="{'team_id': [110]}"/>
+                    <field name="is_scholar"/>
                     <field name="scholarship_grant" visibility="{'stage_id': [367,315]}"/>
                 </group>
             </xpath>
             <page name="scholarship" position="attributes">
-                <attribute name="visibility">{'team_id': [110,111], 'stage_id': [314,365,366,367]}</attribute>
+                <attribute name="visibility">{'team_id': [110], 'stage_id': [314,365,366,367]}</attribute>
             </page>
             
             <!-- STUDIO CUSTOMIZATIONS -->
@@ -114,14 +115,14 @@
                 <field name="lost_reason" position="move"/>
             </field>
             <xpath expr="//notebook" position="inside">
-                <page string="Visume">
+                <page string="Visume" visibility="{'team_id': [112,114], 'stage_id': [320,321,333,334]}">
                     <group>
                         <group string="Files">
                             <field filename="x_studio_final_visume_filename" name="x_studio_final_visume"/>
                             <field invisible="1" name="x_studio_final_visume_filename"/>
                         </group>
                         <group  string="Visume">
-                            <field name="x_studio_visume_schedule" visibility="{'team_id': [112,114], 'stage_id': [320,321,333,334]}"/>
+                            <field name="x_studio_visume_schedule"/>
                         </group>
                     </group>
                 </page>

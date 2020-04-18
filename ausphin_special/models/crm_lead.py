@@ -50,6 +50,8 @@ class CrmLead(models.Model):
         related="partner_id.country_id")
     scholarship_grant = fields.Float(string="Scholarship Grant (%)")
     is_scholar = fields.Boolean(string="Is Scholar Candidate")
+    partner_function = fields.Char(string="Job Position",
+        related="partner_id.function")
     
     ##############################
     # Compute and search methods #
@@ -74,23 +76,14 @@ class CrmLead(models.Model):
     ##################
     def action_move_to_next_stage(self):
         self.ensure_one()
-
-        # get next stage
-        stage_obj = self.env["crm.stage"]
-        stage_ids = stage_obj.search([]).ids
-        current_stage_index = stage_ids.index(self.stage_id.id)
-        if current_stage_index == (len(stage_ids) - 1):
-            raise ValidationError("This is already the last stage!")
-        next_stage_id = stage_ids[current_stage_index + 1]
         
-        # get user to assign if force assign
+        next_stage = self.get_next_stage(self.stage_id)
         user_id = False;
-        next_stage = stage_obj.browse(next_stage_id)
         if next_stage.force_assign:
             user_id = next_stage.sudo().get_assignee()
         
         self.sudo().write({
-            "stage_id": next_stage_id,
+            "stage_id": next_stage.id,
             "user_id": user_id
         })
         return self.env.ref("crm.crm_lead_opportunities_tree_view").read()[0]
@@ -98,20 +91,13 @@ class CrmLead(models.Model):
     def action_move_to_prev_stage(self):
         self.ensure_one()
 
-        # get prev stage
-        stage_ids = self.env["crm.stage"].search([]).ids
-        current_stage_index = stage_ids.index(self.stage_id.id)
-        if current_stage_index == 0:
-            raise ValidationError("This is already the first stage!")
-        prev_stage_id = stage_ids[current_stage_index - 1]
-        
-        # get last assigned user
-        logs = self.stage_log_ids.filtered(lambda l: l.stage_id.id == prev_stage_id and
+        prev_stage = self.get_prev_stage(self.stage_id)
+        logs = self.stage_log_ids.filtered(lambda l: l.stage_id.id == prev_stage.id and
                                                      l.user_id)
         user_id = logs[-1].user_id.id if logs else False
         
         self.sudo().write({
-            "stage_id": prev_stage_id,
+            "stage_id": prev_stage.id,
             "user_id": user_id
         })
         return self.env.ref("crm.crm_lead_opportunities_tree_view").read()[0]
@@ -136,3 +122,30 @@ class CrmLead(models.Model):
             if value:
                 lead.write(value)
         return True
+    
+    def get_next_stage(self, stage):
+        if stage.name == "Leads" and stage.team_id.name == "Enrollment" and self.is_scholar == False:
+            enrollment_stage = stage.search([("name","=","Enrollment"),("team_id","=",self.team_id.id)])
+            if not enrollment_stage:
+                raise ValidationError("Enrollment stage not found!")
+            return enrollment_stage[0]
+        
+        stage_ids = stage.search([]).ids
+        current_stage_index = stage_ids.index(stage.id)
+        if current_stage_index == (len(stage_ids) - 1):
+            raise ValidationError("This is already the last stage!")
+        return stage.browse(stage_ids[current_stage_index + 1])
+    
+    def get_prev_stage(self, stage):
+        if stage.name == "Enrollment" and stage.team_id.name == "Enrollment" and self.is_scholar == False:
+            leads_stage = stage.search([("name","=","Leads"),("team_id","=",self.team_id.id)])
+            if not leads_stage:
+                raise ValidationError("Leads stage not found!")
+            return leads_stage[0]
+        
+        stage_ids = stage.search([]).ids
+        current_stage_index = stage_ids.index(stage.id)
+        if current_stage_index == 0:
+            raise ValidationError("This is already the first stage!")
+        prev_stage = stage.browse(stage_ids[current_stage_index - 1])
+        return prev_stage

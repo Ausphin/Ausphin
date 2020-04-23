@@ -1,6 +1,6 @@
 from odoo import models, fields, api, exceptions
 
-class Journey(models.Model):
+class CrmTeam(models.Model):
     
     ######################
     # Private attributes #
@@ -28,6 +28,20 @@ class Journey(models.Model):
     #########################
     # CRUD method overrides #
     #########################
+    @api.model
+    def create(self, vals):
+        self.clear_caches()
+        return super(CrmTeam, self).create(vals)
+
+    @api.multi
+    def write(self, vals):
+        self.clear_caches()
+        return super(CrmTeam, self).write(vals)
+
+    @api.multi
+    def unlink(self):
+        self.clear_caches()
+        return super(CrmTeam, self).unlink()
 
     ##################
     # Action methods #

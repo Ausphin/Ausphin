@@ -29,6 +29,20 @@ class ResUsers(models.Model):
     #########################
     # CRUD method overrides #
     #########################
+    @api.model
+    def create(self, vals):
+        self.clear_caches()
+        return super(ResUsers, self).create(vals)
+
+    @api.multi
+    def write(self, vals):
+        self.clear_caches()
+        return super(ResUsers, self).write(vals)
+
+    @api.multi
+    def unlink(self):
+        self.clear_caches()
+        return super(ResUsers, self).unlink()
 
     ##################
     # Action methods #

@@ -10,6 +10,7 @@
                     <field name="training_ids" context="{'from_lead': 1}">
                         <tree>
                             <field name="venue_id"/>
+                            <field name="position"/>
                             <field name="supervisor"/>
                             <field name="endorsement_date"/>
                             <field name="interview_date"/>

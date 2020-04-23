@@ -60,7 +60,7 @@
                     <field name="nationality_id" attrs="{'invisible': [('partner_id','=',False)]}"/>
                     <i class="fa fa-ban" style="color: red;" role="img" title="This email is blacklisted for mass mailing" aria-label="Blacklisted" attrs="{'invisible': ['|', ('partner_is_blacklisted', '=', False), ('partner_address_email', '=', False)]}" groups="base.group_user"/>
                     <field name="partner_address_email" string="Email" attrs="{'invisible': [('partner_id','=',False)]}"/>
-                    <field name="partner_function" attrs="{'invisible': [('partner_id','=',False)]}"/>
+                    <field name="partner_placement_position" attrs="{'invisible': [('partner_id','=',False)]}"/>
                     <field name="partner_address_phone" string="Phone" attrs="{'invisible': [('partner_id','=',False)]}"/>
                     <field name="partner_address_mobile" string="Mobile" attrs="{'invisible': [('partner_id','=',False)]}"/>
                     <field name="x_studio_passport_number" attrs="{'invisible': [('partner_id','=',False)]}"/>
@@ -237,6 +237,12 @@
             <field name="training_ids" position="attributes">
                 <attribute name="visibility">{'team_id': [112,113,114,115], 'stage_id': [322,325,326,327,329,330,331,335,338,339,340,341,342,343]}</attribute>
             </field>
+            <xpath expr="//field[@name='training_ids']/tree/field[@name='start_date']" position="attributes">
+                <attribute name="attrs">{'column_invisible': [('parent.stage_id','!=',329)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='training_ids']/tree/field[@name='end_date']" position="attributes">
+                <attribute name="attrs">{'column_invisible': [('parent.stage_id','!=',329)]}</attribute>
+            </xpath>
             <field name="day_open" position="attributes">
                 <attribute name="invisible">1</attribute>
             </field>

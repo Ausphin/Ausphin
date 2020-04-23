@@ -18,6 +18,8 @@ class CrmLead(models.Model):
     training_ids = fields.One2many(string="Training",
         comodel_name="crm.training",
         inverse_name="lead_id")
+    partner_placement_position = fields.Char(string="Placement Position",
+        related="partner_id.placement_position")
     
     ##############################
     # Compute and search methods #

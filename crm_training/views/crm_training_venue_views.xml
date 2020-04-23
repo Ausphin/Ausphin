@@ -14,6 +14,7 @@
                     <field name="trainee_ids" context="{'from_venue': 1}" groups="sales_team.group_sale_manager">
                         <tree>
                             <field name="partner_id"/>
+                            <field name="position"/>
                             <field name="supervisor"/>
                             <field name="endorsement_date"/>
                             <field name="start_date"/>

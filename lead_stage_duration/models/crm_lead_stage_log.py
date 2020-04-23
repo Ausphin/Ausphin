@@ -4,7 +4,7 @@ from datetime import datetime
 
 from odoo import models, fields, api
 
-SECONDS_IN_AN_DAY = 60 * 60 * 24
+SECONDS_IN_A_DAY = 60 * 60 * 24
 
 class CrmLeadStageLog(models.Model):
     ######################
@@ -25,6 +25,8 @@ class CrmLeadStageLog(models.Model):
     end_date = fields.Datetime(string="End Date")
     actual_duration = fields.Float(string="Actual Duration",
         compute="_compute_actual_duration")
+    actual_duration_text = fields.Char(string="Actual Duration",
+        compute="_compute_actual_duration")
     user_id = fields.Many2one(string="Assignee",
         comodel_name="res.users")
     stage_id = fields.Many2one(string="Stage",
@@ -44,10 +46,11 @@ class CrmLeadStageLog(models.Model):
     def _compute_actual_duration(self):
         for log in self:
             if log.end_date:
-                duration = (log.end_date - log.start_date).total_seconds() / SECONDS_IN_AN_DAY
+                duration = (log.end_date - log.start_date).total_seconds() / SECONDS_IN_A_DAY
             else:
-                duration = (datetime.now() - log.start_date).total_seconds() / SECONDS_IN_AN_DAY
+                duration = (datetime.now() - log.start_date).total_seconds() / SECONDS_IN_A_DAY
             log.actual_duration = duration
+            log.actual_duration_text = log.stage_id.duration_to_text(duration)
     
     ############################
     # Constrains and onchanges #

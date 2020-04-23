@@ -8,8 +8,8 @@
             <xpath expr="//notebook" position="inside">
                 <page string="Timeline" name="stage_logs">
                     <group>
-                        <field name="total_duration"/>
-                        <field name="duration_in_stage"/>
+                        <field name="total_duration_text"/>
+                        <field name="duration_in_stage_text"/>
                         <field name="duration_status"/>
                     </group>
                     <field name="stage_log_ids" readonly="1">
@@ -18,7 +18,7 @@
                             <field name="user_id"/>
                             <field name="start_date"/>
                             <field name="end_date"/>
-                            <field name="actual_duration"/>
+                            <field name="actual_duration_text"/>
                             <field name="is_last_stage" invisible="1"/>
                         </tree>
                     </field>
@@ -33,12 +33,12 @@
         <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
         <field name="arch" type="xml">
             <field name="activity_ids" position="after">
-                <field name="duration_in_stage"/>
+                <field name="duration_in_stage_text"/>
                 <field name="duration_status"/>
             </field>
             <xpath expr="//img" position="before">
                 <span t-att-class="record.duration_status.raw_value == 'within' and 'badge badge-success' or 'badge badge-danger'">
-                    <field name="duration_in_stage"/>
+                    <field name="duration_in_stage_text"/>
                 </span>
             </xpath>
             <progressbar position="replace">

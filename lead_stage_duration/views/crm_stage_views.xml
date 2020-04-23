@@ -7,7 +7,8 @@
         <field name="arch" type="xml">
             <field name="on_change" position="after">
                 <field name="target_duration"/>
-                <field name="average_duration"/>
+                <field name="target_duration_text"/>
+                <field name="average_duration_text"/>
             </field>
         </field>
     </record>

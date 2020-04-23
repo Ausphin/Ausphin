@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="ir_action_server_email_visa_expiration" model="ir.actions.server">
+        <field name="name">Lead/Opportunity: Email Visa Expiration</field>
+        <field name="model_id" ref="model_crm_lead"/>
+        <field name="state">email</field>
+        <field name="template_id" ref="visa_history.mail_template_visa_expiration"/>
+    </record>
+    
+    <record id="ir_action_server_create_au_application_lead" model="ir.actions.server">
+        <field name="name">Lead/Opportunity: Create Lead in AU Application</field>
+        <field name="model_id" ref="model_crm_lead"/>
+        <field name="state">code</field>
+        <field name="code">
+graduation_stage_id = 332 # Traineeship 1st Yr Graduation Stage 
+consultation_stage_id = 333 # AU Application Consultation Stage
+consultation_stage = env["crm.stage"].browse(consultation_stage_id)
+
+if record.stage_id.id == graduation_stage_id:
+    record.create({
+        "type": "opportunity",
+        "name": "Continuation from Traineeship (1st year)",
+        "partner_id": record.partner_id.id,
+        "stage_id": consultation_stage_id,
+        "user_id": consultation_stage.get_assignee(),
+    })
+        </field>
+    </record>
+</odoo>

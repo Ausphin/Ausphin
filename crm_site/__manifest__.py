@@ -18,6 +18,7 @@
         'security/ir.model.access.csv',
         'views/crm_lead_views.xml',
         'views/crm_site_views.xml',
+        'views/res_users_views.xml',
     ],
     'qweb': [],
     'css': [],

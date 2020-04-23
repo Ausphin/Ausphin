@@ -11,6 +11,7 @@
             <field name="fold" position="after">
                 <field name="sequence" groups="base.group_no_one"/>
                 <field name="force_assign"/>
+                <field name="site_dependent"/>
             </field>
         </field>
     </record>

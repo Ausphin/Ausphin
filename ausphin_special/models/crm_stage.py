@@ -28,6 +28,7 @@ class Stages(models.Model):
     company_id = fields.Many2one(string="Company",
         comodel_name="res.company",
         related="team_id.company_id")
+    site_dependent = fields.Boolean(string="Site Dependent")
     
     ##############################
     # Compute and search methods #
@@ -48,22 +49,27 @@ class Stages(models.Model):
     ####################
     # Business methods #
     ####################
-    def get_assignee(self):
+    def get_assignee(self, site=False):
         min = 999999999
         result = False
         results = []
+        assignable_ids = self.assignable_ids.ids
 
-        for assignable_id in self.assignable_ids:
+        if self.site_dependent:
+            site_assignable_ids = site and site.assignable_ids.ids or []
+            assignable_ids = [id for id in assignable_ids if id in site_assignable_ids]
+            
+        for assignable_id in assignable_ids:
             opportunity_count = self.env["crm.lead"].sudo().\
-                                search_count([("stage_id","=",self.id),("user_id","=",assignable_id.id)])
+                                search_count([("stage_id","=",self.id),("user_id","=",assignable_id)])
             if not opportunity_count:
                 opportunity_count = 0
-            
+
             if opportunity_count < min:
                 min = opportunity_count
-                results = [assignable_id.id]
+                results = [assignable_id]
             elif opportunity_count == min:
-                results.append(assignable_id.id)
+                results.append(assignable_id)
         
         if len(results) > 1:
             result = random.choice(results)

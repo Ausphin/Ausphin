@@ -7,7 +7,6 @@
             <xpath expr="//div[@name='options_active']" position="inside">
                 <div class="o_row" style="display:inherit">
                     <field name="show_in_conversion"/><label for="show_in_conversion"/>
-                    <field name="is_with_site"/><label for="is_with_site"/>
                 </div>
             </xpath>
         </field>

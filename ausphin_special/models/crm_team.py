@@ -16,7 +16,6 @@ class Journey(models.Model):
     ######################
     name = fields.Char(string="Journey")
     show_in_conversion = fields.Boolean(string="Show in Lead Conversion")
-    is_with_site = fields.Boolean(string="Show Sites")
     
     ##############################
     # Compute and search methods #

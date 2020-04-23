@@ -22,9 +22,13 @@ class CrmLead(models.Model):
         inverse_name="lead_id")
     duration_in_stage = fields.Float(string="Duration in Stage",
         compute="_compute_duration")
+    duration_in_stage_text = fields.Char(string="Duration in Stage",
+        compute="_compute_duration")
     total_duration = fields.Float(string="Total Duration",
         compute="_compute_duration",
         help="Sum of all actual durations excluding those in last stage")
+    total_duration_text = fields.Char(string="Total Duration",
+        compute="_compute_duration")
     duration_status = fields.Selection(string="Duration Status",
         selection=[
             ("within", "Within Target"),
@@ -42,6 +46,7 @@ class CrmLead(models.Model):
             lead.duration_in_stage = \
                 sum(log.actual_duration for log in \
                     lead.stage_log_ids.filtered(lambda l: l.stage_id == lead.stage_id))
+            lead.duration_in_stage_text = lead.stage_id.duration_to_text(lead.duration_in_stage)
 
             # duration status
             if lead.duration_in_stage <= lead.stage_id.target_duration or \
@@ -54,6 +59,7 @@ class CrmLead(models.Model):
             lead.total_duration = \
                 sum(log.actual_duration for log in \
                     lead.stage_log_ids.filtered(lambda l: l.stage_id.is_last_stage == False))
+            lead.total_duration_text = lead.stage_id.duration_to_text(lead.total_duration)
     
     ############################
     # Constrains and onchanges #

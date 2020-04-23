@@ -4,7 +4,7 @@ import random
 
 from odoo import models, fields, api, exceptions
 
-class Stages(models.Model):
+class CrmStage(models.Model):
     
     ######################
     # Private attributes #
@@ -41,6 +41,20 @@ class Stages(models.Model):
     #########################
     # CRUD method overrides #
     #########################
+    @api.model
+    def create(self, vals):
+        self.clear_caches()
+        return super(CrmStage, self).create(vals)
+
+    @api.multi
+    def write(self, vals):
+        self.clear_caches()
+        return super(CrmStage, self).write(vals)
+
+    @api.multi
+    def unlink(self):
+        self.clear_caches()
+        return super(CrmStage, self).unlink()
 
     ##################
     # Action methods #

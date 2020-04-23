@@ -28,7 +28,8 @@ class CrmTraining(models.Model):
         required=True)
     partner_id = fields.Many2one(string="Trainee",
         comodel_name="res.partner",
-        related="lead_id.partner_id")
+        related="lead_id.partner_id",
+        store=True)
     venue_id = fields.Many2one(string="Venue",
         comodel_name="crm.training.venue",
         required=True)
@@ -36,12 +37,13 @@ class CrmTraining(models.Model):
     interview_date = fields.Date(string="Interview Date")
     interview_result = fields.Selection(string="Interview Result",
         selection=[
-            ("pass", "Pass"),
-            ("fail", "Fail")])
+            ("successful", "Successful"),
+            ("not_yet_successful", "Not yet successful")])
     job_offer_date = fields.Date(string="Job Offer Date")
     start_date = fields.Date(string="Start Date")
     end_date = fields.Date(string="End Date")
     supervisor = fields.Char(string="Workplace Supervisor")
+    position = fields.Char(string="Position")
     
     ##############################
     # Compute and search methods #

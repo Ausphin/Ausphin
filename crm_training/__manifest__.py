@@ -21,6 +21,7 @@
         'views/crm_training_views.xml',
         'views/crm_training_venue_views.xml',
         'views/crm_lead_views.xml',
+        'views/res_partner_views.xml',
     ],
     'qweb': [],
     'css': [],

@@ -21,7 +21,8 @@ class CrmTrainingVenue(models.Model):
         required=True)
     trainee_ids = fields.One2many(string="Trainees",
         comodel_name="crm.training",
-        inverse_name="venue_id")
+        inverse_name="venue_id",
+        domain=[('interview_result','=','successful')])
     
     ##############################
     # Compute and search methods #

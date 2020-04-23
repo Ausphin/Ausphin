@@ -50,8 +50,6 @@ class CrmLead(models.Model):
         related="partner_id.country_id")
     scholarship_grant = fields.Float(string="Scholarship Grant (%)")
     is_scholar = fields.Boolean(string="Is Scholar Candidate")
-    partner_function = fields.Char(string="Job Position",
-        related="partner_id.function")
     site_dependent = fields.Boolean(string="Site Dependent",
         related="stage_id.site_dependent")
     

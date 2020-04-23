@@ -34,12 +34,18 @@
         <field name="arch" type="xml">
             <field name="activity_ids" position="after">
                 <field name="duration_in_stage_text"/>
+                <field name="total_duration_text"/>
                 <field name="duration_status"/>
             </field>
-            <xpath expr="//img" position="before">
-                <span t-att-class="record.duration_status.raw_value == 'within' and 'badge badge-success' or 'badge badge-danger'">
-                    <field name="duration_in_stage_text"/>
-                </span>
+            <xpath expr="//div[hasclass('o_kanban_record_subtitle')]" position="after">
+                <div>
+                    <span class="badge">
+                        Total: <field name="total_duration_text"/>
+                    </span>
+                    <span t-att-class="record.duration_status.raw_value == 'within' and 'badge badge-success' or 'badge badge-danger'">
+                        Stage: <field name="duration_in_stage_text"/>
+                    </span>
+                </div>
             </xpath>
             <progressbar position="replace">
                 <progressbar field="duration_status" colors='{"within": "success", "beyond": "danger"}'/>

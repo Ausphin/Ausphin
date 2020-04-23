@@ -8,8 +8,8 @@
             <xpath expr="//field[@name='user_id']/.." position="replace">
                 <group string="Assign this opportunity to">
                     <field name="team_id" widget="selection" domain="[('show_in_conversion','!=',False)]" required="1"/>
-                    <field name="is_with_site" invisible="1"/>
-                    <field name="site_id" attrs="{'invisible': [('is_with_site','=',False)]}"/>
+                    <field name="site_dependent" invisible="1"/>
+                    <field name="site_id" attrs="{'invisible': [('site_dependent','=',False)], 'required': [('site_dependent','=',True)]}"/>
                     <field name="user_id" readonly="1" force_save="1" required="1"/>
                     <field name="stage_id" invisible="1"/>
                 </group>

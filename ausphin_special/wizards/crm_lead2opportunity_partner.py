@@ -12,7 +12,6 @@ class Lead2OpportunityPartner(models.TransientModel):
     ###################
     # Default methods #
     ###################
-    
             
     ######################
     # Fields declaration #
@@ -24,7 +23,8 @@ class Lead2OpportunityPartner(models.TransientModel):
         string="Stage")
     site_id = fields.Many2one(string="Site",
         comodel_name="crm.site")
-    is_with_site = fields.Boolean(related="team_id.is_with_site")
+    site_dependent = fields.Boolean(string="Site Dependent",
+        related="stage_id.site_dependent")
     
     ##############################
     # Compute and search methods #
@@ -35,12 +35,18 @@ class Lead2OpportunityPartner(models.TransientModel):
     ############################
     @api.onchange("team_id")
     def _onchange_sales_team(self):
+        self.site_id = False
         stage_id = self.env["crm.stage"].sudo().search([("team_id","=",self.team_id.id)], limit=1).id
         stage = self.env["crm.stage"].sudo().browse(stage_id)
         self.stage_id = stage_id
-        self.user_id = stage.sudo().get_assignee()
-        self.site_id = False
- 
+        self.user_id = False
+        if not self.stage_id.site_dependent:
+            self.user_id = stage.sudo().get_assignee()
+
+    @api.onchange("site_id")
+    def _onchange_site_id(self):
+        self.user_id = self.stage_id.sudo().get_assignee(site=self.site_id)
+        
     #########################
     # CRUD method overrides #
     #########################
@@ -57,3 +63,4 @@ class Lead2OpportunityPartner(models.TransientModel):
     ####################
     # Business methods #
     ####################
+

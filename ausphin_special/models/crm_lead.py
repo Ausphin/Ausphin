@@ -52,6 +52,8 @@ class CrmLead(models.Model):
     is_scholar = fields.Boolean(string="Is Scholar Candidate")
     partner_function = fields.Char(string="Job Position",
         related="partner_id.function")
+    site_dependent = fields.Boolean(string="Site Dependent",
+        related="stage_id.site_dependent")
     
     ##############################
     # Compute and search methods #
@@ -80,7 +82,7 @@ class CrmLead(models.Model):
         next_stage = self.get_next_stage(self.stage_id)
         user_id = False;
         if next_stage.force_assign:
-            user_id = next_stage.sudo().get_assignee()
+            user_id = next_stage.sudo().get_assignee(site=self.site_id)
         
         self.sudo().write({
             "stage_id": next_stage.id,

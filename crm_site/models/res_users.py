@@ -2,13 +2,11 @@
 
 from odoo import models, fields, api
 
-class CrmSite(models.Model):
+class ResUsers(models.Model):
     ######################
     # Private attributes #
     ######################
-    _name = "crm.site"
-    _description = "Lead/Opportunity Site"
-    _order = "name"
+    _inherit = "res.users"
     
     ###################
     # Default methods #
@@ -17,11 +15,9 @@ class CrmSite(models.Model):
     ######################
     # Fields declaration #
     ######################
-    name = fields.Char(string="Name",
-        required=True)
-    assignable_ids = fields.Many2many(comodel_name="res.users",
+    site_ids = fields.Many2many(comodel_name="crm.site",
         relation="users_sites_rel",
-        string="Assignable Users")
+        string="Assignable Sites")
     
     ##############################
     # Compute and search methods #

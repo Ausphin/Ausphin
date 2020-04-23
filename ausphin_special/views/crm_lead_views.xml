@@ -299,15 +299,24 @@
             <field name="stage_id" position="attributes">
                 <attribute name="readonly">0</attribute>
             </field>
-            <field name="user_id" position="attributes">
-                <attribute name="attrs">{'required': [('force_assign','=',True)]}</attribute>
-            </field>
             <button name="action_move_to_prev_stage" position="attributes">
                 <attribute name="attrs"/>
             </button>
             <button name="action_move_to_next_stage" position="attributes">
                 <attribute name="attrs"/>
             </button>
+        </field>
+    </record>
+    
+    <record id="crm_lead_view_form_inherit_leader" model="ir.ui.view">
+        <field name="name">crm.lead.view.form.inherit.leader</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm_lead_view_form_inherit"/>
+        <field name="groups_id" eval="[(4,ref('sales_team.group_sale_salesman_all_leads'))]"/>
+        <field name="arch" type="xml">
+            <field name="user_id" position="attributes">
+                <attribute name="attrs">{'required': [('force_assign','=',True)]}</attribute>
+            </field>
         </field>
     </record>
     

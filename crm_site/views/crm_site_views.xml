@@ -9,6 +9,8 @@
                     <group>
                         <field name="name"/>
                     </group>
+                    <separator string="Assignable Users"/>
+                    <field name="assignable_ids"/>
                 </sheet>
             </form>
         </field>

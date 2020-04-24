@@ -34,13 +34,9 @@ class CrmLead(models.Model):
         compute="_compute_is_user")
     fees_and_guidelines = fields.Binary(string="Fees and Guidelines")
     fees_and_guidelines_fname = fields.Char(string="Fees and Guidelines Filename")
-    skills_audit = fields.Binary(string="Skills Audit")
-    skills_audit_fname = fields.Char(string="Skills Audit Filename")
-    predeparture_checklist = fields.Binary(string="Pre-departure Checklist")
-    predeparture_checklist_fname = fields.Char(string="Pre-departure Checklist Filename")
-    nationality_id = fields.Many2one(comodel_name="res.country",
-        string="Nationality",
-        related="partner_id.x_studio_nationality")
+    citizenship_id = fields.Many2one(comodel_name="res.country",
+        string="Citizenship",
+        related="partner_id.citizenship_id")
     contact_name = fields.Char(required=True)
     mobile = fields.Char(required=True)
     partner_address_city = fields.Char(string="City",
@@ -52,6 +48,9 @@ class CrmLead(models.Model):
     is_scholar = fields.Boolean(string="Is Scholar Candidate")
     site_dependent = fields.Boolean(string="Site Dependent",
         related="stage_id.site_dependent")
+    birth_date = fields.Date(string="Date of Birth",
+        related="partner_id.birth_date")
+    skills_audit_sched = fields.Datetime(string="Skills Audit Schedule")
     
     ##############################
     # Compute and search methods #

@@ -57,12 +57,13 @@
                     <field name="id" string="Application ID" visibility="{'team_id': [112,113,114,115]}"/>
                     <field name="partner_address_city" attrs="{'invisible': [('partner_id','=',False)]}"/>
                     <field name="partner_address_country_id" attrs="{'invisible': [('partner_id','=',False)]}"/>
-                    <field name="nationality_id" attrs="{'invisible': [('partner_id','=',False)]}"/>
-                    <i class="fa fa-ban" style="color: red;" role="img" title="This email is blacklisted for mass mailing" aria-label="Blacklisted" attrs="{'invisible': ['|', ('partner_is_blacklisted', '=', False), ('partner_address_email', '=', False)]}" groups="base.group_user"/>
-                    <field name="partner_address_email" string="Email" attrs="{'invisible': [('partner_id','=',False)]}"/>
+                    <field name="citizenship_id" attrs="{'invisible': [('partner_id','=',False)]}"/>
+                    <field name="birth_date" attrs="{'invisible': [('partner_id','=',False)]}"/>
                     <field name="partner_placement_position" attrs="{'invisible': [('partner_id','=',False)]}"/>
                     <field name="partner_address_phone" string="Phone" attrs="{'invisible': [('partner_id','=',False)]}"/>
                     <field name="partner_address_mobile" string="Mobile" attrs="{'invisible': [('partner_id','=',False)]}"/>
+                    <i class="fa fa-ban" style="color: red;" role="img" title="This email is blacklisted for mass mailing" aria-label="Blacklisted" attrs="{'invisible': ['|', ('partner_is_blacklisted', '=', False), ('partner_address_email', '=', False)]}" groups="base.group_user"/>
+                    <field name="partner_address_email" string="Email" attrs="{'invisible': [('partner_id','=',False)]}"/>
                     <field name="x_studio_passport_number" attrs="{'invisible': [('partner_id','=',False)]}"/>
                     <field name="x_studio_passport_expiry_date" attrs="{'invisible': [('partner_id','=',False)]}"/>
                     <field name="x_studio_arrival_in_australia" visibility="{'team_id': [114], 'stage_id': [342]}"/>
@@ -84,8 +85,6 @@
             <page name="scholarship" position="attributes">
                 <attribute name="visibility">{'team_id': [110], 'stage_id': [314,365,366,367]}</attribute>
             </page>
-            
-            <!-- STUDIO CUSTOMIZATIONS -->
             <button name="%(sale_crm.sale_action_orders)d" position="after">
                 <button class="oe_stat_button" icon="fa-trophy" type="action" name="525" visibility="{'team_id': [112,114], 'stage_id': [325,338]}">
                     <field name="x_x_studio_field_9txAp__x_skills_audit_count" string="Skills Audit" widget="statinfo"/>
@@ -115,7 +114,7 @@
                 <field name="lost_reason" position="move"/>
             </field>
             <field name="site_id" position="attributes">
-                <attribute name="visibility">{'team_id': [110,112,117], 'stage_id': [313,320,368,348,349,350,369]}</attribute>
+                <attribute name="visibility">{'team_id': [110,112,117], 'stage_id': [313,314,365,366,367,315,320,321,368,348,349,350,369]}</attribute>
             </field>
             <xpath expr="//notebook" position="inside">
                 <page string="Visume" visibility="{'team_id': [112,114], 'stage_id': [320,321,333,334]}">
@@ -228,7 +227,7 @@
             <field name="training_ids" position="before">
                 <group string="Files" visibility="{'team_id': [112,114], 'stage_id': [322,323,327,335,336,340]}">
                     <field invisible="1" name="x_studio_endorsement_resume_filename"/>
-                    <field filename="x_studio_endorsement_resume_filename" name="x_studio_endorsement_resume" visibility="{'stage_id': [322,327,335,340]}"/>
+                    <field filename="x_studio_endorsement_resume_filename" name="x_studio_endorsement_resume" visibility="{'stage_id': [322,325,327,335,340]}"/>
                     <field invisible="1" name="x_studio_job_offer_copy_filename"/>
                     <field filename="x_studio_job_offer_copy_filename" name="x_studio_job_offer_copy"/>
                 </group>
@@ -251,7 +250,7 @@
             </field>
             <page name="documents" position="attributes">
                 <attribute name="string">Requirements</attribute>
-                <attribute name="visibility">{'team_id': [112,114], 'stage_id': [320,321,322,323,324,325,326,327,333,334,335,336,337,338,339,340]}</attribute>
+                <attribute name="visibility">{'team_id': [112,114], 'stage_id': [320,321,322,323,324,325,326,327,328,333,334,335,336,337,338,339,340,341]}</attribute>
             </page>
             <group name="major_docs" position="before">
                 <group>
@@ -262,10 +261,9 @@
                         <field invisible="1" name="x_studio_tcs_file_filename"/>
                         <field filename="fees_and_guidelines_fname" name="fees_and_guidelines" visibility="{'team_id': [112,114], 'stage_id': [320,323,333,336]}"/>
                         <field invisible="1" name="fees_and_guidelines_fname"/>
-                        <field filename="skills_audit_fname" name="skills_audit" visibility="{'team_id': [112,114], 'stage_id': [327,340]}"/>
-                        <field invisible="1" name="skills_audit_fname"/>
-                        <field filename="predeparture_checklist_fname" name="predeparture_checklist" visibility="{'team_id': [112,114,116], 'stage_id': [329,330,342,345,346]}"/>
-                        <field invisible="1" name="predeparture_checklist_fname"/>
+                    </group>
+                    <group string="Skills Audit" visibility="{'team_id': [112,114], 'stage_id': [325,338]}">
+                        <field name="skills_audit_sched"/>
                     </group>
                 </group>
             </group>
@@ -275,6 +273,9 @@
             <group name="minor_docs" position="attributes">
                 <attribute name="visibility">{'team_id': [112,114,116], 'stage_id': [320,321,322,323,324,326,327,328,333,334,335,336,337,339,340,341,345,346]}</attribute>
             </group>
+            <page name="visas" position="attributes">
+                <attribute name="visibility">{'team_id': [112,113,114,115,116,117,118,119], 'stage_id': [320,328,329,330,333,335,336,337,338,339,340,341,342]}</attribute>
+            </page>
         </field>
     </record>
     
@@ -285,13 +286,13 @@
         <field name="priority">50</field>
         <field name="arch" type="xml">
             <button name="%(sale_crm.sale_action_quotations_new)d" position="attributes">
-                <attribute name="visibility">{'team_id': [112,114], 'stage_id': [320,321,323,333,334,336]}</attribute>
+                <attribute name="visibility">{'team_id': [110,112,114,116,117], 'stage_id': [315,320,321,323,333,334,336,345,349]}</attribute>
             </button>
             <button name="%(sale_crm.sale_action_quotations)d" position="attributes">
-                <attribute name="visibility">{'team_id': [112,114], 'stage_id': [320,321,323,333,334,336]}</attribute>
+                <attribute name="visibility">{'team_id': [110,112,114,116,117], 'stage_id': [315,320,321,323,333,334,336,345,349]}</attribute>
             </button>
             <button name="%(sale_crm.sale_action_orders)d" position="attributes">
-                <attribute name="visibility">{'team_id': [112,114], 'stage_id': [320,321,323,333,334,336]}</attribute>
+                <attribute name="visibility">{'team_id': [110,112,114,116,117], 'stage_id': [315,320,321,323,333,334,336,345,349]}</attribute>
             </button>
         </field>
     </record>

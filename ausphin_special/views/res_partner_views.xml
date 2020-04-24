@@ -5,12 +5,39 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
-            <field name="vat" position="before">
-                <field name="civil_status"/>
-                <field name="birth_date"/>
-                <field name="birth_place"/>
-                <field name="religion"/>
+            <field name="type" position="before">
+                <field name="x_studio_is_a_candidate"/>
+                <field name="title" position="move"/>
             </field>
+            <field name="vat" position="before">
+                <field name="x_studio_country_of_origin"/>
+                <field name="citizenship_id"/>
+                <field name="birth_place"/>
+                <field name="birth_date"/>
+                <field name="religion"/>
+                <field name="civil_status"/>
+                <field name="x_studio_abn"/>
+            </field>
+            <field name="vat" position="after">
+                <field name="lang" position="move"/>
+                <field name="category_id" position="move"/>
+            </field>
+            <field name="website" position="before">
+                <field name="x_studio_whatsapp"/>
+                <field name="x_studio_facebook"/>
+                <field name="x_studio_skype_id"/>
+                <field name="x_studio_viber_id"/>
+            </field>
+            <notebook position="inside">
+                <page string="Recruitment">
+                    <group>
+                        <group>
+                            <field name="x_studio_passport_number"/>
+                            <field name="x_studio_passport_expiry_date"/>
+                        </group>
+                    </group>
+                </page>
+            </notebook>
         </field>
     </record>
     

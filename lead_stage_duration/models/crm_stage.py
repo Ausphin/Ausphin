@@ -82,8 +82,8 @@ class CrmStage(models.Model):
     # Business methods #
     ####################
     def duration_to_text(self, duration):
-        days = int(floor(duration / HOURS_IN_A_DAY))
-        hours = int(ceil(duration % HOURS_IN_A_DAY))
+        days = int(floor(duration))
+        hours = int(ceil((duration % 1) * HOURS_IN_A_DAY))
         text = ""
         if days:
             text = "{}D".format(days)

@@ -25,7 +25,7 @@ class CrmLeadStageLog(models.Model):
     end_date = fields.Datetime(string="End Date")
     actual_duration = fields.Float(string="Actual Duration",
         compute="_compute_actual_duration")
-    actual_duration_text = fields.Char(string="Actual Duration",
+    actual_duration_text = fields.Char(string="Approx. Duration",
         compute="_compute_actual_duration")
     user_id = fields.Many2one(string="Assignee",
         comodel_name="res.users")

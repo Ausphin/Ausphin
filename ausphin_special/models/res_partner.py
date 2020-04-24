@@ -28,6 +28,8 @@ class ResPartner(models.Model):
     has_active_opportunity = fields.Boolean(string="Has Active Opportunity",
         compute="_compute_active_opportunity_count",
         search="_search_has_active_opportunity")
+    citizenship_id = fields.Many2one(string="Citizenship",
+        comodel_name="res.country")
     
     ##############################
     # Compute and search methods #

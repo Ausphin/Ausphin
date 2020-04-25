@@ -16,6 +16,7 @@
                             <field name="interview_date"/>
                             <field name="interview_result"/>
                             <field name="job_offer_date"/>
+                            <field name="jo_acceptance_date"/>
                             <field name="start_date"/>
                             <field name="end_date"/>
                         </tree>

@@ -6,7 +6,7 @@
         <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
         <field name="arch" type="xml">
             <field name="team_id" position="after">
-                <field name="site_id" readonly="1"/>
+                <field name="site_id" force_save="1" attrs="{'readonly': [('site_id', '!=', False)]}"/>
             </field>
         </field>
     </record>
@@ -17,8 +17,8 @@
         <field name="inherit_id" ref="crm_lead_view_form_inherit_oppor"/>
         <field name="groups_id" eval="[(4,ref('sales_team.group_sale_manager'))]"/>
         <field name="arch" type="xml">
-            <field name="site_id" position="attributes">
-                <attribute name="readonly">0</attribute>
+            <field name="site_id" position="replace">
+                <field name="site_id"/>
             </field>
         </field>
     </record>

@@ -115,6 +115,7 @@
             </field>
             <field name="site_id" position="attributes">
                 <attribute name="visibility">{'team_id': [110,112,117], 'stage_id': [313,314,365,366,367,315,320,321,368,348,349,350,369]}</attribute>
+            
             </field>
             <xpath expr="//notebook" position="inside">
                 <page string="Visume" visibility="{'team_id': [112,114], 'stage_id': [320,321,333,334]}">
@@ -225,22 +226,25 @@
                 <attribute name="visibility">{'team_id': [112,113,114,115], 'stage_id': [322,323,325,326,327,329,330,331,335,336,338,339,340,341,342,343]}</attribute>
             </page>
             <field name="training_ids" position="before">
-                <group string="Files" visibility="{'team_id': [112,114], 'stage_id': [322,323,327,335,336,340]}">
+                <group string="Files" visibility="{'team_id': [112,114], 'stage_id': [322,323,325,327,335,336,338,340]}">
                     <field invisible="1" name="x_studio_endorsement_resume_filename"/>
-                    <field filename="x_studio_endorsement_resume_filename" name="x_studio_endorsement_resume" visibility="{'stage_id': [322,325,327,335,340]}"/>
+                    <field filename="x_studio_endorsement_resume_filename" name="x_studio_endorsement_resume" visibility="{'stage_id': [322,325,327,335,338,340]}"/>
                     <field invisible="1" name="x_studio_job_offer_copy_filename"/>
-                    <field filename="x_studio_job_offer_copy_filename" name="x_studio_job_offer_copy"/>
+                    <field filename="x_studio_job_offer_copy_filename" name="x_studio_job_offer_copy" visibility="{'stage_id': [322,323,327,335,336,340]}"/>
                 </group>
                 <separator string="Trainings" visibility="{'team_id': [112,113,114,115], 'stage_id': [322,325,326,327,329,330,331,335,338,339,340,341,342,343]}"/>
             </field>
             <field name="training_ids" position="attributes">
                 <attribute name="visibility">{'team_id': [112,113,114,115], 'stage_id': [322,325,326,327,329,330,331,335,338,339,340,341,342,343]}</attribute>
             </field>
+            <xpath expr="//field[@name='training_ids']/tree/field[@name='supervisor']" position="attributes">
+                <attribute name="attrs">{'column_invisible': [('parent.stage_id','not in',[326,327,329,330,331,339,340,341,342,343])]}</attribute>
+            </xpath>
             <xpath expr="//field[@name='training_ids']/tree/field[@name='start_date']" position="attributes">
-                <attribute name="attrs">{'column_invisible': [('parent.stage_id','!=',329)]}</attribute>
+                <attribute name="attrs">{'column_invisible': [('parent.stage_id','not in',[329,330,331,342,343])]}</attribute>
             </xpath>
             <xpath expr="//field[@name='training_ids']/tree/field[@name='end_date']" position="attributes">
-                <attribute name="attrs">{'column_invisible': [('parent.stage_id','!=',329)]}</attribute>
+                <attribute name="attrs">{'column_invisible': [('parent.stage_id','not in',[329,330,331,342,343])]}</attribute>
             </xpath>
             <field name="day_open" position="attributes">
                 <attribute name="invisible">1</attribute>

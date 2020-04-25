@@ -24,19 +24,20 @@ class ResPartner(models.Model):
     ##############################
     @api.depends("opportunity_ids.training_ids",
                  "opportunity_ids.training_ids.interview_result",
-                 "opportunity_ids.training_ids.start_date")
+                 "opportunity_ids.training_ids.jo_acceptance_date")
     def _compute_placement_position(self):
         for partner in self:
             result = False
             trainings = self.env["crm.training"].sudo().search(
-                [("partner_id","=",partner.id),("interview_result","=","successful"),("start_date","=",False)])
+                [("partner_id","=",partner.id),("interview_result","=","successful"),("jo_acceptance_date","!=",False)])
             if trainings:
-                result = trainings[-1].position
+                result = trainings.sorted(key=lambda t: t.jo_acceptance_date)[-1].position
             else:
                 trainings = self.env["crm.training"].sudo().search(
-                    [("partner_id","=",partner.id),("interview_result","=","successful"),("start_date","!=",False)])
+                    [("partner_id","=",partner.id),("interview_result","=","successful"),("jo_acceptance_date","=",False)])
                 if trainings:
-                    result = trainings.sorted(key=lambda t: t.start_date)[-1].position
+                    result = trainings[-1].position
+
             partner.placement_position = result
     
     ############################

@@ -44,7 +44,8 @@ class CrmTraining(models.Model):
     end_date = fields.Date(string="End Date")
     supervisor = fields.Char(string="Workplace Supervisor")
     position = fields.Char(string="Position")
-    
+    jo_acceptance_date = fields.Date(string="JO Acceptance")
+
     ##############################
     # Compute and search methods #
     ##############################

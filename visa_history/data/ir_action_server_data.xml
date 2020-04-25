@@ -12,11 +12,11 @@
         <field name="model_id" ref="model_crm_lead"/>
         <field name="state">code</field>
         <field name="code">
-graduation_stage_id = 332 # Traineeship 1st Yr Graduation Stage 
+training_stage_id = 331 # Traineeship Training Venue Stage 
 consultation_stage_id = 333 # AU Application Consultation Stage
 consultation_stage = env["crm.stage"].browse(consultation_stage_id)
 
-if record.stage_id.id == graduation_stage_id:
+if record.stage_id.id == training_stage_id:
     record.create({
         "type": "opportunity",
         "name": "Continuation from Traineeship (1st year)",

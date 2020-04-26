@@ -278,7 +278,7 @@
                 <attribute name="visibility">{'team_id': [112,114,116], 'stage_id': [320,321,322,323,324,326,327,328,333,334,335,336,337,339,340,341,345,346]}</attribute>
             </group>
             <page name="visas" position="attributes">
-                <attribute name="visibility">{'team_id': [112,113,114,115,116,117,118,119], 'stage_id': [320,328,329,330,333,335,336,337,338,339,340,341,342]}</attribute>
+                <attribute name="visibility">{'team_id': [112,113,114,115,116,117,118,120], 'stage_id': [320,328,329,330,333,335,336,337,338,339,340,341,342]}</attribute>
             </page>
         </field>
     </record>

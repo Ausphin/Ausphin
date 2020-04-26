@@ -31,6 +31,8 @@
         'security/crm_team_security.xml',
         'security/crm_stage_security.xml',
         'security/res_users_security.xml',
+        'security/sale_order_security.xml',
+        'security/sale_order_line_security.xml',
         'views/crm_lead_views.xml',
         'views/crm_team_views.xml',
         'views/crm_stage_views.xml',

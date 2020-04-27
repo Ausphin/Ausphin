@@ -82,6 +82,14 @@
                     <field name="scholarship_grant" visibility="{'stage_id': [367,315]}"/>
                 </group>
             </xpath>
+            <xpath expr="//notebook" position="inside">
+                 <page string="Class Info" name="class_info" visibility="{'team_id': [111], 'stage_id': [316,317,318,319]}">
+                    <group string="Class Info" >
+                        <field name="batch_num"/>
+                        <field name="class_start_date"/>
+                    </group>
+                </page>
+            </xpath>
             <page name="scholarship" position="attributes">
                 <attribute name="visibility">{'team_id': [110], 'stage_id': [314,365,366,367]}</attribute>
             </page>
@@ -115,8 +123,8 @@
             </field>
             <field name="site_id" position="attributes">
                 <attribute name="visibility">{'team_id': [110,112,117], 'stage_id': [313,314,365,366,367,315,320,321,368,348,349,350,369]}</attribute>
-            
             </field>
+           
             <xpath expr="//notebook" position="inside">
                 <page string="Visume" visibility="{'team_id': [112,114], 'stage_id': [320,321,333,334]}">
                     <group>

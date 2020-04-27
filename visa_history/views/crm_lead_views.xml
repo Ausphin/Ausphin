@@ -8,6 +8,7 @@
             <xpath expr="//notebook" position="inside">
                 <page string="Visas" name="visas">
                     <group>
+                        <field name="visa_start_date"/>
                         <field name="visa_expiration_date"/>
                         <field name="visa_type"/>
                     </group>

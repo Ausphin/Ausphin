@@ -51,6 +51,9 @@ class CrmLead(models.Model):
     birth_date = fields.Date(string="Date of Birth",
         related="partner_id.birth_date")
     skills_audit_sched = fields.Datetime(string="Skills Audit Schedule")
+    batch_num = fields.Char(string="Batch Number")
+    class_start_date = fields.Date(string="Class Start Date")
+    
     
     ##############################
     # Compute and search methods #
@@ -61,7 +64,7 @@ class CrmLead(models.Model):
             lead.is_user = False
             if lead.user_id.id == self.env.uid:
                 lead.is_user = True
-
+                
     ############################
     # Constrains and onchanges #
     ############################

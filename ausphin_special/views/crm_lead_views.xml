@@ -124,7 +124,7 @@
             <field name="site_id" position="attributes">
                 <attribute name="visibility">{'team_id': [110,112,117], 'stage_id': [313,314,365,366,367,315,320,321,368,348,349,350,369]}</attribute>
             </field>
-            
+           
             <xpath expr="//notebook" position="inside">
                 <page string="Visume" visibility="{'team_id': [112,114], 'stage_id': [320,321,333,334]}">
                     <group>

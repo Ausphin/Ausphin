@@ -54,7 +54,6 @@ class CrmLead(models.Model):
     batch_num = fields.Char(string="Batch Number")
     class_start_date = fields.Date(string="Class Start Date")
     
-    
     ##############################
     # Compute and search methods #
     ##############################
@@ -64,7 +63,7 @@ class CrmLead(models.Model):
             lead.is_user = False
             if lead.user_id.id == self.env.uid:
                 lead.is_user = True
-                
+
     ############################
     # Constrains and onchanges #
     ############################

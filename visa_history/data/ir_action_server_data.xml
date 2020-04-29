@@ -7,23 +7,61 @@
         <field name="template_id" ref="visa_history.mail_template_visa_expiration"/>
     </record>
     
-    <record id="ir_action_server_create_au_application_lead" model="ir.actions.server">
-        <field name="name">Lead/Opportunity: Create Lead in AU Application</field>
+    <record id="ir_action_server_create_possible_opportunity_3mos" model="ir.actions.server">
+        <field name="name">Lead/Opportunity: Create Possible Opportunity (3 Months)</field>
         <field name="model_id" ref="model_crm_lead"/>
         <field name="state">code</field>
         <field name="code">
-training_stage_id = 331 # Traineeship Training Venue Stage 
-consultation_stage_id = 333 # AU Application Consultation Stage
-consultation_stage = env["crm.stage"].browse(consultation_stage_id)
+stage_mapping = {
+    331: [333], # Traineeship 1st year (Training Venue) -> AU Application
+    343: [351, 345], # Traineship 2nd year (Training Venue) -> Working Visa, Student Visa
+    346: [333], # Student Visa (Student Visa) -> AU Application
+    350: [333, 351], # RPL (Enrolled) -> AU Application, Working Visa
+    352: [354, 368], # Working Visa (Working Visa) -> Permanent Residency, RPL
+}
+            
+src_id = record.stage_id.id
+src = env["crm.stage"].browse(src_id)
 
-if record.stage_id.id == training_stage_id:
-    record.create({
-        "type": "opportunity",
-        "name": "Continuation from Traineeship (1st year)",
-        "partner_id": record.partner_id.id,
-        "stage_id": consultation_stage_id,
-        "user_id": consultation_stage.get_assignee(),
-    })
+if src_id in stage_mapping:
+    dst_ids = stage_mapping[src_id]
+    for dst_id in dst_ids:
+        dst = env["crm.stage"].browse(dst_id)
+        record.create({
+            "type": "opportunity",
+            "name": "Continuation from " + str(src.team_id.name),
+            "partner_id": record.partner_id.id,
+            "stage_id": dst_id,
+            "user_id": dst.get_assignee(),
+        })
+        </field>
+    </record>
+    
+    <record id="ir_action_server_create_possible_opportunity_6mos" model="ir.actions.server">
+        <field name="name">Lead/Opportunity: Create Possible Opportunity (6 Months)</field>
+        <field name="model_id" ref="model_crm_lead"/>
+        <field name="state">code</field>
+        <field name="code">
+stage_mapping = {
+    331: [368], # Traineeship 1st year (Training Venue) -> RPL
+    343: [368], # Traineship 2nd year (Training Venue) -> RPL
+    346: [368], # Student Visa (Student Visa) -> RPL
+}
+
+src_id = record.stage_id.id
+src = env["crm.stage"].browse(src_id)
+
+if src_id in stage_mapping:
+    dst_ids = stage_mapping[src_id]
+    for dst_id in dst_ids:
+        dst = env["crm.stage"].browse(dst_id)
+        record.create({
+            "type": "opportunity",
+            "name": "Continuation from " + str(src.team_id.name),
+            "partner_id": record.partner_id.id,
+            "stage_id": dst_id,
+            "user_id": dst.get_assignee(),
+        })
         </field>
     </record>
 </odoo>

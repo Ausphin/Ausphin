@@ -21,7 +21,10 @@ KanbanRenderer.include({
         this._super.apply(this, arguments);
         
         if (this.columnOptions.sortable == false) {
-            this.$el.sortable("disable");
+            try {
+                this.$el.sortable("disable");
+            }
+            catch (err) {}
         }
     }
     

@@ -37,8 +37,6 @@ class CrmLead(models.Model):
     citizenship_id = fields.Many2one(comodel_name="res.country",
         string="Citizenship",
         related="partner_id.citizenship_id")
-    contact_name = fields.Char(required=True)
-    mobile = fields.Char(required=True)
     partner_address_city = fields.Char(string="City",
         related="partner_id.city")
     partner_address_country_id = fields.Many2one(string="Country",

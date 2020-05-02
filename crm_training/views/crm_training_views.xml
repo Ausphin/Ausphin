@@ -30,6 +30,7 @@
                         <group string="Pre-Departure">
                             <field name="start_date" attrs="{'readonly': [('interview_result','!=','successful')]}"/>
                             <field name="end_date" attrs="{'readonly': [('interview_result','!=','successful')]}"/>
+                            <field name="remarks"/>
                         </group>
                     </group>
                 </sheet>

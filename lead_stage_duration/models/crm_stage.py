@@ -34,7 +34,20 @@ class CrmStage(models.Model):
         compute="_compute_average_duration")
     is_last_stage = fields.Boolean(string="Is Last Stage",
         compute="_compute_is_last_stage")
-    
+    current_within = fields.Integer(string="Current Within Target",
+        compute="_compute_stats")
+    current_beyond = fields.Integer(string="Current Beyond Target",
+        compute="_compute_stats")
+    total_within = fields.Integer(string="Total Within Target",
+        compute="_compute_stats")
+    total_beyond = fields.Integer(string="Total Beyond Target",
+        compute="_compute_stats")
+    lead_ids = fields.One2many(string="Leads",
+        comodel_name="crm.lead",
+        inverse_name="stage_id")
+    log_ids = fields.One2many(string="Logs",
+        comodel_name="crm.lead.stage.log",
+        inverse_name="stage_id")
     ##############################
     # Compute and search methods #
     ##############################
@@ -66,6 +79,32 @@ class CrmStage(models.Model):
                 result = True
             stage.is_last_stage = result
     
+    @api.multi
+    def _compute_stats(self):
+        for stage in self:
+            current_within = 0
+            current_beyond = 0
+            for lead in stage.lead_ids:
+                if lead.duration_status == 'within':
+                    current_within += 1
+                else:
+                    current_beyond += 1
+            
+            stage.current_within = current_within
+            stage.current_beyond = current_beyond
+            within = set()
+            beyond = set()
+            for log in stage.log_ids:
+                if log.status == 'Within':
+                    within.add(log.lead_id.id)
+                else:
+                    beyond.add(log.lead_id.id)
+                
+            new_set = within - beyond
+            
+            stage.total_within = len(new_set)
+            stage.total_beyond = len(beyond)
+            
     ############################
     # Constrains and onchanges #
     ############################

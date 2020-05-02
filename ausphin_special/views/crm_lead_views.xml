@@ -66,6 +66,7 @@
                     <field name="partner_address_email" string="Email" attrs="{'invisible': [('partner_id','=',False)]}"/>
                     <field name="x_studio_passport_number" attrs="{'invisible': [('partner_id','=',False)]}"/>
                     <field name="x_studio_passport_expiry_date" attrs="{'invisible': [('partner_id','=',False)]}"/>
+                    <field name="opportunity_type"/>
                     <field name="x_studio_arrival_in_australia" visibility="{'team_id': [114], 'stage_id': [342]}"/>
                 </group>
             </xpath>
@@ -305,6 +306,9 @@
             <button name="%(sale_crm.sale_action_orders)d" position="attributes">
                 <attribute name="visibility">{'team_id': [110,112,114,116,117], 'stage_id': [315,320,321,323,333,334,336,345,349]}</attribute>
             </button>
+            <field name="team_id" position="attributes">
+                <attribute name="force_save">1</attribute>
+            </field>
         </field>
     </record>
     

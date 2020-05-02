@@ -23,6 +23,7 @@
         'security/ir.model.access.csv',
         'views/crm_lead_views.xml',
         'views/crm_stage_views.xml',
+        'views/crm_team_views.xml',
         'views/crm_lead_stage_log_views.xml',
     ],
     'qweb': [],

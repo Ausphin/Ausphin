@@ -14,7 +14,7 @@ class CrmTeam(models.Model):
     ######################
     # Fields declaration #
     ######################
-    name = fields.Char(string="Journey")
+    name = fields.Char(string="Service")
     show_in_conversion = fields.Boolean(string="Show in Lead Conversion")
     
     ##############################

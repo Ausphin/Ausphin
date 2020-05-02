@@ -30,6 +30,9 @@ class ResPartner(models.Model):
         search="_search_has_active_opportunity")
     citizenship_id = fields.Many2one(string="Citizenship",
         comodel_name="res.country")
+    venue_ids = fields.Many2many(string="Training Venues",
+        comodel_name="crm.training.venue",
+        relation="venue_partner_rel")
     
     ##############################
     # Compute and search methods #

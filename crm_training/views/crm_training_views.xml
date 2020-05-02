@@ -15,7 +15,8 @@
                                required="not context.get('from_lead')"/>
                         <field name="partner_id"
                                invisible="context.get('from_lead')"/>
-                        <field name="supervisor"/>
+                        <field name="supervisor_id" options="{'no_create': 1}"
+                               attrs="{'invisible': [('venue_id','=',False)]}"/>
                     </group>
                     <group>
                         <group string="Placement">
@@ -44,7 +45,7 @@
                 <field name="venue_id"/>
                 <field name="partner_id"/>
                 <field name="position"/>
-                <field name="supervisor"/>
+                <field name="supervisor_id"/>
                 <field name="endorsement_date"/>
                 <field name="interview_date"/>
                 <field name="interview_result"/>

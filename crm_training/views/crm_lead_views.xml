@@ -11,7 +11,7 @@
                         <tree>
                             <field name="venue_id"/>
                             <field name="position"/>
-                            <field name="supervisor"/>
+                            <field name="supervisor_id"/>
                             <field name="endorsement_date"/>
                             <field name="interview_date"/>
                             <field name="interview_result"/>

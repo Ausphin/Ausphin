@@ -13,11 +13,11 @@
     </record>
 
     <record id="sales_team.sales_team_config_action" model="ir.actions.act_window">
-        <field name="name">Journeys</field>
+        <field name="name">Services</field>
     </record>
 
     <record id="sales_team.crm_team_salesteams_act" model="ir.actions.act_window">
-        <field name="name">Journeys</field>
+        <field name="name">Services</field>
         <field name="context">{}</field>
     </record>
 </odoo>

@@ -16,7 +16,8 @@ class CrmLeadStageLog(models.Model):
     ###################
     # Default methods #
     ###################
-
+  
+        
     ######################
     # Fields declaration #
     ######################
@@ -38,6 +39,12 @@ class CrmLeadStageLog(models.Model):
         ondelete="cascade")
     is_last_stage = fields.Boolean(string="Is Last Stage",
         related="stage_id.is_last_stage")
+    remaining_duration = fields.Float(string="Remaining Duration",
+        readonly=True)
+    target_duration = fields.Float(string="Target Duration",
+        readonly=True)
+    status = fields.Char(string="Status",
+        compute="_compute_status")
     
     ##############################
     # Compute and search methods #
@@ -51,7 +58,18 @@ class CrmLeadStageLog(models.Model):
                 duration = (datetime.now() - log.start_date).total_seconds() / SECONDS_IN_A_DAY
             log.actual_duration = duration
             log.actual_duration_text = log.stage_id.duration_to_text(duration)
-    
+
+    def _compute_status(self):
+        for log in self:
+            if log.target_duration:
+                remaining = log.remaining_duration - log.actual_duration
+                if (remaining >= 0):
+                    log.status = "Within"
+                else:
+                    log.status = "Beyond"
+            else:
+                log.status = "Within"
+        
     ############################
     # Constrains and onchanges #
     ############################

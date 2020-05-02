@@ -81,6 +81,8 @@ class CrmLead(models.Model):
                     "stage_id": lead.stage_id.id,
                     "user_id": lead.user_id and lead.user_id.id,
                     "start_date": current_time,
+                    "target_duration": lead.stage_id.target_duration,
+                    "remaining_duration": lead.stage_id.target_duration - lead.duration_in_stage,
                 })
 
     #########################

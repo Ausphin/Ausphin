@@ -18,8 +18,11 @@
                             <field name="user_id"/>
                             <field name="start_date"/>
                             <field name="end_date"/>
+                            <field name="target_duration"/>
+                            <field name="remaining_duration"/>
                             <field name="actual_duration"/>
                             <field name="actual_duration_text"/>
+                            <field name="status"/>
                             <field name="is_last_stage" invisible="1"/>
                         </tree>
                     </field>

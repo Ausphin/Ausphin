@@ -52,6 +52,10 @@ class CrmLead(models.Model):
     batch_num = fields.Char(string="Batch Number")
     class_start_date = fields.Date(string="Class Start Date")
     final_visume_url = fields.Char(string="Final Visume")
+    opportunity_type = fields.Selection(string="Opportunity Type",
+        selection=[
+            ("onshore", "Onshore"),
+            ("offshore", "Offshore")])
     
     ##############################
     # Compute and search methods #

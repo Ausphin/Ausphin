@@ -47,6 +47,7 @@ class CrmTraining(models.Model):
         domain="[('venue_ids','in',[venue_id])]")
     position = fields.Char(string="Position")
     jo_acceptance_date = fields.Date(string="JO Acceptance")
+    remarks = fields.Text(string="Remarks")
 
     ##############################
     # Compute and search methods #

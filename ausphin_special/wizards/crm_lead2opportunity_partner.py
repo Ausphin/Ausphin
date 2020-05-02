@@ -16,7 +16,7 @@ class Lead2OpportunityPartner(models.TransientModel):
     ######################
     # Fields declaration #
     ######################
-    team_id = fields.Many2one(string="Journey",
+    team_id = fields.Many2one(string="Service",
         comodel_name="crm.team")
     stage_id = fields.Many2one(comodel_name="crm.stage",
         store=True,

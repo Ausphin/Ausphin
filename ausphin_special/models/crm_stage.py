@@ -18,7 +18,7 @@ class CrmStage(models.Model):
     ######################
     # Fields declaration #
     ######################
-    team_id = fields.Many2one(string="Journey",
+    team_id = fields.Many2one(string="Service",
         comodel_name="crm.team")
     assignable_ids = fields.Many2many(comodel_name="res.users",
         relation="users_stages_rel",

@@ -19,7 +19,7 @@ class CrmLead(models.Model):
     stage_id = fields.Many2one(comodel_name="crm.stage",
         domain=False)
     team_id = fields.Many2one(comodel_name="crm.team",
-        string="Journey",
+        string="Service",
         related="stage_id.team_id",
         store=True)
     user_id = fields.Many2one(comodel_name="res.users",
@@ -51,6 +51,7 @@ class CrmLead(models.Model):
     skills_audit_sched = fields.Datetime(string="Skills Audit Schedule")
     batch_num = fields.Char(string="Batch Number")
     class_start_date = fields.Date(string="Class Start Date")
+    final_visume_url = fields.Char(string="Final Visume")
     
     ##############################
     # Compute and search methods #

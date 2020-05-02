@@ -23,6 +23,9 @@ class CrmTrainingVenue(models.Model):
         comodel_name="crm.training",
         inverse_name="venue_id",
         domain=[('interview_result','=','successful'),('jo_acceptance_date','!=',False)])
+    supervisor_ids = fields.Many2many(string="Accredited Supervisors",
+        comodel_name="res.partner",
+        relation="venue_partner_rel")
     
     ##############################
     # Compute and search methods #

@@ -129,8 +129,7 @@
                 <page string="Visume" visibility="{'team_id': [112,114], 'stage_id': [320,321,333,334]}">
                     <group>
                         <group string="Files">
-                            <field filename="x_studio_final_visume_filename" name="x_studio_final_visume"/>
-                            <field invisible="1" name="x_studio_final_visume_filename"/>
+                            <field name="final_visume_url"/>
                         </group>
                         <group  string="Visume">
                             <field name="x_studio_visume_schedule"/>
@@ -245,7 +244,7 @@
             <field name="training_ids" position="attributes">
                 <attribute name="visibility">{'team_id': [112,113,114,115], 'stage_id': [322,325,326,327,329,330,331,335,338,339,340,341,342,343]}</attribute>
             </field>
-            <xpath expr="//field[@name='training_ids']/tree/field[@name='supervisor']" position="attributes">
+            <xpath expr="//field[@name='training_ids']/tree/field[@name='supervisor_id']" position="attributes">
                 <attribute name="attrs">{'column_invisible': [('parent.stage_id','not in',[326,327,329,330,331,339,340,341,342,343])]}</attribute>
             </xpath>
             <xpath expr="//field[@name='training_ids']/tree/field[@name='start_date']" position="attributes">
@@ -345,7 +344,7 @@
         <field name="inherit_id" ref="crm.view_crm_case_opportunities_filter"/>
         <field name="arch" type="xml">
             <filter name="saleschannel" position="replace">
-                <filter string="Journey" name="saleschannel" context="{'group_by':'team_id'}"/>
+                <filter string="Service" name="saleschannel" context="{'group_by':'team_id'}"/>
             </filter>
         </field>
     </record>

@@ -15,12 +15,12 @@
     
     <menuitem
         id="sale.sales_team_config"
-        name="Journeys"
+        name="Services"
         parent="sale.menu_sale_config"/>
     
     <menuitem
         id="sale.report_sales_team"
-        name="Journeys"
+        name="Services"
         parent="sale.sale_order_menu"/>
     
 </odoo>

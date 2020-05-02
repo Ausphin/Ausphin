@@ -34,7 +34,7 @@ class CrmTraining(models.Model):
         comodel_name="crm.training.venue",
         required=True)
     endorsement_date = fields.Date(string="Endorsement Date")
-    interview_date = fields.Date(string="Interview Date")
+    interview_date = fields.Datetime(string="Interview Date")
     interview_result = fields.Selection(string="Interview Result",
         selection=[
             ("successful", "Successful"),
@@ -42,7 +42,9 @@ class CrmTraining(models.Model):
     job_offer_date = fields.Date(string="Job Offer Date")
     start_date = fields.Date(string="Start Date")
     end_date = fields.Date(string="End Date")
-    supervisor = fields.Char(string="Workplace Supervisor")
+    supervisor_id = fields.Many2one(string="Workplace Supervisor",
+        comodel_name="res.partner",
+        domain="[('venue_ids','in',[venue_id])]")
     position = fields.Char(string="Position")
     jo_acceptance_date = fields.Date(string="JO Acceptance")
 
@@ -53,6 +55,9 @@ class CrmTraining(models.Model):
     ############################
     # Constrains and onchanges #
     ############################
+    @api.onchange("venue_id")
+    def _onchange_venue_id(self):
+        self.supervisor_id = False
 
     #########################
     # CRUD method overrides #

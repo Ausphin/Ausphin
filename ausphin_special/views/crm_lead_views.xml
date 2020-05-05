@@ -66,7 +66,6 @@
                     <field name="partner_address_email" string="Email" attrs="{'invisible': [('partner_id','=',False)]}"/>
                     <field name="x_studio_passport_number" attrs="{'invisible': [('partner_id','=',False)]}"/>
                     <field name="x_studio_passport_expiry_date" attrs="{'invisible': [('partner_id','=',False)]}"/>
-                    <field name="opportunity_type"/>
                     <field name="x_studio_arrival_in_australia" visibility="{'team_id': [114], 'stage_id': [342]}"/>
                 </group>
             </xpath>
@@ -130,7 +129,8 @@
                 <page string="Visume" visibility="{'team_id': [112,114], 'stage_id': [320,321,333,334]}">
                     <group>
                         <group string="Files">
-                            <field name="final_visume_url"/>
+                            <field name="final_visume_url" attrs="{'readonly': [('is_visume_payed','=',True)]}"/>
+                            <field name="is_visume_payed" attrs="{'invisible': [('final_visume_url','=',False)]}"/>
                         </group>
                         <group  string="Visume">
                             <field name="x_studio_visume_schedule"/>
@@ -280,10 +280,10 @@
                 </group>
             </group>
             <group name="major_docs" position="attributes">
-                <attribute name="visibility">{'team_id': [112,114,116], 'stage_id': [320,321,322,323,324,326,327,328,333,334,335,336,337,339,340,341,345,346]}</attribute>
+                <attribute name="visibility">{'team_id': [112,114,116], 'stage_id': [320,321,322,323,324,325,326,327,328,333,334,335,336,337,339,340,341,345,346]}</attribute>
             </group>
             <group name="minor_docs" position="attributes">
-                <attribute name="visibility">{'team_id': [112,114,116], 'stage_id': [320,321,322,323,324,326,327,328,333,334,335,336,337,339,340,341,345,346]}</attribute>
+                <attribute name="visibility">{'team_id': [112,114,116], 'stage_id': [320,321,322,323,324,325,326,327,328,333,334,335,336,337,339,340,341,345,346]}</attribute>
             </group>
             <page name="visas" position="attributes">
                 <attribute name="visibility">{'team_id': [112,113,114,115,116,117,118,120], 'stage_id': [320,328,329,330,333,335,336,337,338,339,340,341,342]}</attribute>

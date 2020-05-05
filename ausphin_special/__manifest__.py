@@ -14,6 +14,7 @@
         'crm_training',
         'hide_field_by_stage',
         'crm_documents',
+        'activity_reminder',
     ],
     'external_dependencies': {},
     'author': 'Rainier King, '
@@ -33,6 +34,8 @@
         'security/res_users_security.xml',
         'security/sale_order_security.xml',
         'security/sale_order_line_security.xml',
+        'data/mail_template_data.xml',
+        'data/base_automation_data.xml',
         'views/crm_lead_views.xml',
         'views/crm_team_views.xml',
         'views/crm_stage_views.xml',

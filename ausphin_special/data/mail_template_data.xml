@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <record id="mail_template_visume_complete" model="mail.template">
+        <field name="name">Lead/Opportunity: Visume Payed</field>
+        <field name="model_id" ref="model_crm_lead"/>
+        <field name="subject">Your Visume is Ready!</field>
+        <field name="body_html" type="html">
+            <p>Hello ${object.partner_id.name or object.contact_name},</p>
+            <p>
+                This is to inform that your Visume is now ready.<br/>
+                You may access it in this link: ${object.final_visume_url}
+            </p>
+            <p>Thank you and have a great day!</p>
+        </field>
+        <field name="email_from">"${object.company_id.name|safe}" &lt;${object.company_id.email or user.email|safe}&gt;</field>
+        <field name="email_to">${object.partner_address_email or object.email_from}</field>
+    </record>
+    
+</odoo>

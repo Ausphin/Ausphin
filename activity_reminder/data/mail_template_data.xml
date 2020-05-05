@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <record id="mail_template_activity_due_today" model="mail.template">
+        <field name="name">Activity: Due Today</field>
+        <field name="model_id" ref="mail.model_mail_activity"/>
+        <field name="subject">Activity Due Today: ${object.summary}</field>
+        <field name="body_html" type="html">
+            <ul>
+                <li><strong>Due Date:</strong> ${object.date_deadline}</li>
+                <li><strong>Type:</strong> ${object.activity_type_id.name}</li>
+                <li><strong>Summary:</strong> ${object.summary}</li>
+                <li><strong>Note:</strong><br/>
+                    ${object.note|safe}</li>
+            </ul>
+        </field>
+        <field name="email_from">${user.email}</field>
+        <field name="email_to">${object.user_id.email}</field>
+    </record>
+    
+    <record id="mail_template_activity_due_tomorrow" model="mail.template">
+        <field name="name">Activity: Due Tomorrow</field>
+        <field name="model_id" ref="mail.model_mail_activity"/>
+        <field name="subject">Activity Due Tomorrow: ${object.summary}</field>
+        <field name="body_html" type="html">
+            <ul>
+                <li><strong>Due Date:</strong> ${object.date_deadline}</li>
+                <li><strong>Type:</strong> ${object.activity_type_id.name}</li>
+                <li><strong>Summary:</strong> ${object.summary}</li>
+                <li><strong>Note:</strong><br/>
+                    ${object.note|safe}</li>
+            </ul>
+        </field>
+        <field name="email_from">${user.email}</field>
+        <field name="email_to">${object.user_id.email}</field>
+    </record>
+    
+</odoo>

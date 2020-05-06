@@ -97,7 +97,7 @@
                 <button class="oe_stat_button" icon="fa-trophy" type="action" name="525" visibility="{'team_id': [112,114], 'stage_id': [325,338]}">
                     <field name="x_x_studio_field_9txAp__x_skills_audit_count" string="Skills Audit" widget="statinfo"/>
                 </button>
-                <button class="oe_stat_button" icon="fa-file" type="action" name="542" visibility="{'team_id': [112,114], 'stage_id': [326,327,328,339,340,341]}">
+                <button class="oe_stat_button" icon="fa-file" type="action" name="542" visibility="{'team_id': [112,114], 'stage_id': [324,327,328,337,340,341]}">
                     <field name="x_x_studio_candidate_lead__x_ta_count" string="T.A." widget="statinfo"/>
                 </button>
                 <button class="oe_stat_button" icon="fa-sitemap" type="action" name="559" visibility="{'team_id': [112,114], 'stage_id': [327,328,340,341]}">
@@ -231,7 +231,7 @@
             </field>
             <page name="trainings" position="attributes">
                 <attribute name="string">Placement</attribute>
-                <attribute name="visibility">{'team_id': [112,113,114,115], 'stage_id': [322,323,325,326,327,329,330,331,335,336,338,339,340,341,342,343]}</attribute>
+                <attribute name="visibility">{'team_id': [112,113,114,115], 'stage_id': [322,323,324,325,327,329,330,331,335,336,337,338,340,341,342,343]}</attribute>
             </page>
             <field name="training_ids" position="before">
                 <group string="Files" visibility="{'team_id': [112,114], 'stage_id': [322,323,325,327,335,336,338,340]}">
@@ -240,13 +240,13 @@
                     <field invisible="1" name="x_studio_job_offer_copy_filename"/>
                     <field filename="x_studio_job_offer_copy_filename" name="x_studio_job_offer_copy" visibility="{'stage_id': [322,323,327,335,336,340]}"/>
                 </group>
-                <separator string="Trainings" visibility="{'team_id': [112,113,114,115], 'stage_id': [322,325,326,327,329,330,331,335,338,339,340,341,342,343]}"/>
+                <separator string="Trainings" visibility="{'team_id': [112,113,114,115], 'stage_id': [322,324,325,327,329,330,331,335,337,338,340,341,342,343]}"/>
             </field>
             <field name="training_ids" position="attributes">
-                <attribute name="visibility">{'team_id': [112,113,114,115], 'stage_id': [322,325,326,327,329,330,331,335,338,339,340,341,342,343]}</attribute>
+                <attribute name="visibility">{'team_id': [112,113,114,115], 'stage_id': [322,324,325,327,329,330,331,335,337,338,340,341,342,343]}</attribute>
             </field>
             <xpath expr="//field[@name='training_ids']/tree/field[@name='supervisor_id']" position="attributes">
-                <attribute name="attrs">{'column_invisible': [('parent.stage_id','not in',[326,327,329,330,331,339,340,341,342,343])]}</attribute>
+                <attribute name="attrs">{'column_invisible': [('parent.stage_id','not in',[324,325,327,329,330,331,337,338,340,341,342,343])]}</attribute>
             </xpath>
             <xpath expr="//field[@name='training_ids']/tree/field[@name='start_date']" position="attributes">
                 <attribute name="attrs">{'column_invisible': [('parent.stage_id','not in',[329,330,331,342,343])]}</attribute>
@@ -262,12 +262,12 @@
             </field>
             <page name="documents" position="attributes">
                 <attribute name="string">Requirements</attribute>
-                <attribute name="visibility">{'team_id': [112,114], 'stage_id': [320,321,322,323,324,325,326,327,328,333,334,335,336,337,338,339,340,341]}</attribute>
+                <attribute name="visibility">{'team_id': [112,114], 'stage_id': [320,321,322,323,324,325,327,328,333,334,335,336,337,338,340,341]}</attribute>
             </page>
             <group name="major_docs" position="before">
                 <group>
-                    <group string="Files" visibility="{'team_id': [112,114], 'stage_id': [320,321,322,323,324,325,326,327,333,334,335,336,337,338,339,340]}">
-                        <field filename="x_studio_initial_resume_file_filename" name="x_studio_initial_resume_file" visibility="{'team_id': [112,114], 'stage_id': [320,321,322,323,324,325,326,327,333,334,335,336,337,338,339,340]}"/>
+                    <group string="Files" visibility="{'team_id': [112,114], 'stage_id': [320,321,322,323,324,325,327,333,334,335,336,337,338,340]}">
+                        <field filename="x_studio_initial_resume_file_filename" name="x_studio_initial_resume_file" visibility="{'team_id': [112,114], 'stage_id': [320,321,322,323,324,325,327,333,334,335,336,337,338,340]}"/>
                         <field invisible="1" name="x_studio_initial_resume_file_filename"/>
                         <field filename="x_studio_tcs_file_filename" name="x_studio_tcs_file" visibility="{'team_id': [112,114], 'stage_id': [320,321,333,334]}"/>
                         <field invisible="1" name="x_studio_tcs_file_filename"/>
@@ -280,13 +280,13 @@
                 </group>
             </group>
             <group name="major_docs" position="attributes">
-                <attribute name="visibility">{'team_id': [112,114,116], 'stage_id': [320,321,322,323,324,325,326,327,328,333,334,335,336,337,339,340,341,345,346]}</attribute>
+                <attribute name="visibility">{'team_id': [112,114,116], 'stage_id': [320,321,322,323,324,325,327,328,333,334,335,336,337,340,341,345,346]}</attribute>
             </group>
             <group name="minor_docs" position="attributes">
-                <attribute name="visibility">{'team_id': [112,114,116], 'stage_id': [320,321,322,323,324,325,326,327,328,333,334,335,336,337,339,340,341,345,346]}</attribute>
+                <attribute name="visibility">{'team_id': [112,114,116], 'stage_id': [320,321,322,323,324,325,327,328,333,334,335,336,337,340,341,345,346]}</attribute>
             </group>
             <page name="visas" position="attributes">
-                <attribute name="visibility">{'team_id': [112,113,114,115,116,117,118,120], 'stage_id': [320,328,329,330,333,335,336,337,338,339,340,341,342]}</attribute>
+                <attribute name="visibility">{'team_id': [112,113,114,115,116,117,118,120], 'stage_id': [320,328,329,330,333,335,336,337,338,340,341,342]}</attribute>
             </page>
         </field>
     </record>

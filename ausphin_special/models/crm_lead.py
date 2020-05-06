@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from datetime import datetime, timedelta
+
 from odoo import models, fields, api 
 from odoo.exceptions import ValidationError
 
@@ -67,6 +69,37 @@ class CrmLead(models.Model):
     ############################
     # Constrains and onchanges #
     ############################
+    @api.constrains("stage_id")
+    def _create_activity_by_stage(self):
+        for lead in self:
+            if lead.stage_id.name == "Skills Audit" and lead.skills_audit_sched:
+                lead.create_activity(self.env.ref("mail.mail_activity_data_call").id,
+                                     "Conduct Skills Audit",
+                                     lead.skills_audit_sched.date(),
+                                     lead.user_id.id)
+            elif lead.stage_id.name == "Visume" and lead.x_studio_visume_schedule:
+                lead.create_activity(self.env.ref("mail.mail_activity_data_call").id,
+                                     "Visume Reminders",
+                                     (lead.x_studio_visume_schedule - timedelta(days=2)).date(),
+                                     lead.user_id.id)
+    
+    @api.constrains("skills_audit_sched")
+    def _check_skills_audit_sched(self):
+        for lead in self:
+            if lead.stage_id.name == "Skills Audit" and lead.skills_audit_sched:
+                lead.create_activity(self.env.ref("mail.mail_activity_data_call").id,
+                                     "Conduct Skills Audit",
+                                     lead.skills_audit_sched.date(),
+                                     lead.user_id.id)
+    
+    @api.constrains("x_studio_visume_schedule")
+    def _check_x_studio_visume_schedule(self):
+        for lead in self:
+            if lead.stage_id.name == "Visume" and lead.x_studio_visume_schedule:
+                lead.create_activity(self.env.ref("mail.mail_activity_data_call").id,
+                                     "Visume Reminders",
+                                     (lead.x_studio_visume_schedule - timedelta(days=2)).date(),
+                                     lead.user_id.id)
 
     #########################
     # CRUD method overrides #
@@ -81,7 +114,9 @@ class CrmLead(models.Model):
         next_stage = self.get_next_stage(self.stage_id)
         user_id = False;
         if next_stage.force_assign:
-            user_id = next_stage.sudo().get_assignee(site=self.site_id)
+            logs = self.stage_log_ids.filtered(lambda l: l.stage_id.id == next_stage.id and
+                                                         l.user_id)
+            user_id = logs[-1].user_id.id if logs else next_stage.sudo().get_assignee(site=self.site_id)
         
         self.sudo().write({
             "stage_id": next_stage.id,
@@ -150,3 +185,31 @@ class CrmLead(models.Model):
             raise ValidationError("This is already the first stage!")
         prev_stage = stage.browse(stage_ids[current_stage_index - 1])
         return prev_stage
+    
+    def create_activity(self, type_id, summary, date_deadline, user_id):
+        activity_obj = self.env["mail.activity"]
+        res_model_id = self.env.ref("crm.model_crm_lead").id
+        for lead in self:
+            matched_activity = activity_obj.sudo().search([
+                ("summary","=",summary),
+                ("res_id","=",lead.id),
+                ("res_model_id","=",res_model_id)
+            ])
+            if matched_activity:
+                matched_activity.write({
+                    "activity_type_id": type_id,
+                    "user_id": user_id,
+                    "res_id": lead.id,
+                    "res_model_id": res_model_id,
+                    "date_deadline": date_deadline,
+                })
+                continue
+            
+            activity_obj.create({
+                "activity_type_id": type_id,
+                "summary": summary,
+                "user_id": user_id,
+                "res_id": lead.id,
+                "res_model_id": res_model_id,
+                "date_deadline": date_deadline,
+            })

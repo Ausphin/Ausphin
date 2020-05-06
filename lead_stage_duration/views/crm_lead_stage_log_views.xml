@@ -20,4 +20,40 @@
             </form>
         </field>
     </record>
+    
+    <record id="crm_lead_stage_log_view_tree" model="ir.ui.view">
+        <field name="name">crm.lead.stage.log.view.tree</field>
+        <field name="model">crm.lead.stage.log</field>
+        <field name="arch" type="xml">
+            <tree decoration-info="is_last_stage">
+                <field name="lead_id"/>
+                <field name="stage_id"/>
+                <field name="user_id"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="target_duration"/>
+                <field name="remaining_duration"/>
+                <field name="actual_duration"/>
+                <field name="actual_duration_text"/>
+                <field name="status"/>
+                <field name="is_last_stage" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+    
+    <record id="crm_lead_stage_log_action" model="ir.actions.act_window">
+        <field name="name">Stage Logs</field>
+        <field name="res_model">crm.lead.stage.log</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,graph</field>
+        <field name="domain">[]</field>
+        <field name="context">{'create': 0, 'edit': 0}</field>
+    </record>
+    
+    <menuitem
+        id="crm_lead_stage_log_menu"
+        name="Stage Logs"
+        action="crm_lead_stage_log_action"
+        parent="crm.crm_menu_report"
+        sequence="4"/>
 </odoo>

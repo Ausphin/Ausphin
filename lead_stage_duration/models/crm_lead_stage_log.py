@@ -40,7 +40,8 @@ class CrmLeadStageLog(models.Model):
     is_last_stage = fields.Boolean(string="Is Last Stage",
         related="stage_id.is_last_stage")
     remaining_duration = fields.Float(string="Remaining Duration",
-        readonly=True)
+        compute="_compute_remaining_duration",
+        store=True)
     target_duration = fields.Float(string="Target Duration",
         readonly=True)
     status = fields.Char(string="Status",
@@ -69,6 +70,17 @@ class CrmLeadStageLog(models.Model):
                     log.status = "Beyond"
             else:
                 log.status = "Within"
+    
+    @api.depends("lead_id.stage_log_ids", "target_duration")
+    def _compute_remaining_duration(self):
+        for log in self:
+            previous_logs = self.search([("lead_id","=",log.lead_id.id),
+                                         ("stage_id","=",log.stage_id.id),
+                                         ("start_date","<",log.start_date),
+                                         ("end_date","!=",False)])
+            previous_duration = sum([l.actual_duration for l in previous_logs]) if previous_logs else 0.0
+            log.remaining_duration = log.target_duration - previous_duration
+#             log.remaining_duration = 0.0
         
     ############################
     # Constrains and onchanges #

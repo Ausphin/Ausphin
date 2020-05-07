@@ -24,7 +24,7 @@ class CrmLeadStageLog(models.Model):
     start_date = fields.Datetime(string="Start Date",
         required=True)
     end_date = fields.Datetime(string="End Date")
-    actual_duration = fields.Float(string="Actual Duration",
+    actual_duration = fields.Float(string="Running Duration",
         compute="_compute_actual_duration")
     actual_duration_text = fields.Char(string="Approx. Duration",
         compute="_compute_actual_duration")
@@ -44,8 +44,25 @@ class CrmLeadStageLog(models.Model):
         store=True)
     target_duration = fields.Float(string="Target Duration",
         readonly=True)
-    status = fields.Char(string="Status",
+    status = fields.Char(string="Running Status",
         compute="_compute_status")
+    opportunity_date = fields.Datetime(string="Opportunity Date",
+        related="lead_id.opportunity_date",
+        store=True)
+    final_status = fields.Char(string="Final Status",
+        compute="_compute_final_status",
+        store=True)
+    final_actual_duration = fields.Float(string="Final Duration",
+        compute="_compute_final_status",
+        store=True)
+    team_id = fields.Many2one(comodel_name="crm.team",
+        string="Service",
+        related="lead_id.team_id",
+        store=True)
+    partner_id = fields.Many2one(comodel_name="res.partner",
+        string="Candidate",
+        related="lead_id.partner_id",
+        store=True)
     
     ##############################
     # Compute and search methods #
@@ -80,7 +97,16 @@ class CrmLeadStageLog(models.Model):
                                          ("end_date","!=",False)])
             previous_duration = sum([l.actual_duration for l in previous_logs]) if previous_logs else 0.0
             log.remaining_duration = log.target_duration - previous_duration
-#             log.remaining_duration = 0.0
+    
+    @api.depends("end_date")
+    def _compute_final_status(self):
+        for log in self:
+            if log.end_date:
+                log.final_actual_duration = log.actual_duration
+                log.final_status = log.status
+            else:
+                log.final_actual_duration = 0
+                log.final_status = False
         
     ############################
     # Constrains and onchanges #

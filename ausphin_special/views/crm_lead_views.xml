@@ -129,8 +129,8 @@
                 <page string="Visume" visibility="{'team_id': [112,114], 'stage_id': [320,321,333,334]}">
                     <group>
                         <group string="Files">
-                            <field name="final_visume_url" attrs="{'readonly': [('is_visume_payed','=',True)]}"/>
-                            <field name="is_visume_payed" attrs="{'invisible': [('final_visume_url','=',False)]}"/>
+                            <field name="final_visume_url" attrs="{'readonly': [('is_visume_paid','=',True)]}"/>
+                            <field name="is_visume_paid" attrs="{'invisible': [('final_visume_url','=',False)]}"/>
                         </group>
                         <group  string="Visume">
                             <field name="x_studio_visume_schedule"/>

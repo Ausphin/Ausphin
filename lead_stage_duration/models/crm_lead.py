@@ -35,6 +35,9 @@ class CrmLead(models.Model):
             ("beyond", "Beyond Target")],
         compute="_compute_duration",
         help="Within target if duration in stage is less than target or target is 0")
+    opportunity_date = fields.Datetime(string="Opportunity Date",
+        compute="_compute_opportunity_date",
+        store=True)
     
     ##############################
     # Compute and search methods #
@@ -61,6 +64,14 @@ class CrmLead(models.Model):
                     lead.stage_log_ids.filtered(lambda l: l.stage_id.is_last_stage == False))
             lead.total_duration_text = lead.stage_id.duration_to_text(lead.total_duration)
     
+    @api.depends("stage_log_ids","stage_log_ids.start_date")
+    def _compute_opportunity_date(self):
+        for lead in self:
+            result = False
+            if lead.stage_log_ids:
+                result = lead.stage_log_ids[0].start_date
+            lead.opportunity_date = result
+                
     ############################
     # Constrains and onchanges #
     ############################

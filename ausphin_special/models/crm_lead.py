@@ -54,7 +54,7 @@ class CrmLead(models.Model):
     batch_num = fields.Char(string="Batch Number")
     class_start_date = fields.Date(string="Class Start Date")
     final_visume_url = fields.Char(string="Final Visume")
-    is_visume_payed = fields.Boolean(string="Visume Payed")
+    is_visume_paid = fields.Boolean(string="Visume Paid")
     
     ##############################
     # Compute and search methods #

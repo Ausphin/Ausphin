@@ -83,7 +83,7 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,graph,pivot,form</field>
         <field name="domain">[]</field>
-        <field name="context">{'create': 0, 'edit': 0}</field>
+        <field name="context">{}</field>
     </record>
     
     <menuitem

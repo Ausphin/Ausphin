@@ -43,7 +43,7 @@ class CrmLeadStageLog(models.Model):
         compute="_compute_remaining_duration",
         store=True)
     target_duration = fields.Float(string="Target Duration",
-        readonly=True)
+        readonly=False)
     status = fields.Char(string="Running Status",
         compute="_compute_status")
     opportunity_date = fields.Datetime(string="Opportunity Date",

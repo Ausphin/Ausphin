@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="hr_employee_inherit_form_view">
+            <field name="name">hr.employee.form.view</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='hr_settings']" position="after">
+                    <page name="employee_obj" string="Personal Details">
+                        <group>
+                            <group>                            
+                                <field name="p_address" context="{'show_address': 1}"
+                                            options='{"always_reload": True, "highlight_first_line": True}'/>  
+                                   
+                                <field name="gov_id"/>
+                            </group>
+                            <group>
+                                <field name="relation"/>
+                                <field name="emp_aniversery"/>
+                                <field name="prsnl_contact_detail"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="hr_employee_inherit_view">
+            <field name="name">hr.employee.form.view</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+               <xpath expr="//notebook[last()]" position="inside">
+                    <page name="employee_obj" string="Employment Details">
+                        <group>
+                            <group>                            
+                                <field name="h_date"/>                            
+                                <field name="salary"/>
+                            </group>
+                            <group>
+                                <field name="tax_status"/>
+                                <field name="b_acc_no" invisible="1"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- <record model="ir.ui.view" id="hr_employee_remove_field">
+            <field name="name">hr.employee.inerit.form.view</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page[@name='personal_information']/group/group[7]/field[@name='google_drive_link']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record> -->
+    </data>
+</odoo>

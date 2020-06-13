@@ -1,0 +1,53 @@
+<odoo>
+    <data>
+        <record id="email_template_employee_birthday_notification" model="mail.template">
+            <field name="name">Employee Birthday Notification</field>
+            <field name="email_from">${object.email}</field>
+            <field name="email_to">${object.work_email}</field>
+            <field name="subject">Happy Birthday ${object.name}.</field>
+            <field name="model_id" ref="model_hr_employee"/>
+             <field name="body_html"><![CDATA[
+                <p> Dear ${object.name},</p>
+                ${ctx.get('report_header')| safe}
+                ${ctx.get('body_action')| safe}
+                ${ctx.get('report_footer')| safe}
+                ]]></field>
+        </record>
+
+        <record id="email_template_employee_aniversary_notification" model="mail.template">
+            <field name="name">Employee Aniversary Notification</field>
+            <field name="email_from">${object.email}</field>
+            <field name="email_to">${object.work_email}</field>
+            <field name="subject">Happy Anivarsary ${object.name}.</field>
+            <field name="model_id" ref="model_hr_employee"/>
+             <field name="body_html"><![CDATA[
+                <p> Dear ${object.name},</p>
+                ${ctx.get('ani_header')| safe}
+                ${ctx.get('ani_body')| safe}
+                ${ctx.get('ani_footer')| safe}
+                ]]></field>
+        </record>
+
+        <record id="ir_cron_aniversary_mail_action" model="ir.cron">
+            <field name="name">Employee Aniversary Reminder</field>
+            <field name="model_id" ref="model_hr_employee"/>
+            <field name="state">code</field>
+            <field name="code">model.aniversary_mail_method()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+        </record>
+
+        <record id="ir_cron_birthday_mail_action" model="ir.cron">
+            <field name="name">Employee Birthday Reminder</field>
+            <field name="model_id" ref="model_hr_employee"/>
+            <field name="state">code</field>
+            <field name="code">model.birthday_mail_method()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+        </record>        
+    </data>
+</odoo>

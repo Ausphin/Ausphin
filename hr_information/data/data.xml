@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+        <record id="entry_document1" model="employee.checklist">
+            <field name="name">CV</field>
+            <field name="document_type">entry</field>
+        </record>
+        <record id="entry_document2" model="employee.checklist">
+            <field name="name">IDs</field>
+            <field name="document_type">entry</field>
+        </record>
+        <record id="entry_document3" model="employee.checklist">
+            <field name="name">Birth Certificate</field>
+            <field name="document_type">entry</field>
+        </record>
+         <record id="entry_document4" model="employee.checklist">
+            <field name="name">Marrige Certificate</field>
+            <field name="document_type">entry</field>
+        </record>
+        <record id="entry_document5" model="employee.checklist">
+            <field name="name">Diploma Certificate</field>
+            <field name="document_type">entry</field>
+        </record>
+        <record id="entry_document6" model="employee.checklist">
+            <field name="name">TOR</field>
+            <field name="document_type">entry</field>
+        </record>
+        <record id="entry_document7" model="employee.checklist">
+            <field name="name">Certifications</field>
+            <field name="document_type">entry</field>
+        </record>
+        <record id="entry_document8" model="employee.checklist">
+            <field name="name">NBI Clearance</field>
+            <field name="document_type">entry</field>
+        </record>
+        <record id="entry_document9" model="employee.checklist">
+            <field name="name">Medical Certificate</field>
+            <field name="document_type">entry</field>
+        </record>
+    </data>
+
+</odoo>

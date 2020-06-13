@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+	<!-- Form view inherit -->
+	<record id="inherit_view_res_users_form" model="ir.ui.view">
+		<field name="name">res.users.form.inherit</field>
+		<field name="model">res.users</field>
+		<field name="inherit_id" ref="base.view_users_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//notebook[last()]" position="inside">
+				<page string="Birthday Email Format">
+					<group>
+						<field name="report_header"/>
+						<field name="body_action"/>
+						<field name="report_footer"/>
+					</group>
+				</page>
+			</xpath>
+		</field>
+	</record>
+
+	<record id="inherit_view_res_users" model="ir.ui.view">
+		<field name="name">res.users.view.inherit</field>
+		<field name="model">res.users</field>
+		<field name="inherit_id" ref="base.view_users_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//notebook[last()]" position="inside">
+				<page string="Aniversary Email Format">
+					<group>
+						<field name="ani_header"/>
+						<field name="ani_body"/>
+						<field name="ani_footer"/>
+					</group>
+				</page>
+			</xpath>
+		</field>
+	</record>
+</odoo>

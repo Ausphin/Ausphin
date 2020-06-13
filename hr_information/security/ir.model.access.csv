@@ -1,0 +1,16 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+
+access_hr_employee_document_employee,hr.employee.document_employee,model_hr_employee_document,,1,1,1,1
+access_hr_employee_document_manager,hr.employee.document_manager,model_hr_employee_document,,1,1,1,1
+access_hr_employee_document_user,hr.employee.document_user,model_hr_employee_document,,1,1,1,1
+access_employee_checklist,access_employee_checklist,model_employee_checklist,,1,1,1,1
+
+access_hr_employee_health_condition_employee,hr.employee.health.condition,model_hr_employee_health_condition,,1,1,1,1
+access_hr_employee_health_condition_user,hr.employee.health.condition,model_hr_employee_health_condition,,1,1,1,1
+access_hr_employee_health_condition_type_employee,hr.employee.health.condition.type,model_hr_employee_health_condition_type,,1,1,1,1
+access_hr_employee_health_condition_type_user,hr.employee.health.condition.type,model_hr_employee_health_condition_type,,1,1,1,1
+access_hr_employee_health_condition_severity_employee,hr.employee.health.condition.severity,model_hr_employee_health_condition_severity,,1,1,1,1
+access_hr_employee_health_condition_severity_user,hr.employee.health.condition.severity,model_hr_employee_health_condition_severity,,1,1,1,1
+access_hr_employee_blood_type_employee,hr.employee.blood.type,model_hr_employee_blood_type,,1,1,1,1
+access_hr_employee_blood_type_user,hr.employee.blood.type,model_hr_employee_blood_type,,1,1,1,1

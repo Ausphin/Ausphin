@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        
+        <record id="hr_holidays.hr_leave_allocation_view_form_manager" model="ir.ui.view">
+            <field name="name">hr.leave.allocation.view.form.manager</field>
+            <field name="model">hr.leave.allocation</field>
+            <field name="inherit_id" ref="hr_holidays.hr_leave_allocation_view_form"/>
+            <field name="mode">primary</field>
+            <field name="priority">16</field>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_confirm']" position="after">
+                    <button string="Approve" name="action_approve" states="confirm" type="object" groups="hr_holidays.group_hr_holidays_user" class="oe_highlight"
+                        attrs="{'invisible': ['|', ('can_approve', '=', False), ('state', '!=', 'confirm')]}"/>
+                    <button string="Validate" name="action_validate" states="validate1" type="object" groups="hr_holidays.group_hr_holidays_manager" class="oe_highlight"/>
+                    <button string="Refuse" name="action_refuse" states="confirm,validate,validate1" type="object" groups="hr_holidays.group_hr_holidays_user"
+                        attrs="{'invisible': ['|', ('can_approve', '=', False), ('state', 'not in', ('confirm','validate','validate1'))]}"/>
+                    <button string="Reset to Draft" name="action_draft" type="object"
+                            attrs="{'invisible': ['|', ('can_reset', '=', False), ('state', 'not in', ['confirm', 'refuse'])]}"/>
+                </xpath>
+                <xpath expr="//field[@name='holiday_status_id']" position="attributes">
+                    <attribute name="domain">[('valid', '=', True)]</attribute>
+                </xpath>
+                <xpath expr="//field[@name='employee_id']" position="before">
+                    <field name="holiday_type" string="Mode" groups="hr_holidays.group_hr_holidays_user" context="{'employee_id':employee_id}" />
+                </xpath>
+                <xpath expr="//field[@name='employee_id']" position="replace">
+                    <field name="employee_id" groups="hr_holidays.group_hr_holidays_user"
+                        attrs="{'required': [('holiday_type', '=', 'employee')], 'invisible': [('holiday_type', '!=', 'employee')]}"/>
+                </xpath>
+                <xpath expr="//field[@name='employee_id']" position="after">
+                    <field name="category_id"
+                        attrs="{'required': [('holiday_type', '=', 'category')], 'invisible': [('holiday_type', '!=', 'category')]}"/>
+                </xpath>
+                <xpath expr="//field[@name='department_id']" position="replace">
+                    <field name="department_id" groups="hr_holidays.group_hr_holidays_user"
+                        attrs="{'required': [('holiday_type', '=', 'department')], 'invisible': [('holiday_type', 'not in', ('department', 'category'))]}"/>
+                </xpath>
+                <xpath expr="//field[@name='department_id']" position="after">
+                    <field name="government_id" groups="hr_holidays.group_hr_holidays_user"
+                        attrs="{'required': [('holiday_type', '=', 'government')], 'invisible': [('holiday_type', '!=', 'government')]}"/>
+                </xpath>
+                <xpath expr="//field[@name='department_id']" position="after">
+                    <field name="mode_company_id" groups="hr_holidays.group_hr_holidays_user"
+                        attrs="{'required': [('holiday_type', '=', 'company')], 'invisible': [('holiday_type', '!=', 'company')]}"/>
+                </xpath>
+                <xpath expr="//field[@name='accrual']" position="attributes">
+                    <attribute name="invisible">0</attribute>
+                </xpath>
+                <xpath expr="//field[@name='accrual']" position="after">
+                    <label for="date_to" string=""
+                        attrs="{'invisible': [('accrual', '=', False)]}"/>
+                    <div attrs="{'invisible': [('accrual', '=', False)]}">
+                        <div class="o_row">
+                            Run until <field name="date_to" string="Run Until" help="If no value set, runs indefinitely"/>
+                        </div>
+                        <div class="o_row">
+                            <span>Add</span>
+                            <field name="number_per_interval" class="ml8"
+                                attrs="{'required': [('accrual', '=', True)]}"/>
+                            <field name="unit_per_interval"
+                                attrs="{'required': [('accrual', '=', True)]}"/>
+                            <span class="ml8">of leaves every</span>
+                            <field name="interval_number" class="ml8"
+                                attrs="{'required': [('accrual', '=', True)]}"/>
+                            <field name="interval_unit"
+                                attrs="{'required': [('accrual', '=', True)]}"/>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

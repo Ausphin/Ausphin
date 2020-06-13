@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="hr_employee_view_form" model="ir.ui.view">
+        <field name="name">hr.employee.view.form.inherit.health</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Health" groups="hr.group_hr_user">
+                    <field name="health_condition_ids" />
+                    <group string='Medical Details'>
+                        <field name="blood_type" />
+                        <field name="health_notes" />
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_employee_health_condition_view_tree" model="ir.ui.view">
+        <field name="name">hr.employee.health.condition.view.tree</field>
+        <field name="model">hr.employee.health.condition</field>
+        <field name="arch" type="xml">
+            <tree string="Employee Health Conditions" editable="bottom">
+                <field name="type_id"/>
+                <field name="severity_id"/>
+                <field name="notes"/>
+            </tree>
+        </field>
+    </record>
+
+</odoo>

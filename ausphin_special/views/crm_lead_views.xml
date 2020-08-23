@@ -58,6 +58,7 @@
                     <field name="partner_address_city" attrs="{'invisible': [('partner_id','=',False)]}"/>
                     <field name="partner_address_country_id" attrs="{'invisible': [('partner_id','=',False)]}"/>
                     <field name="citizenship_id" attrs="{'invisible': [('partner_id','=',False)]}"/>
+                    <field name="gender" attrs="{'invisible': [('partner_id','=',False)]}"/>
                     <field name="birth_date" attrs="{'invisible': [('partner_id','=',False)]}"/>
                     <field name="partner_placement_position" attrs="{'invisible': [('partner_id','=',False)]}"/>
                     <field name="partner_address_phone" string="Phone" attrs="{'invisible': [('partner_id','=',False)]}"/>
@@ -75,6 +76,10 @@
             </field>
             <field name="mobile" position="before">
                 <field name="phone"/>
+            </field>
+            <field name="lost_reason" position="replace">
+                <field name="lost_reason" attrs="{'invisible': [('active', '=', True)]}"/>
+                <field name="lost_remarks" attrs="{'invisible': [('active', '=', True)]}"/>
             </field>
             <xpath expr="//field[@name='priority']/.." position="after">
                 <group string="Scholarship Info" visibility="{'team_id': [110]}" >
@@ -129,11 +134,19 @@
                 <page string="Visume" visibility="{'team_id': [112,114], 'stage_id': [320,321,333,334]}">
                     <group>
                         <group string="Files">
+                            <field filename="visume_tc_filename" name="visume_tc_file"/>
+                            <field name="visume_tc_filename" invisible="1"/>
+                            <field filename="visume_consent_filename" name="visume_consent_file"/>
+                            <field name="visume_consent_filename" invisible="1"/>
                             <field name="final_visume_url" attrs="{'readonly': [('is_visume_paid','=',True)]}"/>
                             <field name="is_visume_paid" attrs="{'invisible': [('final_visume_url','=',False)]}"/>
                         </group>
-                        <group  string="Visume">
+                        <group  string="Visume Dates">
+                            <field name="signed_visume_tc_date" widget="date"/>
+                            <field name="signed_visume_consent_date" widget="date"/>
                             <field name="x_studio_visume_schedule"/>
+                            <field name="visume_completion_date" widget="date"/>
+                            <field name="visume_endorsement_date" widget="date"/>
                         </group>
                     </group>
                 </page>
@@ -223,9 +236,9 @@
             <field name="partner_name" position="attributes">
                 <attribute name="string">Name</attribute>
             </field>
-            <field name="referred" position="after">
+<!--             <field name="referred" position="after">
                 <field name="x_studio_qualification"/>
-            </field>
+            </field> -->
             <field name="tag_ids" position="attributes">
                 <attribute name="domain">[["x_studio_field_uN3ZC","=",stage_id]]</attribute>
             </field>
@@ -254,12 +267,25 @@
             <xpath expr="//field[@name='training_ids']/tree/field[@name='end_date']" position="attributes">
                 <attribute name="attrs">{'column_invisible': [('parent.stage_id','not in',[329,330,331,342,343])]}</attribute>
             </xpath>
-            <field name="day_open" position="attributes">
-                <attribute name="invisible">1</attribute>
-            </field>
-            <field name="day_close" position="attributes">
-                <attribute name="invisible">1</attribute>
-            </field>
+            <xpath expr="//field[@name='day_open']/.." position="replace">
+                <group string="Assessment" name="Misc">
+                    <field name="day_open" groups="base.group_no_one" invisible="1"/>
+                    <field name="day_close" groups="base.group_no_one" invisible="1"/>
+                    <field name="type" invisible="1"/>
+                    <field name="qualification"/>
+                    <field name="course_id"/>
+                    <field name="x_studio_qualification" string="Eligibility"/>
+                </group>
+            </xpath>
+            <xpath expr="//field[@name='campaign_id']/.." position="replace">
+                <group string="Marketing">
+                    <field name="campaign_id"/>
+                    <field name="medium_id"/>
+                    <field name="source_id"/>
+                    <field name="referred" attrs="{'invisible':[('source_id','!=',%(utm.source_1)d)]}"/>
+                </group>
+            </xpath>
+            
             <page name="documents" position="attributes">
                 <attribute name="string">Requirements</attribute>
                 <attribute name="visibility">{'team_id': [112,114], 'stage_id': [320,321,322,323,324,325,327,328,333,334,335,336,337,338,340,341]}</attribute>
@@ -273,6 +299,11 @@
                         <field invisible="1" name="x_studio_tcs_file_filename"/>
                         <field filename="fees_and_guidelines_fname" name="fees_and_guidelines" visibility="{'team_id': [112,114], 'stage_id': [320,323,333,336]}"/>
                         <field invisible="1" name="fees_and_guidelines_fname"/>
+                    </group>
+                    <group string="Dates" visibility="{'team_id': [112,114], 'stage_id': [320,321,322,323,324,325,327,333,334,335,336,337,338,340]}">
+                        <field name="submitted_resume_date" widget="date" visibility="{'team_id': [112,114], 'stage_id': [320,321,322,323,324,325,327,333,334,335,336,337,338,340]}"/>
+                        <field name="signed_terms_date" widget="date" visibility="{'team_id': [112,114], 'stage_id': [320,323,333,336]}"/>
+                        <field name="signed_fees_date" widget="date" visibility="{'team_id': [112,114], 'stage_id': [320,323,333,336]}"/>
                     </group>
                     <group string="Skills Audit" visibility="{'team_id': [112,114], 'stage_id': [325,338]}">
                         <field name="skills_audit_sched"/>

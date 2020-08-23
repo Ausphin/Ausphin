@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <record id="crm_course_view_tree" model="ir.ui.view">
+        <field name="name">crm.course.view.tree</field>
+        <field name="model">crm.course</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+    
+    <record id="crm_course_view_form" model="ir.ui.view">
+        <field name="name">crm.course.view.form</field>
+        <field name="model">crm.course</field>
+        <field name="arch" type="xml">
+            <form string="Course Form">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    
+    
+    <record id="crm_course_action" model="ir.actions.act_window">
+        <field name="name">Courses</field>
+        <field name="res_model">crm.course</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+    
+    <menuitem
+        id="crm_course_menu"
+        name="Courses"
+        action="crm_course_action"
+        parent="crm.crm_menu_config"
+        sequence="4"/>
+</odoo>

@@ -45,8 +45,11 @@ class CrmTraining(models.Model):
     supervisor_id = fields.Many2one(string="Workplace Supervisor",
         comodel_name="res.partner",
         domain="[('venue_ids','in',[venue_id])]")
-    position = fields.Char(string="Position")
-    jo_acceptance_date = fields.Date(string="JO Acceptance")
+    nominated_position = fields.Char(string="Nominated Position")
+    position = fields.Char(string="Job Offer Position")
+    jo_transmittal_date = fields.Date(string="JO Transmittal Date")
+    jo_acceptance_date = fields.Date(string="JO Signed Date")
+    annual_salary = fields.Float(string="Annual Salary (AUD)")
     remarks = fields.Text(string="Remarks")
 
     ##############################

@@ -33,6 +33,11 @@ class ResPartner(models.Model):
     venue_ids = fields.Many2many(string="Training Venues",
         comodel_name="crm.training.venue",
         relation="venue_partner_rel")
+    gender = fields.Selection(string="Gender",
+        selection=[
+            ("male","Male"),
+            ("female","Female")])
+
     
     ##############################
     # Compute and search methods #

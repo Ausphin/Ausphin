@@ -13,7 +13,6 @@
         <field name="state">code</field>
         <field name="code">
 stage_mapping = {
-    331: [333], # Traineeship 1st year (Training Venue) -> AU Application
     343: [351, 345], # Traineship 2nd year (Training Venue) -> Working Visa, Student Visa
     346: [333], # Student Visa (Student Visa) -> AU Application
     350: [333, 351], # RPL (Enrolled) -> AU Application, Working Visa
@@ -43,7 +42,7 @@ if src_id in stage_mapping:
         <field name="state">code</field>
         <field name="code">
 stage_mapping = {
-    331: [368], # Traineeship 1st year (Training Venue) -> RPL
+    331: [333,368], # Traineeship 1st year (Training Venue) -> RPL
     343: [368], # Traineship 2nd year (Training Venue) -> RPL
     346: [368], # Student Visa (Student Visa) -> RPL
 }

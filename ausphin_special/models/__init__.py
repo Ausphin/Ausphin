@@ -8,3 +8,4 @@ from . import res_users
 from . import sale_order
 from . import res_partner
 from . import fields
+from . import crm_course

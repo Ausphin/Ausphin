@@ -3,7 +3,7 @@
 from datetime import datetime, timedelta
 
 from odoo import models, fields, api 
-from odoo.exceptions import ValidationError
+from odoo.exceptions import ValidationError, MissingError
 
 class CrmLead(models.Model):
     ######################
@@ -55,7 +55,38 @@ class CrmLead(models.Model):
     class_start_date = fields.Date(string="Class Start Date")
     final_visume_url = fields.Char(string="Final Visume")
     is_visume_paid = fields.Boolean(string="Visume Paid")
-    
+    gender = fields.Selection(string="Gender",
+        related="partner_id.gender")
+    qualification = fields.Selection(string="Qualification",
+        selection=[
+            ("diploma","Diploma"),
+            ("advance_diploma","Advance Diploma, Associate Degree"),
+            ("bachelor","Bachelor Degree"),
+            ("bachelor_honour","Bachelor Honours Degree"),
+            ("cert_1","Certificate I"),
+            ("cert_2","Certificate II"),
+            ("cert_3","Certificate III"),
+            ("cert_4","Certificate IV"),
+            ("doctoral","Doctoral Degree"),
+            ("graduate_cert","Graduate Certificate, Graduate Diploma"),
+            ("masters","Masters Degree")])
+    course_id = fields.Many2one(comodel_name="crm.course",
+        string="Course")
+    submitted_resume_date = fields.Datetime(string="Submitted Date")
+    signed_terms_date = fields.Datetime(string="Signed Date")
+    signed_fees_date = fields.Datetime(string="Signed Date")
+    visume_tc_file = fields.Binary(string="Visume Terms & Condition")
+    visume_tc_filename = fields.Char(string="Filename Visume Terms & Condition")
+    signed_visume_tc_date= fields.Datetime(string="Visume Terms Signed Date")
+    visume_consent_file = fields.Binary(string="Visume Consent Form")
+    visume_consent_filename = fields.Char(string="Filename Visume Consent")
+    signed_visume_consent_date= fields.Datetime(string="Visume Consent Signed Date")
+    visume_completion_date= fields.Datetime(string="Completion Date",
+        compute="_compute_completion_date")
+    visume_endorsement_date= fields.Datetime(string="Endorsement Date",
+        compute="_compute_endorsement_date")
+    lost_remarks = fields.Char(string="Lost Remarks")
+
     ##############################
     # Compute and search methods #
     ##############################
@@ -65,6 +96,20 @@ class CrmLead(models.Model):
             lead.is_user = False
             if lead.user_id.id == self.env.uid:
                 lead.is_user = True
+
+    @api.depends("final_visume_url")
+    def _compute_completion_date(self):
+        for lead in self:
+            lead.visume_completion_date = False
+            if lead.final_visume_url:
+                lead.visume_completion_date = datetime.now()
+
+    @api.depends("is_visume_paid")
+    def _compute_endorsement_date(self):
+        for lead in self:
+            lead.visume_endorsement_date = False
+            if lead.is_visume_paid:
+                lead.visume_endorsement_date = datetime.now()
 
     ############################
     # Constrains and onchanges #
@@ -82,7 +127,7 @@ class CrmLead(models.Model):
                                      "Visume Reminders",
                                      (lead.x_studio_visume_schedule - timedelta(days=2)).date(),
                                      lead.user_id.id)
-    
+
     @api.constrains("skills_audit_sched")
     def _check_skills_audit_sched(self):
         for lead in self:
@@ -91,7 +136,7 @@ class CrmLead(models.Model):
                                      "Conduct Skills Audit",
                                      lead.skills_audit_sched.date(),
                                      lead.user_id.id)
-    
+
     @api.constrains("x_studio_visume_schedule")
     def _check_x_studio_visume_schedule(self):
         for lead in self:
@@ -213,3 +258,9 @@ class CrmLead(models.Model):
                 "res_model_id": res_model_id,
                 "date_deadline": date_deadline,
             })
+
+    def get_visume_paid_email_cc(self, team_id):
+        placement_stage = self.env["crm.stage"].search([("team_id","=",team_id),("name","=","Placement")], limit=1)
+        if not placement_stage:
+            raise MissingError("Cannot find placement stage!")
+        return ",".join(placement_stage.assignable_ids.mapped("email"))

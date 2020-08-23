@@ -20,19 +20,23 @@
                     </group>
                     <group>
                         <group string="Placement">
-                            <field name="position"/>
+                            <field name="nominated_position"/>
                             <field name="endorsement_date"/>
                             <field name="interview_date"/>
                             <field name="interview_result"/>
-                            <field name="job_offer_date" attrs="{'readonly': [('interview_result','!=','successful')]}"/>
-                            <field name="jo_acceptance_date" attrs="{'readonly': [('interview_result','!=','successful')]}"/>
+                            <field name="position" attrs="{'invisible': [('interview_result','!=','successful')]}"/>
+                            <field name="job_offer_date" attrs="{'invisible': [('interview_result','!=','successful')]}"/>
+                            <field name="jo_transmittal_date" attrs="{'invisible': [('interview_result','!=','successful')]}"/>
+                            <field name="jo_acceptance_date" attrs="{'invisible': [('interview_result','!=','successful')]}"/>
+                            <field name="annual_salary" attrs="{'invisible': [('interview_result','!=','successful')]}"/>
                         </group>
-                        <group string="Pre-Departure">
+                        <group string="Pre-Departure" name="predeparture">
                             <field name="start_date" attrs="{'readonly': [('interview_result','!=','successful')]}"/>
                             <field name="end_date" attrs="{'readonly': [('interview_result','!=','successful')]}"/>
-                            <field name="remarks"/>
                         </group>
                     </group>
+                    <separator string="Remarks"/>
+                    <field name="remarks" attrs="{'required': [('interview_result','=','not_yet_successful')]}"/>
                 </sheet>
             </form>
         </field>
@@ -45,11 +49,12 @@
             <tree>
                 <field name="venue_id"/>
                 <field name="partner_id"/>
-                <field name="position"/>
+                <field name="nominated_position"/>
                 <field name="supervisor_id"/>
                 <field name="endorsement_date"/>
                 <field name="interview_date"/>
                 <field name="interview_result"/>
+                <field name="position"/>
                 <field name="job_offer_date"/>
                 <field name="jo_acceptance_date"/>
                 <field name="start_date"/>

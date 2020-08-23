@@ -17,6 +17,8 @@ class CrmTraining(models.Model):
     ######################
     # Fields declaration #
     ######################
+    visa_start_date = fields.Date(string="Visa Start Date",
+        related="lead_id.visa_start_date")
     
     ##############################
     # Compute and search methods #

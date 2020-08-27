@@ -13,6 +13,9 @@
                 <field name="force_assign"/>
                 <field name="site_dependent"/>
             </field>
+            <field name="team_id" position="replace">
+                <field name="team_id" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>
+            </field>
         </field>
     </record>
     

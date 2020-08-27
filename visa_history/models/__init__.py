@@ -2,3 +2,4 @@
 
 from . import crm_lead
 from . import crm_lead_visa
+from . import crm_visa_type

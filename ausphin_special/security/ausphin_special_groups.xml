@@ -5,5 +5,9 @@
         <field name="name">Lead Qualifier</field>
         <field name="category_id" ref="base.module_category_hidden"/>
     </record>
+    <record id="group_document_auditor" model="res.groups">
+        <field name="name">Document Auditor</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+    </record>
 
 </odoo>

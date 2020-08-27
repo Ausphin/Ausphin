@@ -1,0 +1,20 @@
+<odoo>
+    <record id="diploma" model="crm.visa.type">
+        <field name="name">Diploma</field>
+    </record>
+    <record id="leadership" model="crm.visa.type">
+        <field name="name">Leadership</field>
+    </record>
+    <record id="working" model="crm.visa.type">
+        <field name="name">Work</field>
+    </record>
+    <record id="402" model="crm.visa.type">
+        <field name="name">402</field>
+    </record>
+    <record id="407" model="crm.visa.type">
+        <field name="name">407</field>
+    </record>
+    <record id="485" model="crm.visa.type">
+        <field name="name">485</field>
+    </record>
+</odoo>

@@ -1,0 +1,13 @@
+<odoo>
+    <record id="crm_lead_document_view_form_inherit" model="ir.ui.view">
+        <field name="name">crm.lead.document.view.form.inherit</field>
+        <field name="model">crm.lead.document</field>
+        <field name="inherit_id" ref="crm_documents.crm_lead_document_view_form"/>
+        <field name="arch" type="xml">
+            <field name="is_audited" position="replace">
+                <field name="is_audited" attrs="{'readonly': [('is_audited','=',True)]}" force_save="1" groups="ausphin_special.group_document_auditor"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

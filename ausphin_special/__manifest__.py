@@ -47,6 +47,7 @@
         'views/res_partner_views.xml',
         'views/crm_course_views.xml',
         'views/account_invoice_views.xml',
+        'views/crm_lead_document_views.xml',
         'wizards/crm_lead2opportunity_partner_views.xml',
     ],
     'qweb': [],

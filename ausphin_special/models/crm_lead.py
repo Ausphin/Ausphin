@@ -53,6 +53,7 @@ class CrmLead(models.Model):
     skills_audit_sched = fields.Datetime(string="Skills Audit Schedule")
     batch_num = fields.Char(string="Batch Number")
     class_start_date = fields.Date(string="Class Start Date")
+    class_end_date = fields.Date(string="Class End Date")
     final_visume_url = fields.Char(string="Final Visume")
     is_visume_paid = fields.Boolean(string="Visume Paid")
     gender = fields.Selection(string="Gender",
@@ -86,6 +87,8 @@ class CrmLead(models.Model):
     visume_endorsement_date= fields.Datetime(string="Endorsement Date",
         compute="_compute_endorsement_date")
     lost_remarks = fields.Char(string="Lost Remarks")
+    student_id = fields.Char(string="Student ID")
+    visume_created_by = fields.Char(string="Created By")
 
     ##############################
     # Compute and search methods #
@@ -205,8 +208,8 @@ class CrmLead(models.Model):
         return True
     
     def get_next_stage(self, stage):
-        if stage.name == "Leads" and stage.team_id.name == "Enrollment" and self.is_scholar == False:
-            enrollment_stage = stage.search([("name","=","Enrollment"),("team_id","=",self.team_id.id)])
+        if stage.name == "LLN" and stage.team_id.name == "Application" and self.is_scholar == False:
+            enrollment_stage = stage.search([("name","=","Letter of Offer"),("team_id","=",self.team_id.id)])
             if not enrollment_stage:
                 raise ValidationError("Enrollment stage not found!")
             return enrollment_stage[0]
@@ -218,8 +221,8 @@ class CrmLead(models.Model):
         return stage.browse(stage_ids[current_stage_index + 1])
     
     def get_prev_stage(self, stage):
-        if stage.name == "Enrollment" and stage.team_id.name == "Enrollment" and self.is_scholar == False:
-            leads_stage = stage.search([("name","=","Leads"),("team_id","=",self.team_id.id)])
+        if stage.name == "Letter of Offer" and stage.team_id.name == "Application" and self.is_scholar == False:
+            leads_stage = stage.search([("name","=","LLN"),("team_id","=",self.team_id.id)])
             if not leads_stage:
                 raise ValidationError("Leads stage not found!")
             return leads_stage[0]

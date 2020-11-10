@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+    <!-- Salary Rules Category -->
+
+        <record id="TAXI" model="hr.salary.rule.category">
+            <field name="name">Taxable Income</field>
+            <field name="code">TAXI</field>
+        </record>
+
+        <!-- <record id="SDED" model="hr.salary.rule.category">
+            <field name="code">SDED</field>
+            <field name="name">Source Deduction</field>
+            <field name="note">Used for after tax deductions at source</field>
+        </record>
+
+        <record id="VAC" model="hr.salary.rule.category">
+            <field name="code">VAC</field>
+            <field name="name">Vacation Calculation</field>
+        </record> -->
+
+    <!-- Update salary rules of hr_payroll -->
+
+        <record id="hr_payroll.hr_rule_basic" model="hr.salary.rule">
+            <field name="appears_on_payslip" eval="1"/>
+            <field name="category_id" ref="TAXI"/>
+        </record>
+
+        <record id="hr_payroll.hr_rule_taxable" model="hr.salary.rule">
+            <field name="appears_on_payslip" eval="0"/>
+        </record>
+
+        <record id="hr_payroll.hr_rule_net" model="hr.salary.rule">
+            <field name="amount_python_compute">result = categories.TAXI - categories.DED</field>
+        </record>
+       
+		<!-- Tax Records -->
+		<record id="res_partner_ato" model="res.partner">
+        	<field name="name">Australian Taxation Office</field>
+        	<field name="supplier">1</field>
+        	<field eval="0" name="customer"/>
+    	</record>
+    
+    	<record id="contrib_register_payg" model="hr.contribution.register">
+        	<field name="name">PAYG Register</field>
+        	<field name="partner_id" ref="res_partner_ato"/>
+    	</record>
+    	
+        <record id="rule_au_paygw" model="hr.salary.rule">
+            <field name="name">Less PAYG</field>
+            <field name="sequence" eval="150"/>
+            <field name="code">PAYGW</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="appears_on_payslip" eval="1"/>
+            <field name="active" eval="1"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">amount = worked_days.WORK100.number_of_hours 
+result = employee.get_value_details(contract,amount)
+            </field>
+            <field name="register_id" ref="contrib_register_payg"/>
+        </record>
+
+<!-- Wage Salary Rule for employees paid on an hourly basis -->      
+        <record id="rule_au_wage" model="hr.salary.rule">
+            <field name="name">Taxable Income</field>
+            <field name="sequence" eval="10"/>
+            <field name="code">TAXI</field>
+            <field name="category_id" ref="TAXI"/>
+            <field name="appears_on_payslip" eval="1"/>
+            <field name="active" eval="1"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+                result_qty = worked_days.WORK100.number_of_days
+                result = contract.wage
+            </field>
+        </record>
+
+
+        <record id="rule_take_home" model="hr.salary.rule">
+            <field name="name">Take home pay</field>
+            <field name="sequence" eval="10"/>
+            <field name="code">THP</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="appears_on_payslip" eval="1"/>
+            <field name="active" eval="1"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+                result = contract.wage
+            </field>
+        </record>
+
+        <record id="rule_superannuation" model="hr.salary.rule">
+            <field name="name">Superannuation</field>
+            <field name="sequence" eval="10"/>
+            <field name="code">SAN</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="appears_on_payslip" eval="1"/>
+            <field name="active" eval="1"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">amounthrs = worked_days.WORK100.number_of_hours 
+basicresult = (worked_days.WORK100.number_of_hours * (contract.rate_per_day))
+payg = employee.get_value_details(contract,amounthrs)
+lastresult = basicresult - payg
+result = (lastresult * contract.superannuation)/100
+            </field>
+        </record>
+
+        <record id="rule_leave_in_hours" model="hr.salary.rule">
+            <field name="name">Leave In Hours</field>
+            <field name="sequence" eval="10"/>
+            <field name="code">LEAVE</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="appears_on_payslip" eval="1"/>
+            <field name="active" eval="1"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+                result = contract.annual_leave_day + contract.sick_leave_day
+            </field>
+        </record>
+     
+     <!-- Australian Tax Schedules -->
+             <!-- FY 2019/19 Tax Scales -->
+         <record id="au_tax_table_2_2019" model="hr.payroll.paygw.table">
+            <field name="name">SCALE 2</field>
+            <field name="year">2018-2019</field>
+        </record>
+        <record id="au_tax_table_2_2019_line1" model="hr.payroll.paygw.table.line">
+            <field name="table_id" ref="au_tax_table_2_2019"/>
+            <field name="income">0</field>
+            <field name="coeff_a">0.0000</field>
+            <field name="coeff_b">0.0000</field>          
+        </record>
+        <record id="au_tax_table_2_2019_line2" model="hr.payroll.paygw.table.line">
+            <field name="table_id" ref="au_tax_table_2_2019"/>
+            <field name="income">359</field>
+            <field name="coeff_a">0.1900</field>
+            <field name="coeff_b">68.3462</field>          
+        </record>
+        <record id="au_tax_table_3_2019_line3" model="hr.payroll.paygw.table.line">
+            <field name="table_id" ref="au_tax_table_2_2019"/>
+            <field name="income">438</field>
+            <field name="coeff_a">0.2900</field>
+            <field name="coeff_b">112.1942</field>          
+        </record>
+        <record id="au_tax_table_4_2019_line4" model="hr.payroll.paygw.table.line">
+            <field name="table_id" ref="au_tax_table_2_2019"/>
+            <field name="income">548</field>
+            <field name="coeff_a">0.2100</field>
+            <field name="coeff_b">68.3465</field>          
+        </record>
+        <record id="au_tax_table_5_2019_line5" model="hr.payroll.paygw.table.line">
+            <field name="table_id" ref="au_tax_table_2_2019"/>
+            <field name="income">721</field>
+            <field name="coeff_a">0.21900</field>
+            <field name="coeff_b">74.8369</field>          
+        </record>
+        <record id="au_tax_table_6_2019_line6" model="hr.payroll.paygw.table.line">
+            <field name="table_id" ref="au_tax_table_2_2019"/>
+            <field name="income">865</field>
+            <field name="coeff_a">0.3477</field>
+            <field name="coeff_b">186.2119</field>          
+        </record>
+        <record id="au_tax_table_7_2019_line7" model="hr.payroll.paygw.table.line">
+            <field name="table_id" ref="au_tax_table_2_2019"/>
+            <field name="income">1282</field>
+            <field name="coeff_a">0.3450</field>
+            <field name="coeff_b">182.7504</field>          
+        </record>
+        <record id="au_tax_table_8_2019_line8" model="hr.payroll.paygw.table.line">
+            <field name="table_id" ref="au_tax_table_2_2019"/>
+            <field name="income">2307</field>
+            <field name="coeff_a">0.3900</field>
+            <field name="coeff_b">286.5965</field>          
+        </record>
+        <record id="au_tax_table_9_2019_line9" model="hr.payroll.paygw.table.line">
+            <field name="table_id" ref="au_tax_table_2_2019"/>
+            <field name="income">3461</field>
+            <field name="coeff_a">0.4700</field>
+            <field name="coeff_b">563.5196</field>          
+        </record>
+   </data>
+</odoo>

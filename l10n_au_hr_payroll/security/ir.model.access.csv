@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_hr_payroll_paygw_table,access_hr_payroll_paygw_table,model_hr_payroll_paygw_table,,1,1,1,1
+access_hr_payroll_paygw_table_line,access_hr_payroll_paygw_table_line,model_hr_payroll_paygw_table_line,,1,1,1,1

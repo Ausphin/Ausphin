@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <record id="crm_visa_type_view_tree" model="ir.ui.view">
+        <field name="name">crm.visa.type.view.tree</field>
+        <field name="model">crm.visa.type</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+    
+    <record id="crm_visa_type_view_form" model="ir.ui.view">
+        <field name="name">crm.visa.type.view.form</field>
+        <field name="model">crm.visa.type</field>
+        <field name="arch" type="xml">
+            <form string="Visa Type Form">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    
+    
+    <record id="crm_visa_type_action" model="ir.actions.act_window">
+        <field name="name">Visa Types</field>
+        <field name="res_model">crm.visa.type</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+    
+    <menuitem
+        id="crm_visa_type_menu"
+        name="Visa Types"
+        action="crm_visa_type_action"
+        parent="crm.crm_menu_config"
+        sequence="5"/>
+</odoo>

@@ -114,6 +114,8 @@
                     <field name="annual_leave_day"/>
                     <field name="sick_leave_day"/>
                     <field name="superannuation"/>
+                    <field name="ytd_date"/>
+                    
                   </group>
                 </group>
               </xpath> 
@@ -121,3 +123,4 @@
       </record>
   </data>
 </odoo>
+

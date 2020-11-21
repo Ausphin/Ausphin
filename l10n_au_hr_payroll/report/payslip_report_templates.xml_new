@@ -7,34 +7,38 @@
             </div>
             <div class="footer">
             </div>
-            <t t-call="web.external_layout_background">
+            <t t-call="web.external_layout_standard">
                 <style>
                     table,div{
-                        font-size: 14px;
+                        font-size: 11px;
                     }
                  </style>
                 <div class="row">
-                    <div class="col-xs-3" style="padding-top:1rem;padding-left:1rem;padding-bottom:1rem;padding-right:1rem;">
-                        <t t-if ="o and 'company_id' in o">
-                            <t t-set="company" t-value="o.company_id.sudo()"/>
-                        </t>
-                        <t t-if="not o or not 'company_id' in o">
-                          <t t-set="company" t-value="res_company"/>
-                        </t>
-                        <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" class="float-left" alt="Logo" style="width:75%"/>
-                       <!-- <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" alt="Logo"
-                        style="min-height:45px;"/> -->
-                    </div>
-                    <div class="col-xs-3">    
-                    </div>
-                    <div class="col-xs-6" style="background-color: #D3D3D3;margin-left:410px;width:300px;padding-top:1rem;padding-left:1rem;padding-bottom:1rem;">
+                    <table  style="padding-top:1rem;padding-left:1rem;padding-bottom:1rem;padding-right:1rem;text-align:center;" width="100%">
+                        <tr >
+                            <td style="padding-left:30%;text-align:center">
+                                <t t-if ="o and 'company_id' in o">
+                                <t t-set="company" t-value="o.company_id.sudo()"/>
+                                </t>
+                                <t t-if="not o or not 'company_id' in o">
+                                  <t t-set="company" t-value="res_company"/>
+                                </t>
+                                <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" class="float-left" alt="Logo" style="width:55%;text-align:center;"/>        
+                            </td>
+                        </tr>
+                    </table>
+                       
+                    
+                    <!-- <div class="col-xs-3">    
+                    </div> -->
+                    <!-- <div class="col-xs-6" style="background-color: #D3D3D3;margin-left:410px;width:300px;padding-top:1rem;padding-left:1rem;padding-bottom:1rem;">
                         <strong>PAID BY</strong><br/>
                         <span t-field="company.name"/><br/>
                         <span t-field="company.street"/><br/>
                         <span t-field="company.street2"/><br/>
                         <span t-field="company.country_id"/><span t-field="company.zip"/><br/>
                         <span t-field="company.phone"/><br/>
-                    </div>
+                    </div> -->
                 </div>
 
                 <div class="row"><br/>
@@ -43,7 +47,7 @@
                             <td width="5%"></td>
                             <td>
                                 <span t-field="o.employee_id.name"/><br/>
-                                <div t-field="o.employee_id.address_id"
+                                <div t-field="o.employee_id.address_home_id"
                                 t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'/>        
                             </td>
                             <td width="20%"></td>
@@ -51,9 +55,9 @@
                             <td width="14%"></td>
                             <td >
                                 <strong>EMPLOYEMENT DETAILS</strong><br/>
-                                Pay Frequency :<span t-field="o.contract_id.schedule_pay"/> <br/>
+                                Pay Frequency : <br/>
                                 Annual Salary :<span t-field="o.company_id.currency_id.symbol" /><span t-field="o.contract_id.annual_salary"/><br/>
-                                Employment Basis :<span t-field="o.contract_id.type_id.name"/> <br/>
+                                Employment Basis : <br/>
                             </td>
                         </tr>
                     </table>
@@ -61,15 +65,19 @@
                 </div>
                 <div class="page"> 
                     <br/>
-                    <table class="table table-borderless" width="100%" style="background-color: #D3D3D3;
-                        border:1px solid gray;">
+                    <table  width="100%" >
                         <tr>
-                            <td>Pay Period :-<span t-esc="o.date_from"/>-<span t-esc="o.date_to"/></td>
-                            <td>Payment Date :- <span t-esc="o.date_payment"/></td>
-                            <td>Total Earning :- 
-                                <span t-field="o.company_id.currency_id.symbol" /><t t-esc="o.get_total_earning()"  >
+                            <td>Pay Period:</td>
+                            <td>Payment Date:</td>
+                            <td>Total Earnings:</td>
+                            <td>Net Pay:</td>
+                        </tr>
+                        <tr style="font-weight: bold;">
+                            <td><span t-esc="o.date_from"/> to <br/><span t-esc="o.date_to"/></td>
+                            <td><span t-esc="o.date_payment"/></td>
+                            <td><span t-field="o.company_id.currency_id.symbol" /><t t-esc="o.get_total_earning()"  >
                             </t></td>
-                            <td>Net Pay:<span t-field="o.company_id.currency_id.symbol" /><t t-esc="o.get_total_net_earning()"  >
+                            <td><span t-field="o.company_id.currency_id.symbol" /><t t-esc="o.get_total_net_earning()"  >
                             </t>
                             </td>
                             
@@ -97,15 +105,15 @@
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td>THIS PAY</td>
-                            <td>YTD</td>
+                            <td><strong>THIS PAY</strong></td>
+                            <td><strong>YTD</strong></td>
                         </tr>
                     </table>
                     <table class="table table-borderless" style="margin-top:2rem;">
                         <tbody t-foreach="o.line_ids.filtered(lambda line: line.appears_on_payslip)" t-as="line">
                             <t t-if="line.code == 'BASIC'">
                                 <tr>
-                                    <td><b>SALARY &amp; WAGES</b></td>
+                                    <td>SALARY &amp; WAGES</td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
@@ -113,7 +121,7 @@
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <td></td>
+                                    <td>NO. OF HOURS</td>
                                     <td style="text-align:center;">RATE</td>
                                     <td></td>
                                     <td></td>
@@ -135,7 +143,7 @@
                                     <span t-field="line.total"/>
                                     </td>
                                 </tr>
-                                <tr style="background-color: #D3D3D3;border-bottom:1px solid #D3D3D3;border-top:1px solid gray;">
+                                <tr style="font-weight:bold;">
                                     <td></td>
                                     <td></td>
                                     <td></td>
@@ -156,7 +164,7 @@
                         <tbody t-foreach="o.line_ids.filtered(lambda line: line.appears_on_payslip)" t-as="line">
                             <t t-if="line.code == 'PAYGW'">
                                 <tr>
-                                    <td><b>TAX</b></td>
+                                    <td>TAX</td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
@@ -180,7 +188,7 @@
                                     <td style="text-align:right;"><span t-field="o.company_id.currency_id.symbol" /><span t-field="line.amount"/></td>
                                     <td style="text-align:right;"><span t-field="o.company_id.currency_id.symbol" /><span t-field="line.total"/></td>
                                 </tr>
-                                <tr style="background-color: #D3D3D3;border-bottom:1px solid #D3D3D3;border-top:1px solid gray;">
+                                <tr style="font-weight:bold;">
                                     <td></td>
                                     <td></td>
                                     <td></td>
@@ -204,7 +212,7 @@
                         <tbody t-foreach="o.line_ids.filtered(lambda line: line.appears_on_payslip)" t-as="line">
                             <t t-if="line.code == 'SAN'">
                                 <tr>
-                                    <td><b>SUPERANNUATION</b></td>
+                                    <td>SUPERANNUATION</td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
@@ -212,7 +220,7 @@
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td>SGC-AustralianSuper-107252426</td>
+                                    <td>SGC-AustralianSuper</td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
@@ -220,7 +228,7 @@
                                     <td style="text-align:right;"><span t-field="o.company_id.currency_id.symbol" /><span t-field="line.amount"/></td>
                                     <td style="text-align:right;"><span t-field="o.company_id.currency_id.symbol" /><span t-field="line.total"/></td>
                                 </tr>
-                                <tr style="background-color: #D3D3D3;border-bottom:1px solid #D3D3D3;border-top:1px solid #D3D3D3;">
+                                <tr style="font-weight:bold;">
                                     <td></td>
                                     <td></td>
                                     <td></td>
@@ -229,12 +237,32 @@
                                     <td style="text-align:right;"><span t-field="o.company_id.currency_id.symbol" /><span t-field="line.amount"/></td>
                                     <td style="text-align:right;"><span t-field="o.company_id.currency_id.symbol" /><t t-esc="o.get_ytd_details(line)"/></td>
                                 </tr>
+                                <tr style="font-weight:bold;">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td style="text-align:right;">NET PAY:</td>
+                                    <td style="text-align:right;"><span t-field="o.company_id.currency_id.symbol" /><t t-esc="o.get_total_net_earning()" /></td>
+                                    <td style="text-align:right;"></td>
+                                </tr>
                             </t>
                         </tbody>
                     </table>
+                    <!-- <table width="100%">
+                        <tr style="font-weight:bold;">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td style="text-align:right;">NET PAY:</td>
+                                    <td ><span t-field="o.company_id.currency_id.symbol" /><t t-esc="o.get_total_net_earning()" /></td>
+                                </tr>
+                    </table> -->
                     <t t-if="o.get_leave_details()">
-                    <table class="table table-borderless" style="margin-top:2rem;">
-                        <!-- <tbody t-foreach="o.line_ids.filtered(lambda line: line.appears_on_payslip)" t-as="line"> -->
+                    <table class="table table-borderless" >
+                       
                             
                                 <table class="table table-borderless" style="margin-top:2rem;" width="100%">
                                     <tr style="border-bottom:1px solid #D3D3D3;">
@@ -256,31 +284,30 @@
                                     </tr>
                                     
                                 </table>
-                            
-                               
-                            
-                        <!-- </tbody> -->
                     </table>
                     </t>
-                    <table class="table table-borderless" style="margin-top:2rem;">
+                    <table class="table table-borderless" >
                         
-                            <tr style="border-bottom:1px solid #D3D3D3;" >
-                               <td style="text-align:left;">PAYMENT DETAILS
+                            <tr style="" >
+                               <td style="border-top:1px solid #D3D3D3;border-left:1px solid #D3D3D3;border-right:1px solid #D3D3D3;text-align:left;" >PAYMENT DETAILS
                                </td>
-                                <td>REFERENCE</td>
-                                <td></td>
-                                <td style="text-align:right;">AMOUNT</td>
+                                
+                                <td style="border-top:1px solid #D3D3D3;border-left:1px solid #D3D3D3;border-right:1px solid #D3D3D3;text-align:right;"><strong>PAID BY</strong><br/></td>
                             </tr>
                             <tr>
-                                <td style="text-align:left;"><span t-field="o.employee_id.name"/><br/>
+                                <td style="border-bottom:1px solid #D3D3D3;border-left:1px solid #D3D3D3;border-right:1px solid #D3D3D3;text-align:left;"><span t-field="o.employee_id.name"/><br/>
                                 <t t-if="o.employee_id.bank_account_id">
                                     <span t-field="o.employee_id.bank_account_id.bank_id.name"/>-
                                     <span t-field="o.employee_id.bank_account_id.bank_id.bic"/>
                                 </t>
                                 </td>
-                                <td><span t-esc="o.name" /></td>
-                                <td></td>
-                                <td style="text-align:right;"><span t-field="o.company_id.currency_id.symbol" /><t t-esc="o.get_total_net_earning()" /></td>
+                                <td style="border-bottom:1px solid #D3D3D3;border-left:1px solid #D3D3D3;border-right:1px solid #D3D3D3;text-align:right;">
+                                    <span t-field="company.name"/><br/>
+                                    <span t-field="company.street"/><br/>
+                                    <span t-field="company.street2"/><br/>
+                                    <span t-field="company.country_id"/><span t-field="company.zip"/><br/>
+                                    <span t-field="company.phone"/><br/>
+                                </td>
                             </tr>
                         
                     </table>

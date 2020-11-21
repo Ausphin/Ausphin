@@ -11,7 +11,7 @@
     'website': 'http://www.spellboundss.com', 
 
     'category': 'Localization',
-    'version': '0.3',
+    'version': '0.4',
 
     'depends': ['hr_payroll','sale'],
 

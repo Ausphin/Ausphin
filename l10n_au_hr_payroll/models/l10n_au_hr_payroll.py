@@ -22,6 +22,18 @@ class HrPayslip(models.Model):
         return work_hours
 
     @api.model
+    def get_ytd_details(self,line):
+        amount = 0.0
+        if line.slip_id.contract_id:
+            if line.slip_id.contract_id.ytd_date:
+                ytd_date = line.slip_id.contract_id.ytd_date
+                payslip_lins = self.env['hr.payslip.line'].search([('slip_id.date_from','>=',ytd_date),('slip_id.employee_id','=',line.slip_id.employee_id.id),
+                    ('salary_rule_id','=',line.salary_rule_id.id),('slip_id.state','not in',['draft','cancel'])])
+                for li in payslip_lins:
+                    amount += li.total
+        
+        return amount
+    @api.model
     def get_leave_details(self):
         contract = self.contract_id
         
@@ -149,6 +161,20 @@ class HrEmployeeContract(models.Model):
     weeks_per_year = fields.Integer(string='Weeks',default=52)
     weekly_rate = fields.Float(string='Weekly Rate')
     weekly_hrs = fields.Integer(string='Number of Hrs on Week',default=40)
+    schedule_pay = fields.Selection([
+        ('monthly', 'Monthly'),
+        ('quarterly', 'Quarterly'),
+        ('fortnightly','Fortnightly'),
+        ('semi-annually', 'Semi-annually'),
+        ('annually', 'Annually'),
+        ('weekly', 'Weekly'),
+        ('bi-weekly', 'Bi-weekly'),
+        ('bi-monthly', 'Bi-monthly'),
+
+    ], string='Scheduled Pay', index=True, default='monthly',
+    help="Defines the frequency of the wage payment.")
+    ytd_date = fields.Date("YTD Date")
+
 
 
 

@@ -19,7 +19,7 @@
 
         <report id="report_payslip_employee"
             model="hr.payslip"
-            string="Payslip Report"
+            string="PAYG/YTD Payslip"
             name="l10n_au_hr_payroll.print_payslip_report_template"
             file="l10n_au_hr_payroll.print_payslip_report_template"
             report_type="qweb-pdf"

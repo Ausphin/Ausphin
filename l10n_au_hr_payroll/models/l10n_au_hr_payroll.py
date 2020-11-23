@@ -3,14 +3,12 @@
 
 from odoo import api, fields, models, _
 from datetime import date, datetime, time
-import math
 from pytz import timezone
 
 class HrPayslip(models.Model):
     _inherit = 'hr.payslip'
 
     date_payment = fields.Date(string="Payment Date")
-    # day_leave_intervals = contract.employee_id.list_leaves(day_from, day_to, calendar=contract.resource_calendar_id)
 
     @api.model
     def get_hrs(self):

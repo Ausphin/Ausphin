@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <record id="hr_payroll_paygw_table_tree" model="ir.ui.view">
+      <field name="name">hr.payroll.paygw.table.tree</field>
+      <field name="model">hr.payroll.paygw.table</field>
+      <field name="type">tree</field>
+      <field name="arch" type="xml">
+          <tree string="Australian Tax Table">
+            <field name="name"/>
+            <field name="year"/>
+          </tree>
+      </field>
+    </record>
+
+    <record id="hr_payslip_payment_date_extend" model="ir.ui.view">
+      <field name="name">hr.payslip</field>
+      <field name="model">hr.payslip</field>
+      <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form" />
+      <field name="arch" type="xml">
+        <field name="struct_id" position="after">
+          <field name="date_payment" />
+        </field>
+      </field>
+    </record>
+
+
+    <record id="hr_payroll_paygw_table_form" model="ir.ui.view">
+      <field name="name">hr.payroll.paygw.table.form</field>
+      <field name="model">hr.payroll.paygw.table</field>
+      <field name="type">form</field>
+      <field name="arch" type="xml">
+        <form string="Australian PAYGW Table">
+          <sheet>
+              <group>
+                <group>
+                  <field name="name"/>
+                  <field name="year"/>
+                </group>
+              </group>
+              <notebook>
+                <page string="PAYGW Table Line">
+                    <field name="line_ids">
+                      <tree string="PAYGW Table Line" editable="bottom">
+                          <field name="income"/>
+                          <field name="coeff_a"/>
+                          <field name="coeff_b"/>
+                      </tree>
+                    </field>
+                </page>
+              </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record id="action_hr_payroll_paygw_table" model="ir.actions.act_window">
+        <field name="name">Australian Tax Table</field>
+        <field name="res_model">hr.payroll.paygw.table</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+  
+    <menuitem id="menu_hr_payroll_paygw_table_tree" 
+      action="action_hr_payroll_paygw_table" 
+      parent="hr_payroll.menu_hr_payroll_configuration"/>
+
+
+    <record id="hr_employee_view_form_au" model="ir.ui.view">
+          <field name="name">hr.employee.view.form.au</field>
+          <field name="model">hr.employee</field>
+          <field name="type">form</field>
+          <field name="inherit_id" ref="hr.view_employee_form"/>
+          <field name="arch" type="xml">
+              <notebook position="inside">
+                  <page string="Australian Payroll">
+                    <group>
+                        <group string="Tax">
+                            <field name="taxtable"/>
+                        </group>
+                    </group>
+                  </page>
+              </notebook>
+          </field>
+      </record>
+
+      <record id="hr_employee_contract_view_form_au" model="ir.ui.view">
+          <field name="name">hr.contract.view.form.au</field>
+          <field name="model">hr.contract</field>
+          <field name="type">form</field>
+          <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+          <field name="arch" type="xml">
+             <group name="salary_and_advantages" position="replace">
+               <group name="salary_and_advantages" string="" invisible="1">
+                  <label for="wage"/>
+                  <div class="o_row" name="wage">
+                      <field name="wage" nolabel="1"/>
+                      <span>/ month</span>
+                  </div>
+                  <field name="advantages" nolabel="1" placeholder="Advantages..." colspan="2" invisible="1"/>
+              </group>
+             </group>
+              <xpath expr="//page[@name='information']" position="inside">
+                <group>
+                  <group>
+                    <field name="annual_salary"/>
+                    <field name="weeks_per_year"/>
+                    <field name="weekly_hrs"/>
+                    <field name="weekly_rate"/>
+                    <field name="rate_per_day"/>
+                    
+                  </group>
+                  <group>
+                    <field name="annual_leave_day"/>
+                    <field name="sick_leave_day"/>
+                    <field name="superannuation"/>
+                    <field name="ytd_date"/>
+                    
+                  </group>
+                </group>
+              </xpath> 
+          </field>
+      </record>
+  </data>
+</odoo>
+

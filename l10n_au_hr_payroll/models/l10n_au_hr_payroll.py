@@ -116,6 +116,8 @@ class HrPayrollPaygwScale(models.Model):
     name = fields.Char('Name', size=128)
     year = fields.Selection([('2018-2019','2018-2019'),('2019-2020','2019-2020'),('2020-2021','2020-2021'),('2021-2022','2021-2022'),('2022-2023','2022-2023'),('2023-2024','2023-2024'),('2024-2025','2024-2025')],string='Year')
     line_ids = fields.One2many('hr.payroll.paygw.table.line', 'table_id', 'Lines')
+    older_line_ids = fields.One2many('hr.payroll.paygw.older.table.line', 'table_id', 'Lines', copy=True)
+    older = fields.Boolean(string='2019 Older Tax*?', default=False)
 
 class HrPayrollPaygwTableLine(models.Model):
     _name = 'hr.payroll.paygw.table.line'
@@ -126,13 +128,25 @@ class HrPayrollPaygwTableLine(models.Model):
     coeff_a = fields.Float('Coefficient (a)', digits=(16, 4))
     coeff_b = fields.Float('Coefficient (b)', digits=(16, 4))
 
+class HrPayrollPaygwOlderTableLine(models.Model):
+    _name = 'hr.payroll.paygw.older.table.line'
+    _description = 'PAYG Older Line'
+    
+    table_id = fields.Many2one('hr.payroll.paygw.table', 'Table')
+    income = fields.Float(string="Earning", digits=(16, 2), required=True)
+    with_tax_free = fields.Float('With Tax Free', digits=(16, 4))
+    no_tax_free = fields.Float('No Tax Free', digits=(16, 4))
+    
+
 class HrEmployee(models.Model):
     _inherit = 'hr.employee'
         
 
-    taxtable = fields.Many2one('hr.payroll.paygw.table','Tax Schedule')
+    taxtable = fields.Many2one('hr.payroll.paygw.table','2020 Tax*')
+    taxtable_older = fields.Many2one('hr.payroll.paygw.table','2019 Tax*')
 
-    def get_value_details(self,contract,amount):
+    def get_value_details(self, contract, amount, payslip):
+        date_time_obj = datetime.strptime(str(payslip), '%Y-%m-%d')
         contract = str(contract)
         contracta = contract.replace('hr.contract(','')
         contractb = contracta.replace(',)','')
@@ -142,12 +156,17 @@ class HrEmployee(models.Model):
         amount = (contract_id.rate_per_day * amount / 2) 
         paygresult = 0
         amount = int(amount)
-        scales = self.taxtable
-        amount += 0.99
-        
-        tableline_id = self.env['hr.payroll.paygw.table.line'].search([('table_id','=',self.taxtable.id),('income','<=',amount)],limit=1,order='id desc')
-        paygresult = (amount * tableline_id.coeff_a) - tableline_id.coeff_b
-        result = round(paygresult)*2
+        if date_time_obj.year <= 2020 and date_time_obj.month <= 10:
+            scales = self.taxtable
+            amount += 0.99
+            tableline_id = self.env['hr.payroll.paygw.table.line'].search([('table_id','=',self.taxtable.id),('income','<=',amount)],limit=1,order='id desc')
+            paygresult = (amount * tableline_id.coeff_a) - tableline_id.coeff_b
+            result = round(paygresult)*2
+        else:
+            scales = self.taxtable_older
+            tableline_id = self.env['hr.payroll.paygw.older.table.line'].search([('table_id','=',self.taxtable.id),('income','<=',amount)],limit=1,order='id desc')
+            paygresult = tableline_id.with_tax_free
+            result = round(paygresult)*2
         return result
 
 class HrEmployeeContract(models.Model):

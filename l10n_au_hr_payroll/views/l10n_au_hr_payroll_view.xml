@@ -36,11 +36,19 @@
                 <group>
                   <field name="name"/>
                   <field name="year"/>
+                  <field name="older"/>
                 </group>
               </group>
               <notebook>
                 <page string="PAYGW Table Line">
-                    <field name="line_ids">
+                    <field name="older_line_ids" attrs="{'invisible':[('older','=',False)]}">
+                      <tree string="PAYGW Table Line" editable="bottom">
+                          <field name="income"/>
+                          <field name="with_tax_free"/>
+                          <field name="no_tax_free"/>
+                      </tree>
+                    </field>
+                    <field name="line_ids" attrs="{'invisible':[('older','=',True)]}">
                       <tree string="PAYGW Table Line" editable="bottom">
                           <field name="income"/>
                           <field name="coeff_a"/>
@@ -77,6 +85,7 @@
                     <group>
                         <group string="Tax">
                             <field name="taxtable"/>
+                            <field name="taxtable_older"/>
                         </group>
                     </group>
                   </page>

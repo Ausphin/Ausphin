@@ -157,7 +157,7 @@ class HrEmployee(models.Model):
         if date_time_obj.year <= 2020 and date_time_obj.month <= 10:
             amount = (contract_id.rate_per_day * amount)
             scales = self.taxtable_older
-            tableline_id = self.env['hr.payroll.paygw.older.table.line'].search([('table_id','=',self.taxtable.id),('income','<=',amount)],limit=1,order='id desc')
+            tableline_id = self.env['hr.payroll.paygw.older.table.line'].search([('table_id','=',self.taxtable_older.id),('income','<=',amount)],limit=1,order='id desc')
             paygresult = tableline_id.with_tax_free
             result = paygresult
             

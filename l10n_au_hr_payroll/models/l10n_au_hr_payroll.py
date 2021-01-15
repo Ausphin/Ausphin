@@ -28,7 +28,8 @@ class HrPayslip(models.Model):
             if line.slip_id.contract_id.ytd_date:
                 ytd_date = line.slip_id.contract_id.ytd_date
                 payslip_lins = self.env['hr.payslip.line'].search([('slip_id.date_from','>=',ytd_date),('slip_id.employee_id','=',line.slip_id.employee_id.id),
-                    ('salary_rule_id','=',line.salary_rule_id.id),('slip_id.state','not in',['draft','cancel'])])
+                    ('salary_rule_id','=',line.salary_rule_id.id),('slip_id.state','not in',['draft','cancel']),
+                    ('slip_id.date_from','<=',line.slip_id.date_from)])
                 for li in payslip_lins:
                     amount += li.total
         

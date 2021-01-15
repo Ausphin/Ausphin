@@ -34,40 +34,105 @@ class HrPayslip(models.Model):
                     amount += li.total
         
         return amount
+
     @api.model
     def get_leave_details(self):
         contract = self.contract_id
-        
         day_from = datetime.combine(fields.Date.from_string(self.date_from), time.min)
         day_to = datetime.combine(fields.Date.from_string(self.date_to), time.max)
-        day_leave_intervals = contract.employee_id.list_leaves(day_from, day_to, calendar=contract.resource_calendar_id)        
-        current_leave_struct = {}
-        leaves = {}
-        calendar = contract.resource_calendar_id
-        tz = timezone(calendar.tz)
-        for day, hours, leave in day_leave_intervals:
-                holiday = leave[:1].holiday_id
-                current_leave_struct = leaves.setdefault(holiday.holiday_status_id, {
-                    'name': holiday.holiday_status_id.name or _('Global Leaves'),
-                    'sequence': 5,
-                    'code': holiday.holiday_status_id.name or 'GLOBAL',
-                    'number_of_days': 0.0,
-                    'number_of_hours': 0.0,
-                    'contract_id': contract.id,
-                })
-                current_leave_struct['number_of_hours'] += hours
-                work_hours = calendar.get_work_hours_count(
-                    tz.localize(datetime.combine(day, time.min)),
-                    tz.localize(datetime.combine(day, time.max)),
-                    compute_leaves=False,
-                )
-                if work_hours:
-                    current_leave_struct['number_of_days'] += hours / work_hours
-                    current_leave_struct['balance'] = contract.employee_id.remaining_leaves
-        if current_leave_struct:
-            return [current_leave_struct]
-        else:
-            return []
+        
+        from_date = str(day_to.year)+ "-01-01"
+        end_date = str(day_to.year)+ "-12-31"
+
+        # used sick leave
+        used_sick_leave = self.env['hr.leave'].search([('holiday_status_id.sick_leav','=',True),
+            ('date_from','>=',from_date),
+            # ('date_to','<=',self.date_to),
+            ('employee_id','=',self.employee_id.id)
+            ])
+        used_sick_leave_count = 0
+        for sick in used_sick_leave:
+            if sick.date_to.month <= self.date_to.month:
+                used_sick_leave_count += sick.number_of_days_display
+
+        # use_annual_leave
+        used_annual_leave = self.env['hr.leave'].search([('holiday_status_id.annual_leav','=',True),
+            ('date_from','>=',from_date),
+            # ('date_to','<=',self.date_to),
+            ('employee_id','=',self.employee_id.id)
+            ])
+        used_annual_leave_count = 0
+        for sick in used_annual_leave:
+            if sick.date_to.month <= self.date_to.month:
+                used_annual_leave_count += sick.number_of_days_display
+
+        # allocated sick leave
+        leave_Allocated = self.env['hr.leave.allocation'].search([('holiday_status_id.sick_leav','=',True),
+            ('holiday_status_id.validity_start','>=',from_date),
+            ('holiday_status_id.validity_stop','<=',end_date),
+            ('employee_id','=',self.employee_id.id)
+            ])
+        leave_details = []
+        allocate_leave_count = 0
+        for sick in leave_Allocated:
+            if sick.accrual:
+                allocate_leave_count += sick.number_of_days_display
+            elif sick.date_to.month <= day_to.month and sick.date_to.year == day_to.year:
+                allocate_leave_count += sick.number_of_days_display
+
+        leave_details.append({'Name':'Sick Leave','totol_balance':allocate_leave_count-used_sick_leave_count,'totol_used':used_sick_leave_count})
+
+        # annual leave
+        annual_leave_Allocated = self.env['hr.leave.allocation'].search([('holiday_status_id.annual_leav','=',True),
+            ('holiday_status_id.validity_start','>=',from_date),
+            ('holiday_status_id.validity_stop','<=',end_date),
+            ('employee_id','=',self.employee_id.id)
+            ])
+        annual_allocate_leave_count = 0
+        for sick in annual_leave_Allocated:
+            if sick.accrual:
+                annual_allocate_leave_count += sick.number_of_days_display
+            elif sick.date_to.month == day_to.month and sick.date_to.year == day_to.year:
+                annual_allocate_leave_count += sick.number_of_days_display
+            
+            
+        leave_details.append({'Name':'Annual Leave','totol_balance':annual_allocate_leave_count-used_annual_leave_count,'totol_used':used_annual_leave_count})
+
+
+        return leave_details
+
+        # day_leave_intervals = contract.employee_id.list_leaves(day_from, day_to, calendar=contract.resource_calendar_id)        
+        
+        # day_from = datetime.combine(fields.Date.from_string(self.date_from), time.min)
+        # day_to = datetime.combine(fields.Date.from_string(self.date_to), time.max)
+        # day_leave_intervals = contract.employee_id.list_leaves(day_from, day_to, calendar=contract.resource_calendar_id)        
+        # current_leave_struct = {}
+        # leaves = {}
+        # calendar = contract.resource_calendar_id
+        # tz = timezone(calendar.tz)
+        # for day, hours, leave in day_leave_intervals:
+        #         holiday = leave[:1].holiday_id
+        #         current_leave_struct = leaves.setdefault(holiday.holiday_status_id, {
+        #             'name': holiday.holiday_status_id.name or _('Global Leaves'),
+        #             'sequence': 5,
+        #             'code': holiday.holiday_status_id.name or 'GLOBAL',
+        #             'number_of_days': 0.0,
+        #             'number_of_hours': 0.0,
+        #             'contract_id': contract.id,
+        #         })
+        #         current_leave_struct['number_of_hours'] += hours
+        #         work_hours = calendar.get_work_hours_count(
+        #             tz.localize(datetime.combine(day, time.min)),
+        #             tz.localize(datetime.combine(day, time.max)),
+        #             compute_leaves=False,
+        #         )
+        #         if work_hours:
+        #             current_leave_struct['number_of_days'] += hours / work_hours
+        #             current_leave_struct['balance'] = contract.employee_id.remaining_leaves
+        # if current_leave_struct:
+        #     return [current_leave_struct]
+        # else:
+        #     return []
         
 
 
@@ -191,8 +256,6 @@ class HrEmployeeContract(models.Model):
         
     annual_salary = fields.Float('Annual Salary')
     superannuation = fields.Float('Superannuation')
-    annual_leave_day = fields.Float('Annual Leave (days)')
-    sick_leave_day = fields.Float('Sick Leave/Carer Leave (days)')
     rate_per_day = fields.Float(string='Rate / hrs',digits=(16, 4))
     weeks_per_year = fields.Integer(string='Weeks',default=52)
     weekly_rate = fields.Float(string='Weekly Rate')
@@ -210,7 +273,6 @@ class HrEmployeeContract(models.Model):
     ], string='Scheduled Pay', index=True, default='monthly',
     help="Defines the frequency of the wage payment.")
     ytd_date = fields.Date("YTD Date")
-
 
 
 

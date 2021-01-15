@@ -13,7 +13,7 @@
     'category': 'Localization',
     'version': '0.1',
 
-    'depends': ['hr_payroll','sale'],
+    'depends': ['hr_payroll','sale','hr_holidays'],
 
     'data':[
         'data/l10n_au_hr_payroll_data.xml',

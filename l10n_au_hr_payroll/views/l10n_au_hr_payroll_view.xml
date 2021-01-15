@@ -120,8 +120,6 @@
                     
                   </group>
                   <group>
-                    <field name="annual_leave_day"/>
-                    <field name="sick_leave_day"/>
                     <field name="superannuation"/>
                     <field name="ytd_date"/>
                     
@@ -130,6 +128,35 @@
               </xpath> 
           </field>
       </record>
+
+      <record id="edit_holiday_status_form_leave_type_extend" model="ir.ui.view">
+          <field name="name">hr.leave.type.view.form.au</field>
+          <field name="model">hr.leave.type</field>
+          <field name="type">form</field>
+          <field name="inherit_id" ref="hr_holidays.edit_holiday_status_form"/>
+          <field name="arch" type="xml">
+            <field name="allocation_type" position="after" >
+              <field name="sick_leav" />
+              <field name="annual_leav" />
+            </field>
+          </field>
+      </record>
+
+      <record id="edit_holiday_status_form_leave_allocation_type_extend" model="ir.ui.view">
+          <field name="name">hr.leave.allocation.view.form.au</field>
+          <field name="model">hr.leave.allocation</field>
+          <field name="type">form</field>
+          <field name="inherit_id" ref="hr_holidays.hr_leave_allocation_view_form_manager"/>
+          <field name="arch" type="xml">
+            <field name="accrual" position="after" >
+              <field name="date_from" attrs="{'invisible':[('accrual','=',True)]}"/>
+              <field name="date_to" attrs="{'invisible':[('accrual','=',True)]}"/>
+            </field>
+          </field>
+      </record>
+
+
+      
   </data>
 </odoo>
 

@@ -253,20 +253,21 @@ class HrEmployee(models.Model):
                 tableline_id = self.env['hr.payroll.paygw.older.table.line'].search([('table_id','=',self.taxtable_older.id),('income','<=',amount)],limit=1,order='id desc')
                 paygresult = tableline_id.with_tax_free
                 result = paygresult
-            elif date_time_obj.year == 2020 and date_time_obj.month == 10 and date_time_obj.day > 13:
-                amount = (contract_id.rate_per_day * amount / 2) 
-                amount = int(amount)
-                scales = self.taxtable
-                amount += 0.99
-                tableline_id = self.env['hr.payroll.paygw.table.line'].search([('table_id','=',self.taxtable.id),('income','<=',amount)],limit=1,order='id desc')
-                paygresult = (amount * tableline_id.coeff_a) - tableline_id.coeff_b
-                result = round(paygresult)*2
             else:
-                amount = (contract_id.rate_per_day * amount)
-                scales = self.taxtable_older
-                tableline_id = self.env['hr.payroll.paygw.older.table.line'].search([('table_id','=',self.taxtable_older.id),('income','<=',amount)],limit=1,order='id desc')
-                paygresult = tableline_id.with_tax_free
-                result = paygresult
+                if date_time_obj.year >= 2020 and date_time_obj.month >= 10:
+                    amount = (contract_id.rate_per_day * amount / 2) 
+                    amount = int(amount)
+                    scales = self.taxtable
+                    amount += 0.99
+                    tableline_id = self.env['hr.payroll.paygw.table.line'].search([('table_id','=',self.taxtable.id),('income','<=',amount)],limit=1,order='id desc')
+                    paygresult = (amount * tableline_id.coeff_a) - tableline_id.coeff_b
+                    result = round(paygresult)*2
+                else:
+                    amount = (contract_id.rate_per_day * amount)
+                    scales = self.taxtable_older
+                    tableline_id = self.env['hr.payroll.paygw.older.table.line'].search([('table_id','=',self.taxtable_older.id),('income','<=',amount)],limit=1,order='id desc')
+                    paygresult = tableline_id.with_tax_free
+                    result = paygresult
         else:
             amount = (contract_id.rate_per_day * amount / 2) 
             amount = int(amount)

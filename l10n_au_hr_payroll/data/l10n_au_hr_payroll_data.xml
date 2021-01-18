@@ -85,7 +85,6 @@
             <field name="amount_select">code</field>
             <field name="amount_python_compute">amounthrs = payslip.working_hrs_count
 basicresult = payslip.working_hrs_count * contract.rate_per_day
-payg = employee.get_value_details(contract,amounthrs,payslip.date_from)
 lastresult = basicresult
 result = (lastresult * contract.superannuation)/100
             </field>
@@ -101,8 +100,8 @@ result = (lastresult * contract.superannuation)/100
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">
-                amount = payslip.working_hrs_count 
-                result = employee.get_value_details(contract,amount,payslip.date_from)
+                amount = payslip.working_hrs_count
+                result = employee.get_value_details(contract,amount,payslip.date_from,payslip.date_to)
             </field>
             <field name="register_id" ref="contrib_register_payg"/>
         </record>

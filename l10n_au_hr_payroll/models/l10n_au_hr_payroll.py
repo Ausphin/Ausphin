@@ -24,6 +24,7 @@ class HrPayslip(models.Model):
     @api.model
     def get_ytd_details(self,line):
         amount = 0.0
+        amount_final = 0.0
         if line.slip_id.contract_id:
             if line.slip_id.contract_id.ytd_date:
                 ytd_date = line.slip_id.contract_id.ytd_date
@@ -32,8 +33,8 @@ class HrPayslip(models.Model):
                     ('slip_id.date_from','<=',line.slip_id.date_from)])
                 for li in payslip_lins:
                     amount += li.total
-        
-        return amount
+        amount_final = format(amount, '.2f')
+        return amount_final
 
     @api.model
     def get_leave_details(self):
@@ -92,7 +93,7 @@ class HrPayslip(models.Model):
         for sick in annual_leave_Allocated:
             if sick.accrual:
                 annual_allocate_leave_count += sick.number_of_days_display
-            elif sick.date_to.month == day_to.month and sick.date_to.year == day_to.year:
+            elif sick.date_to.month <= day_to.month and sick.date_to.year == day_to.year:
                 annual_allocate_leave_count += sick.number_of_days_display
             
             
@@ -148,7 +149,8 @@ class HrPayslip(models.Model):
                 if line.category_id.code == "NET":
                     net_amount = line.total
 
-        return basic_amount
+        basic_amount_final = format(basic_amount, '.2f')
+        return basic_amount_final
 
     @api.model
     def get_total_net_earning(self):
@@ -162,7 +164,8 @@ class HrPayslip(models.Model):
                 if line.category_id.code == "NET":
                     net_amount = line.total
 
-        return net_amount
+        net_amount_final = format(net_amount, '.2f')
+        return net_amount_final
         
 
 

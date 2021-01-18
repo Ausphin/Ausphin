@@ -42,21 +42,7 @@
         	<field name="partner_id" ref="res_partner_ato"/>
     	</record>
     	
-        <record id="rule_au_paygw" model="hr.salary.rule">
-            <field name="name">Less PAYG</field>
-            <field name="sequence" eval="150"/>
-            <field name="code">PAYGW</field>
-            <field name="category_id" ref="hr_payroll.DED"/>
-            <field name="appears_on_payslip" eval="1"/>
-            <field name="active" eval="1"/>
-            <field name="condition_select">none</field>
-            <field name="amount_select">code</field>
-            <field name="amount_python_compute">amount = worked_days.WORK100.number_of_hours 
-result = employee.get_value_details(contract,amount,payslip.date_from)
-            </field>
-            <field name="register_id" ref="contrib_register_payg"/>
-        </record>
-
+        
 <!-- Wage Salary Rule for employees paid on an hourly basis -->      
         <record id="rule_au_wage" model="hr.salary.rule">
             <field name="name">Taxable Income</field>
@@ -97,12 +83,28 @@ result = employee.get_value_details(contract,amount,payslip.date_from)
             <field name="active" eval="1"/>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">amounthrs = worked_days.WORK100.number_of_hours 
-basicresult = (worked_days.WORK100.number_of_hours * (contract.rate_per_day))
+            <field name="amount_python_compute">amounthrs = payslip.working_hrs_count
+basicresult = payslip.working_hrs_count * contract.rate_per_day
 payg = employee.get_value_details(contract,amounthrs,payslip.date_from)
 lastresult = basicresult
 result = (lastresult * contract.superannuation)/100
             </field>
+        </record>
+
+        <record id="rule_au_paygw" model="hr.salary.rule">
+            <field name="name">Less PAYG</field>
+            <field name="sequence" eval="150"/>
+            <field name="code">PAYGW</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="appears_on_payslip" eval="1"/>
+            <field name="active" eval="1"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+                amount = payslip.working_hrs_count 
+                result = employee.get_value_details(contract,amount,payslip.date_from)
+            </field>
+            <field name="register_id" ref="contrib_register_payg"/>
         </record>
 
         <record id="rule_leave_in_hours" model="hr.salary.rule">

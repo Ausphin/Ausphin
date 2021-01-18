@@ -131,7 +131,6 @@
                                     <td style="text-align:right;"><span t-field="o.company_id.currency_id.symbol" /><span t-field="o.contract_id.rate_per_day"/></td>
                                     <td style="text-align:right;"><span t-field="o.company_id.currency_id.symbol" /><span t-field="line.amount"/></td>
                                     <td style="text-align:right;"><span t-field="o.company_id.currency_id.symbol" />
-                                    
                                     <span t-field="line.total"/>
                                     </td>
                                 </tr>
@@ -147,7 +146,7 @@
                                     <td></td>
                                     <td style="text-align:right;">TOTAL</td>
                                     <td style="text-align:right;"><span t-field="o.company_id.currency_id.symbol" /><span t-field="line.amount"/></td>
-                                    <td style="text-align:right;"><span t-field="o.company_id.currency_id.symbol" /><t t-esc="o.get_ytd_details(line)"/></td>
+                                    <td style="text-align:right;"><span t-field="o.company_id.currency_id.symbol" /><t t-esc="'{:,.2f}'.format(o.get_ytd_details(line))"/></td>
                                 </tr>
                             </t>
                         </tbody>
@@ -195,7 +194,8 @@
                                     <td></td>
                                     <td style="text-align:right;">TOTAL</td>
                                     <td style="text-align:right;"><span t-field="o.company_id.currency_id.symbol" /><span t-field="line.amount"/></td>
-                                    <td style="text-align:right;"><span t-field="o.company_id.currency_id.symbol" /><t t-esc="o.get_ytd_details(line)"/></td>
+                                    <td style="text-align:right;"><span t-field="o.company_id.currency_id.symbol" />
+                                    <t t-esc="'{:,.2f}'.format(o.get_ytd_details(line))"/></td>
                                 </tr>
                             </t>
                         </tbody>
@@ -227,7 +227,7 @@
                                     <td></td>
                                     <td style="text-align:right;">TOTAL</td>
                                     <td style="text-align:right;"><span t-field="o.company_id.currency_id.symbol" /><span t-field="line.amount"/></td>
-                                    <td style="text-align:right;"><span t-field="o.company_id.currency_id.symbol" /><t t-esc="o.get_ytd_details(line)"/></td>
+                                    <td style="text-align:right;"><span t-field="o.company_id.currency_id.symbol" /><t t-esc="'{:,.2f}'.format(o.get_ytd_details(line))"/></td>
                                 </tr>
                             </t>
                         </tbody>

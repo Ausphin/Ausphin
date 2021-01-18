@@ -9,7 +9,11 @@ from pytz import timezone
 class HrPayslip(models.Model):
     _inherit = 'hr.payslip'
 
+    
     date_payment = fields.Date(string="Payment Date")
+    working_days_count = fields.Float("Working Days Count", compute="get_total_working_hrs")
+    working_hrs_count = fields.Float("Working Hrs Count", compute="get_total_working_hrs")
+    
     # day_leave_intervals = contract.employee_id.list_leaves(day_from, day_to, calendar=contract.resource_calendar_id)
 
     @api.model
@@ -33,7 +37,7 @@ class HrPayslip(models.Model):
                     ('slip_id.date_from','<=',line.slip_id.date_from)])
                 for li in payslip_lins:
                     amount += li.total
-        amount_final = format(amount, '.2f')
+        amount_final = float(format(amount, '.2f'))
         return amount_final
 
     @api.model
@@ -149,7 +153,7 @@ class HrPayslip(models.Model):
                 if line.category_id.code == "NET":
                     net_amount = line.total
 
-        basic_amount_final = format(basic_amount, '.2f')
+        basic_amount_final = float(format(basic_amount, '.2f'))
         return basic_amount_final
 
     @api.model
@@ -164,8 +168,27 @@ class HrPayslip(models.Model):
                 if line.category_id.code == "NET":
                     net_amount = line.total
 
-        net_amount_final = format(net_amount, '.2f')
+        net_amount_final = float(format(net_amount, '.2f'))
         return net_amount_final
+
+
+    def get_total_working_hrs(self):
+        days = 0.0
+        hours = 0.0
+        for line in self.worked_days_line_ids:
+            if line.code == "WORK100":
+                days += line.number_of_days
+                hours += line.number_of_hours
+            else:
+                if "Sick" in line.code or "Sick" in line.name or "SL" in line.code:
+                    days += line.number_of_days
+                    hours += line.number_of_hours
+                if "Annual" in line.code or "Annual" in line.name or "AL" in line.code:
+                    days += line.number_of_days
+                    hours += line.number_of_hours
+        self.working_days_count = days
+        self.working_hrs_count = hours
+        
         
 
 
@@ -284,3 +307,4 @@ class HrEmployeeContract(models.Model):
         for rec in self:
             rec.weekly_rate = (rec.annual_salary / rec.weeks_per_year)
             rec.rate_per_day = (rec.weekly_rate / rec.weekly_hrs)
+

@@ -20,6 +20,8 @@
       <field name="arch" type="xml">
         <field name="struct_id" position="after">
           <field name="date_payment" />
+          <field name="working_days_count" invisible="1"/>
+          <field name="working_hrs_count" invisible="1"/>
         </field>
       </field>
     </record>
